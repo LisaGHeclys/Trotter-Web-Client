@@ -1,9 +1,9 @@
 import React from "react";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./view/Home";
 
 import "./App.css";
+
+import Home from "./views/Home";
 import LoginPage from "./views/Login";
 import RegisterPage from "./views/Register";
 
