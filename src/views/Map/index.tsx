@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "./index.scss";
 
@@ -21,7 +21,14 @@ const BaseMapPropsDefault: BaseMapProps = {
 const BaseMap = () => {
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN as string;
   const ref = React.useRef<number>(0);
-  const { length, price, lng, lat, cityName } = BaseMapPropsDefault;
+  const [cityName, setCityName] = useState<string>(
+    BaseMapPropsDefault.cityName
+  );
+  const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
+  const [price, setPrice] = useState<number>(BaseMapPropsDefault.price);
+  const [lng, setLng] = useState<number>(BaseMapPropsDefault.lng);
+  const [lat, setLat] = useState<number>(BaseMapPropsDefault.lat);
+  const [src, setSrc] = useState<string>("https://picsum.photos/200/300");
 
   useEffect(() => {
     if (ref.current) return;
@@ -43,7 +50,54 @@ const BaseMap = () => {
         showUserHeading: true
       })
     );
+    map.on("style.load", () => {
+      map.setFog({});
+    });
+    map.on("load", () => {
+      map.addSource("city", {
+        type: "geojson",
+        data: "http://localhost:3000/data.geojson"
+      });
+
+      map.addLayer({
+        id: "city-layer",
+        type: "circle",
+        source: "city",
+        paint: {
+          "circle-radius": 6,
+          "circle-stroke-width": 2,
+          "circle-color": "red",
+          "circle-stroke-color": "white"
+        }
+      });
+    });
+    map.on("click", "city-layer", (e) => {
+      if (!e.features || e.features.length === 0) return;
+      console.log(e.features[0]);
+      map.easeTo({
+        center: [
+          e.features[0].properties?.longitude,
+          e.features[0].properties?.latitude
+        ],
+        zoom: 7
+      });
+      setCityName(e.features[0].properties?.name || "");
+    });
+    map.on("mouseenter", "city-layer", () => {
+      map.getCanvas().style.cursor = "pointer";
+    });
+    map.on("mouseleave", "city-layer", () => {
+      map.getCanvas().style.cursor = "";
+    });
   }, [lat, lng]);
+
+  useEffect(() => {
+    setSrc(
+      `https://picsum.photos/${Math.floor(Math.random() * 100) + 200}/${
+        Math.floor(Math.random() * 100) + 200
+      }`
+    );
+  }, [cityName]);
 
   return (
     <div
@@ -51,7 +105,9 @@ const BaseMap = () => {
         overflow: "hidden",
         width: "100%",
         height: "100%",
-        position: "relative"
+        position: "relative",
+        display: "flex",
+        flexDirection: "row"
       }}
     >
       <div className="mapSidebar">
@@ -66,13 +122,8 @@ const BaseMap = () => {
           <label>To:</label>
           <input type="date" name="to" id="to" />
         </div>
-        <h5>Eiffel Tower</h5>
-        <img
-          width={250}
-          height={200}
-          alt={"Eiffel Tower"}
-          src="https://lh3.googleusercontent.com/cC6_lOzZ9R9sfxxJosTORlW8GjW5bKxiHMeo_8LIVH3_gfStKc9ocqbjpcwaJZY8Cm6e-feRKwArtF8fK6sILmTg3KQdd01U3vLITByXCtYDEHe0HTG3-5DdYes"
-        />
+        <h5>Some monument</h5>
+        <img width={250} height={200} alt={"Eiffel Tower"} src={src} />
         <br />
         <b>Only for {price}€!</b>
       </div>
