@@ -1,9 +1,14 @@
-import { Button } from "@mui/material";
 import * as React from "react";
 import { Link } from "react-router-dom";
 
+import "../../scss/navbar.scss";
+
 function Login() {
-  return <Button>Login</Button>;
+  return (
+    <Link className={"login"} to={"/login"}>
+      Login
+    </Link>
+  );
 }
 
 export default Login;

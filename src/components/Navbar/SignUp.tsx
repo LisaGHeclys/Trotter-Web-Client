@@ -1,9 +1,14 @@
-import { Button } from "@mui/material";
 import * as React from "react";
 import { Link } from "react-router-dom";
 
+import "../../scss/navbar.scss";
+
 function SignUp() {
-  return <Button variant={"outlined"}>Sign Up</Button>;
+  return (
+    <Link className={"signUp"} to={"/register"}>
+      Sign Up
+    </Link>
+  );
 }
 
 export default SignUp;

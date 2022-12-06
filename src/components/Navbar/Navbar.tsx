@@ -22,6 +22,7 @@ import "../../scss/navbar.scss";
 function Navbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  console.log(isMobile);
 
   return (
     <header>
@@ -32,10 +33,12 @@ function Navbar() {
             <a href={"/"}>
               <img src={simpleLogo} alt={"Logo"} className={"photo"} />
             </a>
-            Trotter
+            {isMobile ? "" : "Trotter"}
           </div>
           {isMobile ? (
-            <DrawerComponent />
+            <>
+              <DrawerComponent />
+            </>
           ) : (
             <div className={"pages"}>
               {routesList.map((route, index) => (
@@ -45,10 +48,14 @@ function Navbar() {
               ))}
             </div>
           )}
-          <div>
-            <Login />
-            <SignUp />
-          </div>
+          {isMobile ? (
+            <></>
+          ) : (
+            <div className={"authComponent"}>
+              <Login />
+              <SignUp />
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     </header>

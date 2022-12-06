@@ -64,3 +64,9 @@ input {
   padding: 12px;
   color: black;
 }
+
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+html,
+body {
+  font-family: "Lato", sans-serif;
+}
