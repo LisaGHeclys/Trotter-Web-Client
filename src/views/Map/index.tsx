@@ -15,7 +15,7 @@ const BaseMapPropsDefault: BaseMapProps = {
   price: 0,
   lat: 2.333333,
   lng: 48.866667,
-  cityName: "Paris",
+  cityName: "Paris"
 };
 
 const BaseMap = () => {
@@ -30,17 +30,17 @@ const BaseMap = () => {
       container: "mapContainer",
       style: "mapbox://styles/mapbox/streets-v11",
       center: [lat, lng],
-      zoom: 2,
+      zoom: 2
     });
     const nav = new mapboxgl.NavigationControl();
     map.addControl(nav, "top-right");
     map.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
-          enableHighAccuracy: true,
+          enableHighAccuracy: true
         },
         trackUserLocation: true,
-        showUserHeading: true,
+        showUserHeading: true
       })
     );
   }, [lat, lng]);
@@ -51,7 +51,7 @@ const BaseMap = () => {
         overflow: "hidden",
         width: "100%",
         height: "100%",
-        position: "relative",
+        position: "relative"
       }}
     >
       <div className="mapSidebar">
