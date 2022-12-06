@@ -7,6 +7,7 @@ import LandingPage from "./views/LandingPage";
 import LoginPage from "./views/Login";
 import RegisterPage from "./views/Register";
 import Home from "./views/Home";
+import BaseMap from "./views/Map";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/map" element={<BaseMap />} />
           {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </BrowserRouter>
