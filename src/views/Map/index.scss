@@ -1,19 +1,20 @@
 #mapContainer {
   height: 100%;
-  width: 100vw;
+  width: 100%;
   overflow: hidden;
-  position: absolute;
+  position: relative;
   top: 0;
 }
 
 .mapSidebar {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 400px;
   height: 100%;
   background-color: #f3f4f8;
-  border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  border-radius: 4px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   overflow: auto;
   z-index: 999;
