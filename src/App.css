@@ -52,6 +52,10 @@ root {
   padding-top: 72px;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 input {
   border: none;
   outline: none;
