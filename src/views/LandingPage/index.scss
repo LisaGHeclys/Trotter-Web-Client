@@ -1,0 +1,61 @@
+@import "react-alice-carousel/lib/scss/alice-carousel.scss";
+@import "../../scss/vars";
+
+.landingPage {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  top: 170px;
+  width: 100%;
+  position: relative;
+  display: center;
+  align-items: center;
+  text-align: center;
+
+  color: $black;
+  font-weight: 600;
+  font-size: 24px;
+  text-decoration: none;
+  font-family: $font;
+}
+
+.backgroundCarousel {
+  top: 25%;
+  background-color: rgba($color: $grey, $alpha: 0.5);
+
+  width: 100vw;
+  height: 55vh;
+
+  border-radius: 100px;
+  filter: blur(15px);
+  justify-items: center;
+  justify-content: center;
+  display: flex;
+  position: absolute;
+}
+
+.description {
+  top: 82%;
+  width: 42vw;
+  height: 8vh;
+  background-color: $grey;
+  border-radius: 30px;
+
+  color: $black;
+  font-weight: 600;
+  font-size: 24px;
+  text-decoration: none;
+  font-family: $font;
+
+  position: relative;
+  display: flex;
+  align-self: center;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 2px 5px 4px rgba($color: $black, $alpha: 0.3);
+}

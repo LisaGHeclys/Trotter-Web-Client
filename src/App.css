@@ -49,7 +49,10 @@ root {
   height: 100%;
   overflow-x: hidden;
   background-color: #f3f4f8;
-  padding-top: 72px;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 input {
@@ -59,4 +62,19 @@ input {
   margin: 12px;
   padding: 12px;
   color: black;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+html,
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 24px;
 }
