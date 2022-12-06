@@ -18,6 +18,9 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/travel" element={<Home />} />
+          <Route path="/service" element={<Home />} />
+          <Route path="/about" element={<Home />} />
           <Route path="/map" element={<BaseMap />} />
           {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>

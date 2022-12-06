@@ -25,7 +25,7 @@ function Navbar() {
   console.log(isMobile);
 
   return (
-    <header>
+    <div>
       <AppBar elevation={0}>
         <CssBaseline />
         <Toolbar className={"navbar"}>
@@ -58,7 +58,7 @@ function Navbar() {
           )}
         </Toolbar>
       </AppBar>
-    </header>
+    </div>
   );
 }
 
