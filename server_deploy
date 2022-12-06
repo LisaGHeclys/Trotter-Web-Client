@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+echo "Deploying server..."
+
+git pull origin production
+
+pm2 list
+
+# pm2 restart Trotter_Client
+
+echo "Application deployed successfully!"
