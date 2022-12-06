@@ -49,7 +49,6 @@ root {
   height: 100%;
   overflow-x: hidden;
   background-color: #f3f4f8;
-  padding-top: 72px;
 }
 
 input {
@@ -59,4 +58,13 @@ input {
   margin: 12px;
   padding: 12px;
   color: black;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 24px;
 }
