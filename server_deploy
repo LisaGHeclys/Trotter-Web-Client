@@ -1,9 +1,11 @@
 #!/bin/bash
 set -e
 
-echo "Deploying server..."
+echo "Pull modifications"
 
 git pull origin production
+
+echo "Deploying on the server..."
 
 pm2 list
 

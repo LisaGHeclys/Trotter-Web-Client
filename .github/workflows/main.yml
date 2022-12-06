@@ -15,4 +15,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: "cd ~/Trotter_Deployement; ./server_deploy.sh;"
+          script: "cd ~/Trotter_Client; ./server_deploy;"
