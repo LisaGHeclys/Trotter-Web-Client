@@ -40,6 +40,9 @@ const BaseMap = () => {
       zoom: 2
     });
     const nav = new mapboxgl.NavigationControl();
+    map.setProjection({
+      name: "globe"
+    });
     map.addControl(nav, "top-right");
     map.addControl(
       new mapboxgl.GeolocateControl({
