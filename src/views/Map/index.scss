@@ -29,3 +29,12 @@
     border-radius: 10px;
   }
 }
+
+.dateRange {
+  transform: scale(0.8);
+}
+
+.dateRange > div > div > span > input {
+  height: 24px;
+  margin: 0px;
+}
