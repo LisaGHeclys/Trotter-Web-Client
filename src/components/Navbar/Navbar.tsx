@@ -26,7 +26,7 @@ function Navbar() {
 
   return (
     <header>
-      <AppBar elevation={0}>
+      <AppBar elevation={0} color="transparent">
         <CssBaseline />
         <Toolbar className={"navbar"}>
           <div className={"logo"}>

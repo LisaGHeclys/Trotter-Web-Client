@@ -6,7 +6,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: $bg;
+  background-color: rgba($color: $bg, $alpha: 0);
+  z-index: 9999;
 
   .pages {
     width: 40%;

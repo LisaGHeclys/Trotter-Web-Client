@@ -45,6 +45,9 @@ const RegisterPage = () => {
             </button>
           </div>
         </div>
+        <div className="spacer">
+          <div className="wavy" />
+        </div>
       </div>
     </>
   );
