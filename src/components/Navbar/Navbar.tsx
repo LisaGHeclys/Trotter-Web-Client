@@ -25,8 +25,8 @@ function Navbar() {
   console.log(isMobile);
 
   return (
-    <div>
-      <AppBar elevation={0}>
+    <header>
+      <AppBar elevation={0} color="transparent">
         <CssBaseline />
         <Toolbar className={"navbar"}>
           <div className={"logo"}>
@@ -58,7 +58,7 @@ function Navbar() {
           )}
         </Toolbar>
       </AppBar>
-    </div>
+    </header>
   );
 }
 
