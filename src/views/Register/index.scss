@@ -1,13 +1,206 @@
-.registerForm {
-  margin: auto;
-  width: 480px;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  background-color: #f3f4f8;
-  border-radius: 10px;
-  border: 1px solid lightgray;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  justify-content: center;
-  align-items: center;
+@import "../../scss/_vars.scss";
+
+.register {
+  width: 100%;
+  height: auto;
+  margin-top: 11%;
+  margin-left: 14%;
+  color: $text;
+  font-family: $font;
+  user-select: none;
+
+  @media screen and (max-width: 1024px) {
+    margin-top: 13%;
+    margin-left: 10%;
+  }
+
+  @media screen and (max-width: 768px) {
+    margin-top: 20%;
+    margin-left: 2%;
+  }
+
+  .registerTitle {
+    position: relative;
+    font-weight: bolder;
+    z-index: 1;
+    font-size: 35px;
+    margin-block-end: 0;
+    left: 70px;
+  }
+
+  .registerText {
+    color: $grey;
+    font-size: 20px;
+    z-index: 1;
+
+    left: 70px;
+    top: 18px;
+    position: relative;
+
+    a {
+      color: $links;
+      text-decoration: none;
+      font-weight: bolder;
+      font-size: 20px;
+
+      &:hover {
+        color: $blueGreen;
+        transition-duration: 0.4s;
+      }
+    }
+  }
+
+  .registerForm {
+    position: relative;
+    top: 30px;
+    width: 32%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    z-index: 1;
+
+    background-color: $bg;
+
+    @media screen and (max-width: 1300px) {
+      width: 40%;
+    }
+    @media screen and (max-width: 1024px) {
+      width: 50%;
+    }
+    @media screen and (max-width: 768px) {
+      width: 80%;
+    }
+    @media screen and (max-width: 480px) {
+      width: 90%;
+    }
+
+    input {
+      width: 80%;
+      height: 60px;
+      z-index: 1;
+
+      background-color: $bg;
+      border: 1.5px $grey solid;
+      border-radius: 10px;
+
+      &::placeholder {
+        color: $grey;
+      }
+
+      &:hover {
+        border: 1.5px $blueGreen solid;
+        transition-duration: 0.4s;
+      }
+      &:focus {
+        border: 1.5px $blueGreen solid;
+        transition-duration: 0.4s;
+      }
+    }
+
+    .registerButton {
+      margin: 2.5%;
+      width: 180px;
+      height: 60px;
+      z-index: 1;
+
+      background-color: $links;
+      border: 1px $links solid;
+      border-radius: 40px;
+      color: $white;
+      cursor: pointer;
+
+      font-weight: bolder;
+      font-size: 20px;
+
+      &:hover {
+        background-color: $blueGreen;
+        transition-duration: 0.4s;
+      }
+    }
+
+    .lineText {
+      line-height: 1em;
+      width: 80%;
+      outline: 0;
+      border: 0;
+      position: relative;
+      text-align: center;
+
+      color: $grey;
+      opacity: 0.5;
+
+      &:before {
+        content: "";
+        background: linear-gradient(to right, transparent, $text, transparent);
+
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height: 1px;
+      }
+
+      &:after {
+        content: attr(data-content);
+        position: relative;
+        display: inline-block;
+        color: $text;
+
+        padding: 0 0.5em;
+        line-height: 1.5em;
+        background-color: $bg;
+      }
+    }
+
+    .alternateLogins {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: center;
+      width: 100%;
+      padding-top: 24px;
+      z-index: 1;
+
+      button {
+        width: 60px;
+        height: 60px;
+        border: 1px $text solid;
+        border-radius: 10px;
+        background-color: $bg;
+        cursor: pointer;
+
+        &:hover {
+          border: 1px $detail solid;
+          background-color: $white;
+          transition-duration: 0.4s;
+        }
+
+        &disabled {
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+  .spacer {
+    aspect-ratio: 1/1;
+    position: absolute;
+    top: 0;
+    right: -50px;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    z-index: 0;
+
+    .wavy {
+      width: 50%;
+      height: 100%;
+      background-image: url("../../assets/wavy.svg");
+      background-repeat: no-repeat;
+      position: absolute;
+      right: 0;
+    }
+  }
 }
