@@ -22,7 +22,6 @@ import "../../scss/navbar.scss";
 function Navbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  console.log(isMobile);
 
   return (
     <div>
