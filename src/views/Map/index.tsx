@@ -27,7 +27,7 @@ const BaseMap = () => {
   const ref = React.useRef<number>(0);
   const [cityName, setCityName] = useState<string>(
     BaseMapPropsDefault.cityName
-  );f
+  );
   const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
   const [price, setPrice] = useState<number>(BaseMapPropsDefault.price);
   const [lng, setLng] = useState<number>(BaseMapPropsDefault.lng);
