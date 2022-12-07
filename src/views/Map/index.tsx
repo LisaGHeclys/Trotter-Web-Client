@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
+import { DateRange } from "react-date-range";
 import "./index.scss";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { Range } from "react-date-range/index";
 
 type BaseMapProps = {
   length: number;
@@ -29,6 +33,22 @@ const BaseMap = () => {
   const [lng, setLng] = useState<number>(BaseMapPropsDefault.lng);
   const [lat, setLat] = useState<number>(BaseMapPropsDefault.lat);
   const [src, setSrc] = useState<string>("https://picsum.photos/200/300");
+  const [range, setRange] = useState<Range[]>([
+    {
+      startDate: new Date(),
+      endDate: undefined,
+      key: "selection"
+    }
+  ]);
+
+  useEffect(() => {
+    if (range.length === 0 || !range[0].endDate || !range[0].startDate) return;
+    const diffTime = Math.abs(
+      range[0]?.endDate?.getTime() - range[0]?.startDate?.getTime()
+    );
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    setLength(diffDays);
+  }, [range]);
 
   useEffect(() => {
     if (ref.current) return;
@@ -85,6 +105,9 @@ const BaseMap = () => {
         zoom: 7
       });
       setCityName(e.features[0].properties?.name || "");
+      setLng(e.features[0].properties?.longitude || 0);
+      setLat(e.features[0].properties?.latitude || 0);
+      setPrice(0);
     });
     map.on("mouseenter", "city-layer", () => {
       map.getCanvas().style.cursor = "pointer";
@@ -118,13 +141,21 @@ const BaseMap = () => {
         <p>
           <b>{length} days</b> in {cityName}!
         </p>
-        <div className="flexRow">
-          <label>From:</label>
-          <input type="date" name="from" id="from" />
-
-          <label>To:</label>
-          <input type="date" name="to" id="to" />
-        </div>
+        <DateRange
+          editableDateInputs={true}
+          onChange={(item) =>
+            setRange([
+              {
+                startDate: item.selection.startDate,
+                endDate: item.selection.endDate,
+                key: "selection"
+              }
+            ])
+          }
+          moveRangeOnFirstSelection={false}
+          ranges={range}
+          className="dateRange"
+        />
         <h5>Some monument</h5>
         <img width={250} height={200} alt={"Eiffel Tower"} src={src} />
         <br />
