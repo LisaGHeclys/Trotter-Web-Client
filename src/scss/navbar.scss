@@ -10,7 +10,7 @@
   z-index: 9999;
 
   .pages {
-    width: 40%;
+    width: 35%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -26,7 +26,7 @@
   justify-content: space-between;
   color: $black;
   font-weight: 700;
-  font-size: 35px;
+  font-size: 30px;
   text-decoration: none;
   font-family: $font;
   transition: all ease-in-out 0.2s;
@@ -40,7 +40,7 @@
 .text {
   color: $black;
   font-weight: 600;
-  font-size: 28px;
+  font-size: 26px;
   text-decoration: none;
   font-family: $font;
   transition: all ease-in-out 0.2s;

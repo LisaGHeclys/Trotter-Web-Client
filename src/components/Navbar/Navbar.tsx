@@ -58,7 +58,7 @@ function Navbar() {
           )}
         </Toolbar>
       </AppBar>
-    </header>
+    </div>
   );
 }
 
