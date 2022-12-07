@@ -155,6 +155,11 @@ const BaseMap = () => {
           moveRangeOnFirstSelection={false}
           ranges={range}
           className="dateRange"
+          minDate={new Date()}
+          maxDate={
+            new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+          }
+          weekStartsOn={1}
         />
         <h5>Some monument</h5>
         <img width={250} height={200} alt={"Eiffel Tower"} src={src} />
