@@ -6,7 +6,7 @@
   width: 325px;
   background-color: #95b0b4;
 
-  &__logo {
+  &Logo {
     display: grid;
     place-items: center;
     height: 120px;
@@ -14,10 +14,10 @@
     font-weight: 700;
   }
 
-  &__menu {
+  &Menu {
     position: relative;
 
-    &__item {
+    &Item {
       display: flex;
       align-items: center;
       place-content: flex-start;
@@ -31,7 +31,7 @@
         color: #fff;
       }
 
-      &__icon {
+      &Icon {
         margin-right: 1rem;
 
         i {
@@ -40,7 +40,7 @@
       }
     }
 
-    &__indicator {
+    &Indicator {
       position: absolute;
       top: 0;
       left: 50%;
