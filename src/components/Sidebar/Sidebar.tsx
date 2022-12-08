@@ -1,38 +1,42 @@
 import "../../scss/sidebar.scss";
-import "boxicons/css/boxicons.min.css";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActiveOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
 import simpleLogo from "../../assets/simpleLogo.png";
 
 const sidebarNavItems = [
   {
     display: "Dashboard",
-    icon: <i className="bx bx-home"></i>,
+    icon: <HomeOutlinedIcon />,
     to: "/dashboard",
     section: ""
   },
   {
     display: "My destinations",
-    icon: <i className="bx bxs-plane-alt"></i>,
+    icon: <AirplanemodeActiveOutlinedIcon />,
     to: "/dashboard",
     section: ""
   },
   {
     display: "dashboard",
-    icon: <i className="bx bx-heart"></i>,
+    icon: <FavoriteBorderOutlinedIcon />,
     to: "/",
     section: ""
   },
   {
     display: "Discover",
-    icon: <i className="bx bx-compass"></i>,
+    icon: <ExploreOutlinedIcon />,
     to: "/dashboard",
     section: ""
   },
   {
     display: "Calendar",
-    icon: <i className="bx bxs-calendar"></i>,
+    icon: <CalendarMonthOutlinedIcon />,
     to: "/dashboard",
     section: ""
   }
@@ -58,7 +62,7 @@ function Sidebar() {
       </div>
       <div className="sidebar__menu_indicator">
         {sidebarNavItems.map((item, index) => (
-          <Link className="text-decoration: none" to={item.to} key={index}>
+          <Link to={item.to} key={index}>
             <div className="sidebar__menu__item">
               <div className="sidebar__menu__item__icon">{item.icon}</div>
               <div className="sidebar__menu__item__text">{item.display}</div>
