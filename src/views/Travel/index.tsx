@@ -7,11 +7,13 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Navbar from "../../components/Navbar/Navbar";
 
 import "./index.scss";
+import { useNavigate } from "react-router-dom";
 
 function TravelPage() {
   const [city, setCity] = useState("");
   const [period, setPeriod] = useState("date");
   const [isFav, setIsFav] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className={"travel"}>
@@ -49,7 +51,10 @@ function TravelPage() {
         Popular places
         <div className={"favoritePlaces"}>
           <div>
-            <Card style={{ borderRadius: "10px" }}>
+            <Card
+              style={{ borderRadius: "10px" }}
+              onClick={() => navigate("/map")}
+            >
               <CardContent
                 style={{
                   backgroundColor: "#95b0b4",
