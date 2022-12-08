@@ -9,7 +9,7 @@ import RegisterPage from "./views/Register";
 import Home from "./views/Home";
 import BaseMap from "./views/Map";
 import TravelPage from "./views/Travel";
-import Dashboard from "./views/Dashborad";
+import Dashboard from "./views/Dashboard";
 import Protected from "./components/Protected";
 
 function App() {
