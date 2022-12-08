@@ -10,6 +10,7 @@ import Home from "./views/Home";
 import BaseMap from "./views/Map";
 import TravelPage from "./views/Travel";
 import Dashboard from "./views/Dashborad";
+import Protected from "./components/Protected";
 
 function App() {
   return (
@@ -23,8 +24,15 @@ function App() {
           <Route path="/travel" element={<TravelPage />} />
           <Route path="/services" element={<Home />} />
           <Route path="/about" element={<Home />} />
-          <Route path="/map" element={<BaseMap />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/map"
+            element={
+              <Protected>
+                <BaseMap />
+              </Protected>
+            }
+          />
           {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </BrowserRouter>
