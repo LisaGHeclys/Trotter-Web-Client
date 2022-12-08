@@ -9,6 +9,7 @@ import RegisterPage from "./views/Register";
 import Home from "./views/Home";
 import BaseMap from "./views/Map";
 import TravelPage from "./views/Travel";
+import Dashboard from "./views/Dashborad";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/services" element={<Home />} />
           <Route path="/about" element={<Home />} />
           <Route path="/map" element={<BaseMap />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </BrowserRouter>
