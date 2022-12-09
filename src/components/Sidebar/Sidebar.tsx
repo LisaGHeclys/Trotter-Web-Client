@@ -6,6 +6,7 @@ import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActi
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import simpleLogo from "../../assets/simpleLogo.png";
 
@@ -25,7 +26,7 @@ const sidebarNavItems = [
     section: ""
   },
   {
-    display: "dashboard",
+    display: "Favorites",
     icon: <FavoriteBorderOutlinedIcon />,
     to: "/",
     section: ""
@@ -62,15 +63,22 @@ function Sidebar() {
         <img src={simpleLogo} alt={"Logo"} className={"photo"} />
         Trotter
       </div>
+      <hr />
       <div className="sidebarMenuIndicator"></div>
       {sidebarNavItems.map((item, index) => (
-        <Link to={item.to} key={index}>
+        <Link className="sidebarLink" to={item.to} key={index}>
           <div className="sidebarMenuItem">
             <div className="sidebarMenuItemIcon">{item.icon}</div>
             <div className="sidebarMenuItemText">{item.display}</div>
           </div>
         </Link>
       ))}
+      <div className="sidebarMenuButton">
+        <button className="sidebarMenuButtonLogOut">
+          Log out
+          <LogoutIcon className="sidebarMenuButtonLogOutIcon" />
+        </button>
+      </div>
     </div>
   );
 }
