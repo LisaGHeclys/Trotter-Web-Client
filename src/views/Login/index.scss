@@ -55,16 +55,24 @@
 }
 
 .loginButton {
-  width: 280px;
-  height: 40px;
-  margin: 12px 0px;
-  padding: 0 10px;
-  border: 1px solid lightgray;
-  border-radius: 10px;
-  font-size: 16px;
-  outline: none;
-  background-color: #f5f5f5;
+  margin: 2.5%;
+  width: 180px;
+  height: 48px;
+  z-index: 1;
+
+  background-color: $links;
+  border: 1px $links solid;
+  border-radius: 40px;
+  color: $white;
   cursor: pointer;
+
+  font-weight: bolder;
+  font-size: 20px;
+
+  &:hover {
+    background-color: $blueGreen;
+    transition-duration: 0.4s;
+  }
 }
 
 .lineText {
