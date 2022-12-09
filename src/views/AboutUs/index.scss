@@ -1,0 +1,62 @@
+@import "../../scss/_vars.scss";
+
+.containerAboutUs {
+  color: $text;
+  background-color: $bg;
+  font-family: $font;
+  position: relative;
+  top: 80px;
+
+  .containerStory {
+    margin-top: 88px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    margin-bottom: 100px;
+
+    h1 {
+      color: $text;
+      font-size: 2.5rem;
+      text-align: center;
+    }
+
+    hr {
+      background-color: $grey;
+      width: 600px;
+      height: 1.5px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    p {
+      color: $text;
+      font-size: 1.2rem;
+      text-align: center;
+      margin-right: 25%;
+      margin-left: 25%;
+      margin-top: 50px;
+    }
+  }
+
+  .containerMembers {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+
+    h1 {
+      color: $text;
+      font-size: 2.5rem;
+      text-align: center;
+    }
+
+    hr {
+      background-color: $grey;
+      width: 600px;
+      height: 1.5px;
+      border: none;
+      border-radius: 10px;
+    }
+  }
+}
