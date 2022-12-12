@@ -10,7 +10,6 @@ const responsive = {
 };
 
 const items: any = [
-  // <img src="" className="yours-custom-class" />,
   <div className="carouselItems" data-value="1">
     <h2>1</h2>
     <p>
@@ -101,12 +100,7 @@ function AboutUs() {
         <div className="containerStory">
           <h1>Our story</h1>
           <hr />
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
-            recusandae natus dolore vero praesentium excepturi illum at neque
-            fugiat explicabo odit repellat tempora rem, deleniti iure, officiis
-            officia ex ipsam!
-          </p>
+          <p>Text</p>
         </div>
         <div className="containerMembers">
           <h1>Our members</h1>
