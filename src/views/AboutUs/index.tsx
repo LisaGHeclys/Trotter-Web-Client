@@ -11,23 +11,85 @@ const responsive = {
 
 const items: any = [
   // <img src="" className="yours-custom-class" />,
-  <div className="image" data-value="1">
+  <div className="carouselItems" data-value="1">
     <h2>1</h2>
+    <p>
+      Name
+      <br />
+      Poste
+    </p>
   </div>,
-  <div className="image" data-value="2">
+  <div className="carouselItems" data-value="2">
     <h2>2</h2>
+    <p>
+      Name
+      <br />
+      Poste
+    </p>
   </div>,
-  <div className="image" data-value="3">
+  <div className="carouselItems" data-value="3">
     <h2>3</h2>
+    <p>
+      Name
+      <br />
+      Poste
+    </p>
   </div>,
-  <div className="image" data-value="4">
+  <div className="carouselItems" data-value="4">
     <h2>4</h2>
+    <p>
+      Name
+      <br />
+      Poste
+    </p>
   </div>,
-  <div className="image" data-value="5">
+  <div className="carouselItems" data-value="5">
     <h2>5</h2>
+    <p>
+      Name
+      <br />
+      Poste
+    </p>
   </div>,
-  <div className="image" data-value="6">
+  <div className="carouselItems" data-value="6">
     <h2>6</h2>
+    <p>
+      Name
+      <br />
+      Poste
+    </p>
+  </div>,
+  <div className="carouselItems" data-value="7">
+    <h2>7</h2>
+    <p>
+      Name
+      <br />
+      Poste
+    </p>
+  </div>,
+  <div className="carouselItems" data-value="8">
+    <h2>8</h2>
+    <p>
+      Name
+      <br />
+      Poste
+    </p>
+  </div>,
+  <div className="carouselItems" data-value="9">
+    <h2>9</h2>
+    <p>
+      Name
+      <br />
+      Poste
+    </p>
+  </div>,
+  <div className="carouselItems" data-value="10">
+    <h2>10</h2>
+    <p>
+      Name
+      <br />
+      Poste
+    </p>
   </div>
 ];
 
