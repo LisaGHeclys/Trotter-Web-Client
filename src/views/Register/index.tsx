@@ -5,10 +5,36 @@ import "./index.scss";
 import GoogleIcon from "@mui/icons-material/Google";
 import { Link } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
+
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  async function register() {
+    const response = await axios({
+      method: "post",
+      url: `${process.env.REACT_APP_SERVER_URI}/auth/register`,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: {
+        Email: email,
+        Password: password
+      }
+    });
+    if (response.data.status != 200 || !response.data.accessToken) {
+      //Alert user ("An error occured, please try again later")
+    } else {
+      localStorage.setItem("jwt", response.data.accessToken);
+      navigate("/travel");
+    }
+  }
 
   return (
     <>
@@ -32,10 +58,7 @@ const RegisterPage = () => {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button
-            className="registerButton"
-            onClick={() => console.log("siuuuuuu")}
-          >
+          <button className="registerButton" onClick={register}>
             Register
           </button>
           <hr className="lineText" data-content="Or sign with" />
