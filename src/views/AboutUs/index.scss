@@ -82,6 +82,21 @@
     align-items: center;
     justify-content: center;
     padding: 0;
+    margin-left: 200px;
+    margin-right: 200px;
+
+    @media screen and (max-width: 1024px) {
+      margin-left: 100px;
+      margin-right: 100px;
+    }
+    @media screen and (max-width: 768px) {
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+    @media screen and (max-width: 480px) {
+      margin-left: 25px;
+      margin-right: 25px;
+    }
 
     h1 {
       color: $text;
