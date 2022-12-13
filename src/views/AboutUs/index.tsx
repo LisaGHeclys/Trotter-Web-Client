@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 
 import Lisa from "../../assets/team/Lisa.jpg";
 import Justine from "../../assets/team/Justine.jpg";
+import Lucy from "../../assets/team/Lucy.jpeg";
 import Maxence from "../../assets/team/Maxence.jpeg";
 import Tino from "../../assets/team/Tino.jpg";
 import Laurent from "../../assets/team/Laurent.jpg";
@@ -69,7 +70,7 @@ const items: any = [
     </p>
   </div>,
   <div className="carouselItems" data-value="7">
-    {/* <img className="LucyImg" src={Lucy} alt="Lucy" /> */}
+    <img className="LucyImg" src={Lucy} alt="Lucy" />
     <p>
       Lucy Janssens
       <br />
