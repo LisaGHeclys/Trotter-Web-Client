@@ -2,6 +2,7 @@ import { AnyAction } from "redux";
 
 interface authState {
   isLoggedIn: boolean;
+  token?: string;
 }
 
 const initialState: authState = {
