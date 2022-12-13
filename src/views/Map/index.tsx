@@ -68,7 +68,9 @@ const BaseMap = () => {
   const ref = React.useRef<number>(0);
   const state = useSelector((state: any) => state);
   const [cityName, setCityName] = useState<string>(
-    state.search?.place ?? BaseMapPropsDefault.cityName
+    state.search.place === ""
+      ? BaseMapPropsDefault.cityName
+      : state.search.place
   );
   const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
   const [price, setPrice] = useState<number>(BaseMapPropsDefault.price);
@@ -235,6 +237,10 @@ const BaseMap = () => {
       });
       (map.getSource("route") as any).setData(
         await newDropoff(testLocation, testLocation, dropoffs, 0, [])
+      );
+      map.addControl(
+        new mapboxgl.ScaleControl({ maxWidth: 80, unit: "metric" }),
+        "bottom-right"
       );
       map.addLayer(
         {
