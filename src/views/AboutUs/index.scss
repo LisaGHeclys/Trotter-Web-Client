@@ -8,6 +8,27 @@
   color: $text;
   background-color: $bg;
   font-family: $font;
+
+  p {
+    font-size: 18px;
+  }
+
+  .LaurentImg {
+    width: 280px;
+    height: 205px;
+  }
+  .JustineImg {
+    width: 180px;
+    height: 205px;
+  }
+  .LisaImg {
+    width: 200px;
+    height: 205px;
+  }
+  .TinoImg {
+    width: 180px;
+    height: 205px;
+  }
 }
 
 .containerAboutUs {
@@ -34,7 +55,7 @@
     hr {
       background-color: $grey;
       width: 600px;
-      height: 1.5px;
+      height: 1px;
       border: none;
       border-radius: 10px;
 
@@ -71,7 +92,7 @@
     hr {
       background-color: $grey;
       width: 600px;
-      height: 1.5px;
+      height: 1px;
       border: none;
       border-radius: 10px;
 
