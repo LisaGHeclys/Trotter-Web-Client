@@ -1,3 +1,4 @@
+import { Input } from "@mui/material";
 import { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./index.scss";

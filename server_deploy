@@ -5,6 +5,10 @@ echo "Pull modifications"
 
 git pull origin production
 
+echo "Check for dependencies..."
+
+npm i
+
 echo "Deploying on the server..."
 
 pm2 restart Trotter_Client
