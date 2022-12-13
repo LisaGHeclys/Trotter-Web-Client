@@ -10,7 +10,7 @@ function Carousel({
 }) {
   return (
     <AliceCarousel
-      animationDuration={3000}
+      animationDuration={3800}
       autoPlay
       infinite
       mouseTracking

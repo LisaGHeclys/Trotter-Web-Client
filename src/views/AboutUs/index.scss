@@ -8,6 +8,48 @@
   color: $text;
   background-color: $bg;
   font-family: $font;
+  user-select: none;
+
+  p {
+    font-size: 18px;
+  }
+
+  .MaxenceImg {
+    width: 195px;
+    height: 205px;
+  }
+  .LaurentImg {
+    width: 280px;
+    height: 205px;
+  }
+  .JustineImg {
+    width: 180px;
+    height: 205px;
+  }
+  .LisaImg {
+    width: 200px;
+    height: 205px;
+  }
+  .LucyImg {
+    width: 135px;
+    height: 205px;
+  }
+  .TinoImg {
+    width: 180px;
+    height: 205px;
+  }
+  .LeoImg {
+    width: 170px;
+    height: 205px;
+  }
+  .FernandoImg {
+    width: 170px;
+    height: 205px;
+  }
+  .FlorianImg {
+    width: 165px;
+    height: 205px;
+  }
 }
 
 .containerAboutUs {
@@ -34,7 +76,7 @@
     hr {
       background-color: $grey;
       width: 600px;
-      height: 1.5px;
+      height: 1px;
       border: none;
       border-radius: 10px;
 
@@ -61,6 +103,21 @@
     align-items: center;
     justify-content: center;
     padding: 0;
+    margin-left: 200px;
+    margin-right: 200px;
+
+    @media screen and (max-width: 1024px) {
+      margin-left: 100px;
+      margin-right: 100px;
+    }
+    @media screen and (max-width: 768px) {
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+    @media screen and (max-width: 480px) {
+      margin-left: 25px;
+      margin-right: 25px;
+    }
 
     h1 {
       color: $text;
@@ -71,7 +128,7 @@
     hr {
       background-color: $grey;
       width: 600px;
-      height: 1.5px;
+      height: 1px;
       border: none;
       border-radius: 10px;
 
