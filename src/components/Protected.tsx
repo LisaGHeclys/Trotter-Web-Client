@@ -1,10 +1,22 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { AnyAction, Dispatch } from "redux";
 
 const Protected = ({ children }: { children: JSX.Element }) => {
-  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
+  let isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
   console.log(isLoggedIn);
+  const dispatch = useDispatch<Dispatch<AnyAction>>();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      const token = localStorage.getItem("token");
+      if (token) {
+        dispatch({ type: "LOGIN", payload: {} });
+        isLoggedIn = true;
+      }
+    }
+  }, [isLoggedIn, dispatch]);
 
   if (isLoggedIn) {
     return children;

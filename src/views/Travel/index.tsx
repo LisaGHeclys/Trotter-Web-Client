@@ -16,6 +16,8 @@ import Navbar from "../../components/Navbar/Navbar";
 import "./index.scss";
 import { useNavigate } from "react-router-dom";
 import { TextFieldsOutlined } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { AnyAction, Dispatch } from "redux";
 
 function TravelPage() {
   const theme = useTheme();
@@ -26,6 +28,7 @@ function TravelPage() {
   const [period, setPeriod] = useState("date");
   const [isFav, setIsFav] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch<Dispatch<AnyAction>>();
 
   return (
     <div>
@@ -73,6 +76,16 @@ function TravelPage() {
                 placeholder="From ... to ..."
                 onChange={(e) => setPeriod(e.target.value)}
               />
+            </Grid>
+            <Grid>
+            <button
+            className="loginButton"
+            onClick={() => {
+              console.log(city);
+              dispatch({ type: "SEARCH", payload: { place: city } });
+              navigate("/map");
+            }}
+          >Submit</button>
             </Grid>
           </Grid>
           <Grid item p={0} m={0} xs={isMobile ? 12 : 6}>
