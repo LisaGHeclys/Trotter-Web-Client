@@ -10,6 +10,7 @@ import Laurent from "../../assets/team/Laurent.jpg";
 import Leo from "../../assets/team/Leo.jpg";
 import Fernando from "../../assets/team/Fernando.jpg";
 import Florian from "../../assets/team/Florian.png";
+import Lilian from "../../assets/team/Lilian.png";
 
 import "./index.scss";
 
@@ -62,7 +63,7 @@ const items: any = [
     </p>
   </div>,
   <div className="carouselItems" data-value="6">
-    {/* <img className="LilianImg" src={Lilian} alt="Lilian" /> */}
+    <img className="LilianImg" src={Lilian} alt="Lilian" />
     <p>
       Lilian Giroire
       <br />
