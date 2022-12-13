@@ -277,7 +277,7 @@ const BaseMap = () => {
         setLat(res.lon);
         map.easeTo({
           center: [res.lon, res.lat],
-          zoom: 7
+          zoom: 12
         });
         console.log("siu");
       };
@@ -291,7 +291,7 @@ const BaseMap = () => {
           e.features[0].properties?.longitude,
           e.features[0].properties?.latitude
         ],
-        zoom: 7
+        zoom: 12
       });
       setCityName(e.features[0].properties?.name || "");
       setLng(e.features[0].properties?.longitude || 0);
