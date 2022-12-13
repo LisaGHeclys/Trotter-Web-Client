@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import mapboxgl, { FeatureIdentifier } from "mapbox-gl";
+import mapboxgl from "mapbox-gl";
 import { DateRange } from "react-date-range";
 import "./index.scss";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { Range } from "react-date-range/index";
 import { feature, featureCollection, point } from "@turf/helpers";
+import { useSelector } from "react-redux";
+import { getCoordinates } from "./functions";
 
 type BaseMapProps = {
   length: number;
@@ -63,10 +65,10 @@ function assembleQueryURL(
 }
 
 const BaseMap = () => {
-  mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN as string;
   const ref = React.useRef<number>(0);
+  const state = useSelector((state: any) => state);
   const [cityName, setCityName] = useState<string>(
-    BaseMapPropsDefault.cityName
+    state.search?.place ?? BaseMapPropsDefault.cityName
   );
   const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
   const [price, setPrice] = useState<number>(BaseMapPropsDefault.price);
@@ -76,10 +78,11 @@ const BaseMap = () => {
   const [range, setRange] = useState<Range[]>([
     {
       startDate: new Date(),
-      endDate: undefined,
+      endDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
       key: "selection"
     }
   ]);
+  mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN as string;
 
   async function newDropoff(
     truckLocation: any,
@@ -261,6 +264,18 @@ const BaseMap = () => {
         },
         "waterway-label"
       );
+
+      const fetchCoordinates = async (cityName: string) => {
+        const res = await getCoordinates(cityName);
+        setLng(res.lat);
+        setLat(res.lon);
+        map.easeTo({
+          center: [res.lon, res.lat],
+          zoom: 7
+        });
+        console.log("siu");
+      };
+      fetchCoordinates(cityName).catch((err) => console.log(err));
     });
     map.on("click", "city-layer", (e) => {
       if (!e.features || e.features.length === 0) return;
@@ -283,6 +298,7 @@ const BaseMap = () => {
     map.on("mouseleave", "city-layer", () => {
       map.getCanvas().style.cursor = "";
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lat, lng]);
 
   useEffect(() => {
