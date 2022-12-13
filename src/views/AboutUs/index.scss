@@ -8,11 +8,16 @@
   color: $text;
   background-color: $bg;
   font-family: $font;
+  user-select: none;
 
   p {
     font-size: 18px;
   }
 
+  .MaxenceImg {
+    width: 195px;
+    height: 205px;
+  }
   .LaurentImg {
     width: 280px;
     height: 205px;
@@ -27,6 +32,18 @@
   }
   .TinoImg {
     width: 180px;
+    height: 205px;
+  }
+  .LeoImg {
+    width: 170px;
+    height: 205px;
+  }
+  .FernandoImg {
+    width: 175px;
+    height: 205px;
+  }
+  .FlorianImg {
+    width: 165px;
     height: 205px;
   }
 }

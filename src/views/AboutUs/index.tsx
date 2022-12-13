@@ -3,8 +3,12 @@ import Navbar from "../../components/Navbar/Navbar";
 
 import Lisa from "../../assets/team/Lisa.jpg";
 import Justine from "../../assets/team/Justine.jpg";
+import Maxence from "../../assets/team/Maxence.jpeg";
 import Tino from "../../assets/team/Tino.jpg";
 import Laurent from "../../assets/team/Laurent.jpg";
+import Leo from "../../assets/team/Leo.jpg";
+import Fernando from "../../assets/team/Fernando.jpg";
+import Florian from "../../assets/team/Florian.png";
 
 import "./index.scss";
 
@@ -17,7 +21,7 @@ const responsive = {
 
 const items: any = [
   <div className="carouselItems" data-value="1">
-    {/* <img className="MaxenceImg" src={Maxence} alt="Maxence" /> */}
+    <img className="MaxenceImg" src={Maxence} alt="Maxence" />
     <p>
       Maxence Pellouin
       <br />
@@ -73,7 +77,7 @@ const items: any = [
     </p>
   </div>,
   <div className="carouselItems" data-value="8">
-    {/* <img className="FlorianImg" src={Florian} alt="Florian" /> */}
+    <img className="FlorianImg" src={Florian} alt="Florian" />
     <p>
       Florian Gibault
       <br />
@@ -81,7 +85,7 @@ const items: any = [
     </p>
   </div>,
   <div className="carouselItems" data-value="9">
-    {/* <img className="LeoImg" src={Leo} alt="Leo" /> */}
+    <img className="LeoImg" src={Leo} alt="Leo" />
     <p>
       Léo Brossard
       <br />
@@ -89,7 +93,7 @@ const items: any = [
     </p>
   </div>,
   <div className="carouselItems" data-value="10">
-    {/* <img className="FernandoImg" src={Fernando} alt="Fernando" /> */}
+    <img className="FernandoImg" src={Fernando} alt="Fernando" />
     <p>
       Fernando Tabernero-Pena
       <br />
