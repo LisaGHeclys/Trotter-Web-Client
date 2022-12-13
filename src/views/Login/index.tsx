@@ -5,12 +5,36 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { useDispatch } from "react-redux";
 import { AnyAction, Dispatch } from "redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Alert } from "@mui/material";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const navigate = useNavigate();
+
+  async function login() {
+    const response = await axios({
+      method: "post",
+      url: `${process.env.REACT_APP_SERVER_URI}/auth/login`,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: {
+        Email: email,
+        Password: password
+      }
+    });
+    if (response.data.status != 200 || !response.data.accessToken) {
+      //Alert user ("Wrong email or Password, please try again")
+    } else {
+      localStorage.setItem("jwt", response.data.accessToken);
+      dispatch({ type: "LOGIN", payload: { isLoggedIn: true } });
+      navigate("/travel");
+    }
+  }
 
   return (
     <>
@@ -35,8 +59,7 @@ const LoginPage = () => {
             <button
               className="loginButton"
               onClick={() => {
-                dispatch({ type: "LOGIN", payload: { isLoggedIn: true } });
-                navigate("/travel");
+                login();
               }}
             >
               Submit
