@@ -1,0 +1,102 @@
+@import "./_vars.scss";
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 325px;
+
+  background-color: $grey;
+  border-radius: 0 50px 50px 0;
+  font-family: $font;
+  box-shadow: 10px 10px 10px rgba($color: $text, $alpha: 0.15);
+
+  &Link {
+    text-decoration: none;
+  }
+
+  hr {
+    color: $bg;
+    border: $bg;
+    background-color: $bg;
+
+    margin: 0;
+    height: 8px;
+    border-radius: 5px;
+    width: 50%;
+    position: absolute;
+    top: 14%;
+    left: 25%;
+  }
+
+  &Logo {
+    display: grid;
+    place-items: center;
+    height: 120px;
+    margin-bottom: 140px;
+
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  &Menu {
+    position: relative;
+
+    &Item {
+      display: flex;
+      align-items: center;
+      place-content: flex-start;
+      padding: 1rem 3rem;
+
+      font-size: 22px;
+      font-weight: 500;
+      color: $black;
+      transition: color 0.4s ease-in-out;
+
+      &.active {
+        color: $white;
+      }
+
+      &Icon {
+        margin-right: 1rem;
+      }
+    }
+
+    &Indicator {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: calc(100% - 40px);
+      border-radius: 10px;
+      z-index: -1;
+      transform: translateX(-50%);
+      transition: 0.4s ease-in-out;
+    }
+
+    &Button {
+      justify-content: center;
+      align-items: center;
+
+      &LogOut {
+        border: none;
+        height: 50px;
+        width: 70%;
+        background-color: $blueGreen;
+        color: $bg;
+        border-radius: 50px;
+        margin: 50px;
+        margin-top: 250px;
+        text-align: center;
+        font-size: 22px;
+        font-weight: lighter;
+
+        &Icon {
+          margin-left: 40px;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

@@ -12,7 +12,7 @@ const routesList = [
     routes: "/services"
   },
   {
-    name: "About Us",
+    name: "About us",
     routes: "/about"
   }
 ];

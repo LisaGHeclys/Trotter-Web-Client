@@ -6,7 +6,8 @@ import {
   Toolbar,
   useMediaQuery,
   useTheme,
-  CssBaseline
+  CssBaseline,
+  Grid
 } from "@mui/material";
 
 import simpleLogo from "../../assets/simpleLogo.png";
@@ -28,33 +29,50 @@ function Navbar() {
       <AppBar elevation={0} color="transparent">
         <CssBaseline />
         <Toolbar className={"navbar"}>
-          <div className={"logo"}>
-            <a href={"/"}>
-              <img src={simpleLogo} alt={"Logo"} className={"photo"} />
-            </a>
-            {isMobile ? "" : "Trotter"}
-          </div>
-          {isMobile ? (
-            <>
-              <DrawerComponent />
-            </>
-          ) : (
-            <div className={"pages"}>
-              {routesList.map((route, index) => (
-                <Link className={"text"} to={route.routes} key={index}>
-                  {route.name}
-                </Link>
-              ))}
-            </div>
-          )}
-          {isMobile ? (
-            <></>
-          ) : (
-            <div className={"authComponent"}>
-              <Login />
-              <SignUp />
-            </div>
-          )}
+          <Grid container p={0} m={0} className={"grid"}>
+            <Grid container item xs={2} className={"logo"} columnGap={2}>
+              <Grid item xs={isMobile ? 4 : 2}>
+                <a href={"/"}>
+                  <img src={simpleLogo} alt={"Logo"} className={"photo"} />
+                </a>
+              </Grid>
+              <Grid item xs={isMobile ? 0 : 2}>
+                {isMobile ? (
+                  ""
+                ) : (
+                  <Link className={"text"} to={"/"}>
+                    Trotter
+                  </Link>
+                )}
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              item
+              xs={isMobile ? 10 : 8}
+              className={isMobile ? `drawer` : `pages`}
+            >
+              {isMobile ? (
+                <>
+                  <DrawerComponent />
+                </>
+              ) : (
+                routesList.map((route, index) => (
+                  <Grid item xs={isMobile ? 0 : 2} columnGap={2}>
+                    <Link className={"text"} to={route.routes} key={index}>
+                      {route.name}
+                    </Link>
+                  </Grid>
+                ))
+              )}
+            </Grid>
+            {!isMobile && (
+              <Grid item xs={2} columnGap={4} className={"authComponent"}>
+                <Login />
+                <SignUp />
+              </Grid>
+            )}
+          </Grid>
         </Toolbar>
       </AppBar>
     </header>

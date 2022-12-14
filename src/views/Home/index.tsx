@@ -1,7 +1,7 @@
 import "./index.scss";
 
 function Home() {
-  return <div></div>;
+  return <div>HomePage</div>;
 }
 
 export default Home;
