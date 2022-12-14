@@ -7,7 +7,7 @@ git pull origin production
 
 echo "Check for dependencies..."
 
-npm i
+npm ci
 
 echo "Deploying on the server..."
 
