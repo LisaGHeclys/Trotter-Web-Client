@@ -20,8 +20,8 @@ type BaseMapProps = {
 const BaseMapPropsDefault: BaseMapProps = {
   length: 3,
   price: 0,
-  lat: 2.333333,
-  lng: 48.866667,
+  lng: 2.333333,
+  lat: 48.866667,
   cityName: "Paris"
 };
 
@@ -120,11 +120,13 @@ const BaseMap = () => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
     setLength(diffDays);
   }, [range]);
+  let map: any;
 
   useEffect(() => {
     if (ref.current) return;
     ref.current = 1;
-    const map = new mapboxgl.Map({
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    map = new mapboxgl.Map({
       container: "mapContainer",
       style: "mapbox://styles/mapbox/streets-v11",
       center: [lat, lng],
@@ -273,8 +275,8 @@ const BaseMap = () => {
 
       const fetchCoordinates = async (cityName: string) => {
         const res = await getCoordinates(cityName);
-        setLng(res.lat);
-        setLat(res.lon);
+        setLng(res.lon);
+        setLat(res.lat);
         map.easeTo({
           center: [res.lon, res.lat],
           zoom: 12
@@ -283,7 +285,7 @@ const BaseMap = () => {
       };
       fetchCoordinates(cityName).catch((err) => console.log(err));
     });
-    map.on("click", "city-layer", (e) => {
+    map.on("click", "city-layer", (e: any) => {
       if (!e.features || e.features.length === 0) return;
       console.log(e.features[0]);
       map.easeTo({
@@ -314,6 +316,24 @@ const BaseMap = () => {
       }`
     );
   }, [cityName]);
+
+  useEffect(() => {
+    const fetchCoordinates = async () => {
+      const res = await fetch(process.env.REACT_APP_SERVER_URI + "/IA", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          lon: lng,
+          lat: lat,
+          days: length
+        })
+      });
+      console.log(res);
+    };
+    fetchCoordinates().catch((err) => console.log(err));
+  }, [length, lat, lng]);
 
   return (
     <div
