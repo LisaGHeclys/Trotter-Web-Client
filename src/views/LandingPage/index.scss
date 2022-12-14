@@ -39,16 +39,47 @@
   }
 }
 
-.backgroundCarousel {
-  background-color: rgba($color: $grey, $alpha: 0.5);
+.carouselItems {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 
+  color: $text;
+  background-color: $bg;
+  font-family: $font;
+}
+
+.backgroundCarousel {
   height: 60vh;
 
-  border-radius: 100px;
-  filter: blur(15px);
   justify-items: center;
+  align-items: center;
   justify-content: center;
-  display: flex;
+  position: relative;
+
+  div {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    background-color: transparent;
+
+    > :not(:first-child) {
+      display: none;
+    }
+
+    div {
+      position: relative;
+    }
+  }
+
+  .blur {
+    filter: blur(15px);
+    background-color: rgba($color: $grey, $alpha: 0.5);
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    position: relative;
+  }
 }
 
 .description {
