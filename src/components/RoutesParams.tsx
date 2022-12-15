@@ -8,10 +8,6 @@ const routesList = [
     routes: "/travel"
   },
   {
-    name: "Services",
-    routes: "/services"
-  },
-  {
     name: "About us",
     routes: "/about"
   }
