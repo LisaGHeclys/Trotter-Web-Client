@@ -48,7 +48,6 @@ function assembleQueryURL(
 
     for (const job of restJobs) {
       keepTrack.push(job);
-      console.log(job, job[1]);
       coordinates.push(job.geometry.coordinates);
       if (needToPickUp > lastAtRestaurant) {
         distributions.push(`${restaurantIndex},${coordinates.length - 1}`);
@@ -110,17 +109,23 @@ const BaseMap = () => {
     return routeGeoJSON;
   }
 
-  const testLocation = [BaseMapPropsDefault.lat, BaseMapPropsDefault.lng];
+  const testLocation = [BaseMapPropsDefault.lng, BaseMapPropsDefault.lat];
 
   useEffect(() => {
+    console.log(range);
     if (range.length === 0 || !range[0].endDate || !range[0].startDate) return;
     const diffTime = Math.abs(
       range[0]?.endDate?.getTime() - range[0]?.startDate?.getTime()
     );
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    console.log(diffDays);
     setLength(diffDays);
   }, [range]);
   let map: any;
+
+  const getDays = () => {
+    return length;
+  };
 
   useEffect(() => {
     if (ref.current) return;
@@ -179,6 +184,11 @@ const BaseMap = () => {
         data: nothing
       } as any);
 
+      map.addSource("dropoffs", {
+        type: "geojson",
+        data: dropoffs
+      } as any);
+
       map.addLayer(
         {
           id: "routeline-active",
@@ -198,10 +208,7 @@ const BaseMap = () => {
       map.addLayer({
         id: "dropoffs-symbol",
         type: "circle",
-        source: {
-          data: dropoffs,
-          type: "geojson"
-        } as any,
+        source: "dropoffs",
         paint: {
           "circle-radius": 6,
           "circle-color": "green",
@@ -209,34 +216,7 @@ const BaseMap = () => {
           "circle-stroke-width": 1
         }
       });
-      map.addLayer({
-        id: "warehouse",
-        type: "circle",
-        source: {
-          data: warehouse,
-          type: "geojson"
-        },
-        paint: {
-          "circle-radius": 6,
-          "circle-color": "white",
-          "circle-stroke-color": "#3887be",
-          "circle-stroke-width": 1
-        }
-      });
-      map.addLayer({
-        id: "warehouse-symbol",
-        type: "symbol",
-        source: {
-          data: warehouse,
-          type: "geojson"
-        },
-        layout: {
-          "icon-size": 1
-        },
-        paint: {
-          "text-color": "#3887be"
-        }
-      });
+
       (map.getSource("route") as any).setData(
         await newDropoff(testLocation, testLocation, dropoffs, 0, [])
       );
@@ -285,7 +265,7 @@ const BaseMap = () => {
       };
       fetchCoordinates(cityName).catch((err) => console.log(err));
     });
-    map.on("click", "city-layer", (e: any) => {
+    map.on("click", "city-layer", async (e: any) => {
       if (!e.features || e.features.length === 0) return;
       console.log(e.features[0]);
       map.easeTo({
@@ -299,6 +279,31 @@ const BaseMap = () => {
       setLng(e.features[0].properties?.longitude || 0);
       setLat(e.features[0].properties?.latitude || 0);
       setPrice(0);
+      const localLon = e.features[0].properties?.longitude;
+      const localLat = e.features[0].properties?.latitude;
+
+      const res = await fetch(process.env.REACT_APP_SERVER_URI + "/IA", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          lon: e.features[0].properties?.longitude,
+          lat: e.features[0].properties?.latitude,
+          days: getDays()
+        })
+      });
+      console.log(res);
+      const resJson = await res.json();
+      resJson.features = resJson.features.filter((feature: any, i: number) => {
+        (map.getSource("dropoffs") as any).setData(resJson);
+        return i <= 5;
+      });
+      const coords = [localLon, localLat];
+      (map.getSource("route") as any).setData(
+        await newDropoff(coords, coords, resJson, 0, [])
+      );
+      console.log(resJson);
     });
     map.on("mouseenter", "city-layer", () => {
       map.getCanvas().style.cursor = "pointer";
@@ -316,24 +321,6 @@ const BaseMap = () => {
       }`
     );
   }, [cityName]);
-
-  useEffect(() => {
-    const fetchCoordinates = async () => {
-      const res = await fetch(process.env.REACT_APP_SERVER_URI + "/IA", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          lon: lng,
-          lat: lat,
-          days: length
-        })
-      });
-      console.log(res);
-    };
-    fetchCoordinates().catch((err) => console.log(err));
-  }, [length, lat, lng]);
 
   return (
     <div
