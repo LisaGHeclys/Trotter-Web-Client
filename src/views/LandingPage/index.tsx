@@ -1,9 +1,75 @@
 import Navbar from "../../components/Navbar/Navbar";
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Grid,
+  useMediaQuery,
+  useTheme
+} from "@mui/material";
 
 import AliceCarousel from "react-alice-carousel";
 
+import Lyon from "../../assets/lyon.jpg";
+import Seoul from "../../assets/seoul.jpg";
+import Londre from "../../assets/londre.jpg";
+import Peru from "../../assets/peru.jpg";
+import Auckland from "../../assets/auckland.jpg";
+
+import { styled } from "@mui/material/styles";
+
 import "./index.scss";
+
+const responsive = {
+  0: { items: 1 },
+  568: { items: 2 },
+  1024: { items: 2 },
+  1440: { items: 3 }
+};
+
+const CardContentNoPadding = styled(CardContent)(`
+    padding: 0;
+    &:last-child {
+      padding-bottom: 0;
+    }
+`);
+
+const items: any = [
+  <div className="carouselItems" data-value="1">
+    <Card style={{ borderRadius: "50px" }}>
+      <CardContentNoPadding>
+        <img src={Lyon} width="350" height="100%" alt={"lyon"} />
+      </CardContentNoPadding>
+    </Card>
+  </div>,
+  <div className="carouselItems" data-value="2">
+    <Card style={{ borderRadius: "50px" }}>
+      <CardContentNoPadding>
+        <img src={Seoul} width="350" height="100%" alt={"lyon"} />
+      </CardContentNoPadding>
+    </Card>
+  </div>,
+  <div className="carouselItems" data-value="3">
+    <Card style={{ borderRadius: "50px" }}>
+      <CardContentNoPadding>
+        <img src={Londre} width="350" height="100%" alt={"lyon"} />
+      </CardContentNoPadding>
+    </Card>
+  </div>,
+  <div className="carouselItems" data-value="4">
+    <Card style={{ borderRadius: "50px" }}>
+      <CardContentNoPadding>
+        <img src={Peru} width="350" height="100%" alt={"lyon"} />
+      </CardContentNoPadding>
+    </Card>
+  </div>,
+  <div className="carouselItems" data-value="4">
+    <Card style={{ borderRadius: "50px" }}>
+      <CardContentNoPadding>
+        <img src={Auckland} width="350" height="100%" alt={"lyon"} />
+      </CardContentNoPadding>
+    </Card>
+  </div>
+];
 
 function LandingPage() {
   const theme = useTheme();
@@ -27,7 +93,14 @@ function LandingPage() {
           Travelling alone never has been so easy
         </Grid>
         <Grid p={0} m={0} item className={"backgroundCarousel"} xs={12}>
-          test
+          <div className="blur"></div>
+          <AliceCarousel
+            items={items}
+            responsive={responsive}
+            autoPlay
+            animationDuration={8000}
+            infinite
+          />
         </Grid>
         <Grid p={0} m={0} item className={"description"} xs={isMobile ? 8 : 6}>
           Plan your solo trip with us and discover the activities we can offer
