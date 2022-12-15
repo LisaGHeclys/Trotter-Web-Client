@@ -12,17 +12,26 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import Navbar from "../../components/Navbar/Navbar";
+import Louvre from "../../assets/PalaisLouvre.jpg";
+import London from "../../assets/London.jpg";
 
 import "./index.scss";
 import { useNavigate } from "react-router-dom";
-import { TextFieldsOutlined } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { AnyAction, Dispatch } from "redux";
+import { styled } from "@mui/material/styles";
 
 function TravelPage() {
   const theme = useTheme();
 
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const CardContentNoPadding = styled(CardContent)(`
+    padding: 0;
+    &:last-child {
+      padding-bottom: 0;
+    }
+`);
 
   const [city, setCity] = useState("");
   const [period, setPeriod] = useState("date");
@@ -78,19 +87,23 @@ function TravelPage() {
               />
             </Grid>
             <Grid>
-            <button
-            className="loginButton"
-            onClick={() => {
-              console.log(city);
-              dispatch({ type: "SEARCH", payload: { place: city } });
-              navigate("/map");
-            }}
-          >Submit</button>
+              <button
+                className="searchButton"
+                onClick={() => {
+                  console.log(city);
+                  dispatch({ type: "SEARCH", payload: { place: city } });
+                  navigate("/map");
+                }}
+              >
+                Submit
+              </button>
             </Grid>
           </Grid>
           <Grid item p={0} m={0} xs={isMobile ? 12 : 6}>
-            <Card style={{ borderRadius: "20px" }}>
-              <CardContent className={"photoCard"}>photo</CardContent>
+            <Card style={{ borderRadius: "20px", padding: "0" }}>
+              <CardContentNoPadding className={"photoCard"}>
+                <img className="photo" src={Louvre} alt="louvre" />
+              </CardContentNoPadding>
             </Card>
           </Grid>
         </Grid>
@@ -111,13 +124,15 @@ function TravelPage() {
                 style={{ borderRadius: "10px" }}
                 onClick={() => navigate("/map")}
               >
-                <CardContent
+                <CardContentNoPadding
                   style={{
                     backgroundColor: "#95b0b4",
                     width: isMobile ? "75px" : "150px",
                     height: isMobile ? "75px" : "150px"
                   }}
-                ></CardContent>
+                >
+                  <img className="photo" src={London} alt="London" />
+                </CardContentNoPadding>
               </Card>
               <IconButton
                 onClick={() => {
