@@ -21,7 +21,7 @@ const LoginPage = () => {
       url: `${process.env.REACT_APP_SERVER_URI}/auth/login`,
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": process.env.REACT_APP_SERVER_URI
       },
       data: {
         Email: email,
