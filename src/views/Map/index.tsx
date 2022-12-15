@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import mapboxgl from "mapbox-gl";
+import mapboxgl, { Marker } from "mapbox-gl";
 import { DateRange } from "react-date-range";
 import "./index.scss";
 import "react-date-range/dist/styles.css";
@@ -81,6 +81,7 @@ const BaseMap = () => {
       key: "selection"
     }
   ]);
+  const [markers, setMarkers] = useState<Marker[]>([]);
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN as string;
 
   async function newDropoff(
@@ -232,7 +233,7 @@ const BaseMap = () => {
             "line-cap": "round"
           },
           paint: {
-            "line-color": "yellow",
+            "line-color": "mediumorchid",
             "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 22, 12]
           }
         },
@@ -274,8 +275,8 @@ const BaseMap = () => {
         source: "dropoffs2",
         paint: {
           "circle-radius": 6,
-          "circle-color": "yellow",
-          "circle-stroke-color": "green",
+          "circle-color": "green",
+          "circle-stroke-color": "mediumorchid",
           "circle-stroke-width": 1
         }
       });
@@ -346,7 +347,7 @@ const BaseMap = () => {
             "text-keep-upright": false
           },
           paint: {
-            "text-color": "yellow",
+            "text-color": "mediumorchid",
             "text-halo-color": "hsl(55, 11%, 96%)",
             "text-halo-width": 3
           }
@@ -403,6 +404,17 @@ const BaseMap = () => {
           })
         });
         const resJson = await ress.json();
+        resJson.features.forEach((element: any) => {
+          const marker = new mapboxgl.Marker()
+            .setLngLat(element.geometry.coordinates)
+            .setPopup(
+              new mapboxgl.Popup({ offset: 25 }).setText(
+                element.properties.name
+              )
+            )
+            .addTo(map);
+          setMarkers((old) => [...old, marker]);
+        });
         const a = resJson.features.filter((feature: any, i: number) => {
           return i <= 5;
         });
@@ -460,6 +472,16 @@ const BaseMap = () => {
         })
       });
       const resJson = await res.json();
+      setMarkers([]);
+      resJson.features.forEach((element: any) => {
+        const marker = new mapboxgl.Marker()
+          .setLngLat(element.geometry.coordinates)
+          .setPopup(
+            new mapboxgl.Popup({ offset: 25 }).setText(element.properties.name)
+          )
+          .addTo(map);
+        setMarkers((old) => [...old, marker]);
+      });
       const a = resJson.features.filter((feature: any, i: number) => {
         return i <= 5;
       });
@@ -502,6 +524,7 @@ const BaseMap = () => {
         Math.floor(Math.random() * 100) + 200
       }`
     );
+    markers.forEach((marker) => marker.remove());
   }, [cityName]);
 
   return (
