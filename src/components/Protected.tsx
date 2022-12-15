@@ -5,7 +5,6 @@ import { AnyAction, Dispatch } from "redux";
 
 const Protected = ({ children }: { children: JSX.Element }) => {
   let isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
-  console.log(isLoggedIn);
   const dispatch = useDispatch<Dispatch<AnyAction>>();
 
   useEffect(() => {

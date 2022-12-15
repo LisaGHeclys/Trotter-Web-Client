@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import mapboxgl from "mapbox-gl";
+import mapboxgl, { Marker } from "mapbox-gl";
 import { DateRange } from "react-date-range";
 import "./index.scss";
 import "react-date-range/dist/styles.css";
@@ -81,6 +81,7 @@ const BaseMap = () => {
       key: "selection"
     }
   ]);
+  const [markers, setMarkers] = useState<Marker[]>([]);
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN as string;
 
   async function newDropoff(
@@ -232,7 +233,7 @@ const BaseMap = () => {
             "line-cap": "round"
           },
           paint: {
-            "line-color": "yellow",
+            "line-color": "mediumorchid",
             "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 22, 12]
           }
         },
@@ -274,8 +275,8 @@ const BaseMap = () => {
         source: "dropoffs2",
         paint: {
           "circle-radius": 6,
-          "circle-color": "yellow",
-          "circle-stroke-color": "green",
+          "circle-color": "green",
+          "circle-stroke-color": "mediumorchid",
           "circle-stroke-width": 1
         }
       });
@@ -292,9 +293,6 @@ const BaseMap = () => {
         }
       });
 
-      (map.getSource("route") as any).setData(
-        await newDropoff(testLocation, testLocation, dropoffs, 0, [])
-      );
       map.addControl(
         new mapboxgl.ScaleControl({ maxWidth: 80, unit: "metric" }),
         "bottom-right"
@@ -349,7 +347,7 @@ const BaseMap = () => {
             "text-keep-upright": false
           },
           paint: {
-            "text-color": "yellow",
+            "text-color": "mediumorchid",
             "text-halo-color": "hsl(55, 11%, 96%)",
             "text-halo-width": 3
           }
@@ -394,6 +392,55 @@ const BaseMap = () => {
           center: [res.lon, res.lat],
           zoom: 12
         });
+        const ress = await fetch(process.env.REACT_APP_SERVER_URI + "/IA", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            lon: res.lon,
+            lat: res.lat,
+            days: getDays()
+          })
+        });
+        const resJson = await ress.json();
+        resJson.features.forEach((element: any) => {
+          const marker = new mapboxgl.Marker()
+            .setLngLat(element.geometry.coordinates)
+            .setPopup(
+              new mapboxgl.Popup({ offset: 25 }).setText(
+                element.properties.name
+              )
+            )
+            .addTo(map);
+          setMarkers((old) => [...old, marker]);
+        });
+        const a = resJson.features.filter((feature: any, i: number) => {
+          return i <= 5;
+        });
+        const b = resJson.features.filter((feature: any, i: number) => {
+          return i > 5 && i <= 10;
+        });
+        const c = resJson.features.filter((feature: any, i: number) => {
+          return i > 10;
+        });
+
+        const coords = [res.lon, res.lat];
+        resJson.features = a;
+        (map.getSource("dropoffs") as any).setData(resJson);
+        (map.getSource("route") as any).setData(
+          await newDropoff(coords, coords, resJson, 0, [])
+        );
+        resJson.features = b;
+        (map.getSource("dropoffs2") as any).setData(resJson);
+        (map.getSource("route2") as any).setData(
+          await newDropoff(coords, coords, resJson, 0, [])
+        );
+        resJson.features = c;
+        (map.getSource("dropoffs3") as any).setData(resJson);
+        (map.getSource("route3") as any).setData(
+          await newDropoff(coords, coords, resJson, 0, [])
+        );
       };
       fetchCoordinates(cityName).catch((err) => console.log(err));
     });
@@ -425,6 +472,16 @@ const BaseMap = () => {
         })
       });
       const resJson = await res.json();
+      setMarkers([]);
+      resJson.features.forEach((element: any) => {
+        const marker = new mapboxgl.Marker()
+          .setLngLat(element.geometry.coordinates)
+          .setPopup(
+            new mapboxgl.Popup({ offset: 25 }).setText(element.properties.name)
+          )
+          .addTo(map);
+        setMarkers((old) => [...old, marker]);
+      });
       const a = resJson.features.filter((feature: any, i: number) => {
         return i <= 5;
       });
@@ -441,20 +498,16 @@ const BaseMap = () => {
       (map.getSource("route") as any).setData(
         await newDropoff(coords, coords, resJson, 0, [])
       );
-      console.log(a);
       resJson.features = b;
       (map.getSource("dropoffs2") as any).setData(resJson);
       (map.getSource("route2") as any).setData(
         await newDropoff(coords, coords, resJson, 0, [])
       );
-      console.log(b);
       resJson.features = c;
       (map.getSource("dropoffs3") as any).setData(resJson);
-      console.log(resJson);
       (map.getSource("route3") as any).setData(
         await newDropoff(coords, coords, resJson, 0, [])
       );
-      console.log(c);
     });
     map.on("mouseenter", "city-layer", () => {
       map.getCanvas().style.cursor = "pointer";
@@ -471,6 +524,7 @@ const BaseMap = () => {
         Math.floor(Math.random() * 100) + 200
       }`
     );
+    markers.forEach((marker) => marker.remove());
   }, [cityName]);
 
   return (

@@ -90,7 +90,6 @@ function TravelPage() {
               <button
                 className="searchButton"
                 onClick={() => {
-                  console.log(city);
                   dispatch({ type: "SEARCH", payload: { place: city } });
                   navigate("/map");
                 }}
