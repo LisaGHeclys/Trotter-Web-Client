@@ -292,9 +292,6 @@ const BaseMap = () => {
         }
       });
 
-      (map.getSource("route") as any).setData(
-        await newDropoff(testLocation, testLocation, dropoffs, 0, [])
-      );
       map.addControl(
         new mapboxgl.ScaleControl({ maxWidth: 80, unit: "metric" }),
         "bottom-right"
@@ -394,6 +391,44 @@ const BaseMap = () => {
           center: [res.lon, res.lat],
           zoom: 12
         });
+        const ress = await fetch(process.env.REACT_APP_SERVER_URI + "/IA", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            lon: res.lon,
+            lat: res.lat,
+            days: getDays()
+          })
+        });
+        const resJson = await ress.json();
+        const a = resJson.features.filter((feature: any, i: number) => {
+          return i <= 5;
+        });
+        const b = resJson.features.filter((feature: any, i: number) => {
+          return i > 5 && i <= 10;
+        });
+        const c = resJson.features.filter((feature: any, i: number) => {
+          return i > 10;
+        });
+
+        const coords = [res.lon, res.lat];
+        resJson.features = a;
+        (map.getSource("dropoffs") as any).setData(resJson);
+        (map.getSource("route") as any).setData(
+          await newDropoff(coords, coords, resJson, 0, [])
+        );
+        resJson.features = b;
+        (map.getSource("dropoffs2") as any).setData(resJson);
+        (map.getSource("route2") as any).setData(
+          await newDropoff(coords, coords, resJson, 0, [])
+        );
+        resJson.features = c;
+        (map.getSource("dropoffs3") as any).setData(resJson);
+        (map.getSource("route3") as any).setData(
+          await newDropoff(coords, coords, resJson, 0, [])
+        );
       };
       fetchCoordinates(cityName).catch((err) => console.log(err));
     });
@@ -441,20 +476,16 @@ const BaseMap = () => {
       (map.getSource("route") as any).setData(
         await newDropoff(coords, coords, resJson, 0, [])
       );
-      console.log(a);
       resJson.features = b;
       (map.getSource("dropoffs2") as any).setData(resJson);
       (map.getSource("route2") as any).setData(
         await newDropoff(coords, coords, resJson, 0, [])
       );
-      console.log(b);
       resJson.features = c;
       (map.getSource("dropoffs3") as any).setData(resJson);
-      console.log(resJson);
       (map.getSource("route3") as any).setData(
         await newDropoff(coords, coords, resJson, 0, [])
       );
-      console.log(c);
     });
     map.on("mouseenter", "city-layer", () => {
       map.getCanvas().style.cursor = "pointer";

@@ -28,6 +28,5 @@ export const getCoordinates = async (data: string) => {
     }
   );
   const json = await response.json();
-  console.log(json);
   return json;
 };
