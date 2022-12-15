@@ -58,8 +58,8 @@ function Navbar() {
                 </>
               ) : (
                 routesList.map((route, index) => (
-                  <Grid item xs={isMobile ? 0 : 2} columnGap={2}>
-                    <Link className={"text"} to={route.routes} key={index}>
+                  <Grid item xs={isMobile ? 0 : 2} columnGap={2} key={index}>
+                    <Link className={"text"} to={route.routes}>
                       {route.name}
                     </Link>
                   </Grid>

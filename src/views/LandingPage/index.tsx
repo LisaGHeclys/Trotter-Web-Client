@@ -1,48 +1,73 @@
 import Navbar from "../../components/Navbar/Navbar";
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Grid,
+  useMediaQuery,
+  useTheme
+} from "@mui/material";
 
 import AliceCarousel from "react-alice-carousel";
+
+import Lyon from "../../assets/lyon.jpg";
+import Seoul from "../../assets/seoul.jpg";
+import Londre from "../../assets/londre.jpg";
+import Peru from "../../assets/peru.jpg";
+import Auckland from "../../assets/auckland.jpg";
+
+import { styled } from "@mui/material/styles";
 
 import "./index.scss";
 
 const responsive = {
   0: { items: 1 },
   568: { items: 2 },
-  1024: { items: 3 }
+  1024: { items: 2 },
+  1440: { items: 3 }
 };
+
+const CardContentNoPadding = styled(CardContent)(`
+    padding: 0;
+    &:last-child {
+      padding-bottom: 0;
+    }
+`);
 
 const items: any = [
   <div className="carouselItems" data-value="1">
-    <h2>1</h2>
-    <p>
-      Name
-      <br />
-      Poste
-    </p>
+    <Card style={{ borderRadius: "50px" }}>
+      <CardContentNoPadding>
+        <img src={Lyon} width="350" height="100%" alt={"lyon"} />
+      </CardContentNoPadding>
+    </Card>
   </div>,
   <div className="carouselItems" data-value="2">
-    <h2>2</h2>
-    <p>
-      Name
-      <br />
-      Poste
-    </p>
+    <Card style={{ borderRadius: "50px" }}>
+      <CardContentNoPadding>
+        <img src={Seoul} width="350" height="100%" alt={"lyon"} />
+      </CardContentNoPadding>
+    </Card>
   </div>,
   <div className="carouselItems" data-value="3">
-    <h2>3</h2>
-    <p>
-      Name
-      <br />
-      Poste
-    </p>
+    <Card style={{ borderRadius: "50px" }}>
+      <CardContentNoPadding>
+        <img src={Londre} width="350" height="100%" alt={"lyon"} />
+      </CardContentNoPadding>
+    </Card>
   </div>,
   <div className="carouselItems" data-value="4">
-    <h2>4</h2>
-    <p>
-      Name
-      <br />
-      Poste
-    </p>
+    <Card style={{ borderRadius: "50px" }}>
+      <CardContentNoPadding>
+        <img src={Peru} width="350" height="100%" alt={"lyon"} />
+      </CardContentNoPadding>
+    </Card>
+  </div>,
+  <div className="carouselItems" data-value="4">
+    <Card style={{ borderRadius: "50px" }}>
+      <CardContentNoPadding>
+        <img src={Auckland} width="350" height="100%" alt={"lyon"} />
+      </CardContentNoPadding>
+    </Card>
   </div>
 ];
 
@@ -73,7 +98,7 @@ function LandingPage() {
             items={items}
             responsive={responsive}
             autoPlay
-            animationDuration={5000}
+            animationDuration={8000}
             infinite
           />
         </Grid>

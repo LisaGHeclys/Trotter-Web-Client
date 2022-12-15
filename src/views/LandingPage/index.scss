@@ -40,13 +40,18 @@
 }
 
 .carouselItems {
+  display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  align-content: center;
 
   color: $text;
   background-color: $bg;
   font-family: $font;
+
+  height: 20vh;
+  border-radius: 50px;
 }
 
 .backgroundCarousel {
