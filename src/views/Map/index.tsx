@@ -5,7 +5,7 @@ import "./index.scss";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { Range } from "react-date-range/index";
-import { feature, featureCollection, point } from "@turf/helpers";
+import { feature, featureCollection } from "@turf/helpers";
 import { useSelector } from "react-redux";
 import { getCoordinates } from "./functions";
 
@@ -43,8 +43,6 @@ function assembleQueryURL(
     const restaurantIndex = coordinates.length;
     coordinates.push(warehouseLocation);
     keepTrack.push(pointHopper.warehouse);
-
-    console.log(coordinates);
 
     for (const job of restJobs) {
       keepTrack.push(job);
@@ -112,13 +110,11 @@ const BaseMap = () => {
   const testLocation = [BaseMapPropsDefault.lng, BaseMapPropsDefault.lat];
 
   useEffect(() => {
-    console.log(range);
     if (range.length === 0 || !range[0].endDate || !range[0].startDate) return;
     const diffTime = Math.abs(
       range[0]?.endDate?.getTime() - range[0]?.startDate?.getTime()
     );
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-    console.log(diffDays);
     setLength(diffDays);
   }, [range]);
   let map: any;
@@ -172,19 +168,39 @@ const BaseMap = () => {
         }
       });
 
-      const warehouse = featureCollection([point(testLocation)]);
-      var locationA = point([2.3376327, 48.8661385], { name: "Location A" });
-      var locationB = point([2.3294382, 48.8674736], { name: "Location B" });
-      var locationC = point([2.3388429, 48.8663864], { name: "Location C" });
+      // const warehouse = featureCollection([point(testLocation)]);
+      // var locationA = point([2.3376327, 48.8661385], { name: "Location A" });
+      // var locationB = point([2.3294382, 48.8674736], { name: "Location B" });
+      // var locationC = point([2.3388429, 48.8663864], { name: "Location C" });
 
-      var dropoffs = featureCollection([locationA, locationB, locationC]);
+      var dropoffs = featureCollection([]);
       const nothing = featureCollection([]);
       map.addSource("route", {
         type: "geojson",
         data: nothing
       } as any);
 
+      map.addSource("route2", {
+        type: "geojson",
+        data: nothing
+      } as any);
+
+      map.addSource("route3", {
+        type: "geojson",
+        data: nothing
+      } as any);
+
       map.addSource("dropoffs", {
+        type: "geojson",
+        data: dropoffs
+      } as any);
+
+      map.addSource("dropoffs2", {
+        type: "geojson",
+        data: dropoffs
+      } as any);
+
+      map.addSource("dropoffs3", {
         type: "geojson",
         data: dropoffs
       } as any);
@@ -199,20 +215,79 @@ const BaseMap = () => {
             "line-cap": "round"
           },
           paint: {
-            "line-color": "#3887be",
+            "line-color": "blue",
             "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 22, 12]
           }
         },
         "waterway-label"
       );
+
+      map.addLayer(
+        {
+          id: "routeline-active2",
+          type: "line",
+          source: "route2",
+          layout: {
+            "line-join": "round",
+            "line-cap": "round"
+          },
+          paint: {
+            "line-color": "yellow",
+            "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 22, 12]
+          }
+        },
+        "waterway-label"
+      );
+
+      map.addLayer(
+        {
+          id: "routeline-active3",
+          type: "line",
+          source: "route3",
+          layout: {
+            "line-join": "round",
+            "line-cap": "round"
+          },
+          paint: {
+            "line-color": "red",
+            "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 22, 12]
+          }
+        },
+        "waterway-label"
+      );
+
       map.addLayer({
         id: "dropoffs-symbol",
         type: "circle",
         source: "dropoffs",
         paint: {
           "circle-radius": 6,
-          "circle-color": "green",
-          "circle-stroke-color": "yellow",
+          "circle-color": "blue",
+          "circle-stroke-color": "lightblue",
+          "circle-stroke-width": 1
+        }
+      });
+
+      map.addLayer({
+        id: "dropoffs-symbol2",
+        type: "circle",
+        source: "dropoffs2",
+        paint: {
+          "circle-radius": 6,
+          "circle-color": "yellow",
+          "circle-stroke-color": "green",
+          "circle-stroke-width": 1
+        }
+      });
+
+      map.addLayer({
+        id: "dropoffs-symbol3",
+        type: "circle",
+        source: "dropoffs3",
+        paint: {
+          "circle-radius": 6,
+          "circle-color": "red",
+          "circle-stroke-color": "pink",
           "circle-stroke-width": 1
         }
       });
@@ -253,6 +328,64 @@ const BaseMap = () => {
         "waterway-label"
       );
 
+      map.addLayer(
+        {
+          id: "routearrows2",
+          type: "symbol",
+          source: "route2",
+          layout: {
+            "symbol-placement": "line",
+            "text-field": "▶",
+            "text-size": ["interpolate", ["linear"], ["zoom"], 12, 24, 22, 60],
+            "symbol-spacing": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              12,
+              30,
+              22,
+              160
+            ],
+            "text-keep-upright": false
+          },
+          paint: {
+            "text-color": "yellow",
+            "text-halo-color": "hsl(55, 11%, 96%)",
+            "text-halo-width": 3
+          }
+        },
+        "waterway-label"
+      );
+
+      map.addLayer(
+        {
+          id: "routearrows3",
+          type: "symbol",
+          source: "route3",
+          layout: {
+            "symbol-placement": "line",
+            "text-field": "▶",
+            "text-size": ["interpolate", ["linear"], ["zoom"], 12, 24, 22, 60],
+            "symbol-spacing": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              12,
+              30,
+              22,
+              160
+            ],
+            "text-keep-upright": false
+          },
+          paint: {
+            "text-color": "red",
+            "text-halo-color": "hsl(55, 11%, 96%)",
+            "text-halo-width": 3
+          }
+        },
+        "waterway-label"
+      );
+
       const fetchCoordinates = async (cityName: string) => {
         const res = await getCoordinates(cityName);
         setLng(res.lon);
@@ -261,13 +394,11 @@ const BaseMap = () => {
           center: [res.lon, res.lat],
           zoom: 12
         });
-        console.log("siu");
       };
       fetchCoordinates(cityName).catch((err) => console.log(err));
     });
     map.on("click", "city-layer", async (e: any) => {
       if (!e.features || e.features.length === 0) return;
-      console.log(e.features[0]);
       map.easeTo({
         center: [
           e.features[0].properties?.longitude,
@@ -293,17 +424,37 @@ const BaseMap = () => {
           days: getDays()
         })
       });
-      console.log(res);
       const resJson = await res.json();
-      resJson.features = resJson.features.filter((feature: any, i: number) => {
-        (map.getSource("dropoffs") as any).setData(resJson);
+      const a = resJson.features.filter((feature: any, i: number) => {
         return i <= 5;
       });
+      const b = resJson.features.filter((feature: any, i: number) => {
+        return i > 5 && i <= 10;
+      });
+      const c = resJson.features.filter((feature: any, i: number) => {
+        return i > 10;
+      });
+
       const coords = [localLon, localLat];
+      resJson.features = a;
+      (map.getSource("dropoffs") as any).setData(resJson);
       (map.getSource("route") as any).setData(
         await newDropoff(coords, coords, resJson, 0, [])
       );
+      console.log(a);
+      resJson.features = b;
+      (map.getSource("dropoffs2") as any).setData(resJson);
+      (map.getSource("route2") as any).setData(
+        await newDropoff(coords, coords, resJson, 0, [])
+      );
+      console.log(b);
+      resJson.features = c;
+      (map.getSource("dropoffs3") as any).setData(resJson);
       console.log(resJson);
+      (map.getSource("route3") as any).setData(
+        await newDropoff(coords, coords, resJson, 0, [])
+      );
+      console.log(c);
     });
     map.on("mouseenter", "city-layer", () => {
       map.getCanvas().style.cursor = "pointer";
