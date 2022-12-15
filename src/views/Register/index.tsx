@@ -21,7 +21,8 @@ const RegisterPage = () => {
       url: `${process.env.REACT_APP_SERVER_URI}/auth/register`,
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "X-Requested-With"
       },
       data: {
         Email: email,
