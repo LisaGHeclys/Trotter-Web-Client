@@ -154,7 +154,7 @@ const BaseMap = () => {
     map.on("load", async () => {
       map.addSource("city", {
         type: "geojson",
-        data: "http://localhost:3000/data.geojson"
+        data: `${process.env.REACT_APP_SERVER_URI}/data.geojson`
       });
 
       map.addLayer({
