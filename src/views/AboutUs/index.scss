@@ -9,6 +9,9 @@
   background-color: $bg;
   font-family: $font;
   user-select: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   p {
     font-size: 18px;
