@@ -18,7 +18,7 @@ const RegisterPage = () => {
   async function register() {
     const response = await axios({
       method: "post",
-      url: `${process.env.REACT_APP_SERVER_URI}/auth/register`,
+      url: `${process.env.REACT_APP_URI}/auth/register`,
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": process.env.REACT_APP_SERVIER_URI,
