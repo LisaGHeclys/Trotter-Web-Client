@@ -29,9 +29,9 @@ function App() {
           <Route
             path="/map"
             element={
-              <Protected>
-                <BaseMap />
-              </Protected>
+              // <Protected>
+              <BaseMap />
+              // </Protected>
             }
           />
           {/* <Route path="*" element={<NotFound />} /> */}
