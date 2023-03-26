@@ -38,3 +38,18 @@
   height: 24px;
   margin: 0px;
 }
+
+.markerPopup {
+  min-height: 300px;
+  min-width: 200px;
+  font-weight: bold;
+}
+
+.markerPopup > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  border-radius: 4px;
+}
