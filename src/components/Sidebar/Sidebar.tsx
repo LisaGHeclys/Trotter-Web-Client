@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -12,7 +12,14 @@ import simpleLogo from "../../assets/simpleLogo.png";
 
 import "../../scss/sidebar.scss";
 
-const sidebarNavItems = [
+type SidebarNavItemsType = {
+  display: string;
+  icon: JSX.Element;
+  to: string;
+  section: string;
+}[];
+
+const sidebarNavItems: SidebarNavItemsType = [
   {
     display: "Dashboard",
     icon: <HomeOutlinedIcon />,
@@ -45,8 +52,8 @@ const sidebarNavItems = [
   }
 ];
 
-function Sidebar() {
-  const [activeIndex, setActiveIndex] = useState(0);
+const Sidebar: FC = () => {
+  const [, /*activeIndex*/ setActiveIndex] = useState<number>(0);
   const location = useLocation();
 
   useEffect(() => {
@@ -81,6 +88,6 @@ function Sidebar() {
       </div>
     </div>
   );
-}
+};
 
 export default Sidebar;

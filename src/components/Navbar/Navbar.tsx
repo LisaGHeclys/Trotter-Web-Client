@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -19,8 +18,9 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 
 import "../../scss/navbar.scss";
+import { FC } from "react";
 
-function Navbar() {
+const Navbar: FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -57,7 +57,7 @@ function Navbar() {
                   <DrawerComponent />
                 </>
               ) : (
-                routesList.map((route, index) => (
+                routesList.map((route, index: number) => (
                   <Grid item xs={isMobile ? 0 : 2} columnGap={2} key={index}>
                     <Link className={"text"} to={route.routes}>
                       {route.name}
@@ -77,6 +77,6 @@ function Navbar() {
       </AppBar>
     </header>
   );
-}
+};
 
 export default Navbar;

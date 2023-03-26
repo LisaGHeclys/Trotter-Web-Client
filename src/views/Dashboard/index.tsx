@@ -1,11 +1,11 @@
 import "./index.scss";
-import React, { useEffect, useState } from "react";
+import { FC, useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 
 import { DateRange } from "react-date-range";
 import { Range } from "react-date-range/index";
 
-function Dashboard() {
+const Dashboard: FC = () => {
   const [range, setRange] = useState<Range[]>([
     {
       startDate: new Date(),
@@ -53,6 +53,6 @@ function Dashboard() {
       </div>
     </div>
   );
-}
+};
 
 export default Dashboard;

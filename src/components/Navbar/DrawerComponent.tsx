@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -13,8 +13,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 import routesList from "../RoutesParams";
 
-function DrawerComponent() {
-  const [openDrawer, setOpenDrawer] = useState(false);
+const DrawerComponent: FC = () => {
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
 
   return (
     <div>
@@ -25,7 +25,7 @@ function DrawerComponent() {
         anchor={"right"}
       >
         <List style={{ marginTop: "10px" }}>
-          {routesList.map((route, index) => {
+          {routesList.map((route, index: number) => {
             return (
               <ListItem key={index} onClick={() => setOpenDrawer(false)}>
                 <ListItemText>
@@ -43,6 +43,6 @@ function DrawerComponent() {
       </IconButton>
     </div>
   );
-}
+};
 
 export default DrawerComponent;

@@ -1,5 +1,4 @@
-import { Input } from "@mui/material";
-import { useState } from "react";
+import { FC, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./index.scss";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -7,11 +6,10 @@ import { useDispatch } from "react-redux";
 import { AnyAction, Dispatch } from "redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Alert } from "@mui/material";
 
-const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const LoginPage: FC = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const navigate = useNavigate();
 
@@ -28,8 +26,7 @@ const LoginPage = () => {
         Password: password
       }
     });
-    if (response.data.status != 200 || !response.data.accessToken) {
-      //Alert user ("Wrong email or Password, please try again")
+    if (response.data.status !== 200 || !response.data.accessToken) {
     } else {
       localStorage.setItem("jwt", response.data.accessToken);
       dispatch({ type: "LOGIN", payload: { isLoggedIn: true } });

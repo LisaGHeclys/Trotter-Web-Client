@@ -1,5 +1,5 @@
 import { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
-import { Fragment } from "react";
+import { FC, Fragment } from "react";
 import { Layer, Source } from "react-map-gl";
 
 type DropoffsProps = {
@@ -7,7 +7,7 @@ type DropoffsProps = {
   colors: { primary: string; secondary: string }[];
 };
 
-const Dropoffs = ({ dropoffs, colors }: DropoffsProps) => {
+const Dropoffs: FC<DropoffsProps> = ({ dropoffs, colors }) => {
   return (
     <>
       {Object.keys(dropoffs).map((key, i) => {
