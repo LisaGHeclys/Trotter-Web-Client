@@ -30,7 +30,7 @@ type BaseMapProps = {
   cityName: string;
 };
 
-type GeoJsonRes = {
+export type GeoJsonRes = {
   features: {
     geometry: {
       coordinates: number[];
@@ -143,14 +143,14 @@ const BaseMap: FC = () => {
           ]);
         });
 
-        const a = resJson.features.filter((_feature: unknown, i: number) => {
+        const a = resJson.features.filter((_feature, i: number) => {
           //! TO REFORMAT
           return i <= 5;
         });
-        const b = resJson.features.filter((_feature: unknown, i: number) => {
+        const b = resJson.features.filter((_feature, i: number) => {
           return i > 5 && i <= 10;
         });
-        const c = resJson.features.filter((_feature: unknown, i: number) => {
+        const c = resJson.features.filter((_feature, i: number) => {
           return i > 10;
         });
         const coords = [lng, lat];
@@ -162,7 +162,7 @@ const BaseMap: FC = () => {
             GeoJsonProperties
           >
         }));
-        let route = await newDropoffs(coords, coords, resJson, 0, []);
+        let route = await newDropoffs(coords as number[], resJson);
         setRoutes((old) => ({ ...old, route: route }));
         resJson.features = b;
         setDropoffs((old) => ({
@@ -172,7 +172,7 @@ const BaseMap: FC = () => {
             GeoJsonProperties
           >
         }));
-        route = await newDropoffs(coords, coords, resJson, 0, []);
+        route = await newDropoffs(coords as number[], resJson);
         setRoutes((old) => ({ ...old, route2: route }));
         resJson.features = c;
         setDropoffs((old) => ({
@@ -182,7 +182,7 @@ const BaseMap: FC = () => {
             GeoJsonProperties
           >
         }));
-        route = await newDropoffs(coords, coords, resJson, 0, []);
+        route = await newDropoffs(coords as number[], resJson);
         setRoutes((old) => ({ ...old, route3: route }));
       } catch (e) {
         console.log(e);

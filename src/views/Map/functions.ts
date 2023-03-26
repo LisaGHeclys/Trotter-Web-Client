@@ -1,4 +1,5 @@
 import { feature, featureCollection } from "@turf/helpers";
+import { GeoJsonRes } from ".";
 import store from "../../store";
 
 export const getItinerary = async (data: { lat: number; lng: number }) => {
@@ -33,56 +34,32 @@ export const getCoordinates = async (data: string) => {
 };
 
 function assembleQueryURL(
-  truckLocation: any,
-  warehouseLocation: any,
-  pointHopper: any,
-  lastAtRestaurant: any,
-  keepTrack: any
+  hotelCoordinates: number[],
+  poiCoordinates: GeoJsonRes
 ) {
-  const coordinates = [truckLocation];
-  const distributions = [];
-  keepTrack = [truckLocation];
+  const distribs = poiCoordinates.features.map((feature, index) => {
+    return `${feature.geometry.coordinates.join(",")}`;
+  });
+  distribs.unshift(hotelCoordinates.join(","));
 
-  const restJobs = pointHopper.features;
-
-  if (restJobs.length > 0) {
-    const needToPickUp = true;
-    const restaurantIndex = coordinates.length;
-    coordinates.push(warehouseLocation);
-    keepTrack.push(pointHopper.warehouse);
-
-    for (const job of restJobs) {
-      keepTrack.push(job);
-      coordinates.push(job.geometry.coordinates);
-      if (needToPickUp > lastAtRestaurant) {
-        distributions.push(`${restaurantIndex},${coordinates.length - 1}`);
-      }
-    }
-  }
-  return `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${coordinates.join(
+  return `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${distribs.join(
     ";"
-  )}?distributions=${distributions.join(
-    ";"
-  )}&overview=full&steps=true&geometries=geojson&source=first&access_token=${
+  )}?distributions=${distribs
+    .filter((_distrib, i) => i > 1)
+    .map((_distrib, i) => `1,${i + 2}`)
+    .join(
+      ";"
+    )}&overview=full&steps=true&geometries=geojson&source=first&access_token=${
     process.env.REACT_APP_MAPBOX_TOKEN
   }`;
 }
 
 export const newDropoffs = async (
-  truckLocation: any,
-  warehouseLocation: any,
-  pointHopper: any,
-  lastAtRestaurant: any,
-  keepTrack: any
+  hotelCoordinates: number[],
+  poiCoordinates: GeoJsonRes
 ) => {
   const query = await fetch(
-    assembleQueryURL(
-      truckLocation,
-      warehouseLocation,
-      pointHopper,
-      lastAtRestaurant,
-      keepTrack
-    ),
+    assembleQueryURL(hotelCoordinates, poiCoordinates),
     { method: "GET" }
   );
   const response = await query.json();
