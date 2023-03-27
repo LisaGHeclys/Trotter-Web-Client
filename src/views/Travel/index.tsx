@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FC, useState } from "react";
 
 import {
   Card,
@@ -21,7 +21,7 @@ import { useDispatch } from "react-redux";
 import { AnyAction, Dispatch } from "redux";
 import { styled } from "@mui/material/styles";
 
-function TravelPage() {
+const TravelPage: FC = () => {
   const theme = useTheme();
 
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -33,9 +33,9 @@ function TravelPage() {
     }
 `);
 
-  const [city, setCity] = useState("");
-  const [period, setPeriod] = useState("date");
-  const [isFav, setIsFav] = useState(false);
+  const [city, setCity] = useState<string>("");
+  const [, /*_period*/ setPeriod] = useState<string>("date");
+  const [isFav, setIsFav] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<AnyAction>>();
 
@@ -146,6 +146,6 @@ function TravelPage() {
       </Grid>
     </div>
   );
-}
+};
 
 export default TravelPage;

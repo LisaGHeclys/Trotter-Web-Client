@@ -13,15 +13,10 @@ import Florian from "../../assets/team/Florian.png";
 import Lilian from "../../assets/team/Lilian.png";
 
 import "./index.scss";
+import { FC } from "react";
+import responsive from "../../constants";
 
-const responsive = {
-  0: { items: 1 },
-  568: { items: 2 },
-  1024: { items: 2 },
-  1080: { items: 3 }
-};
-
-const items: any = [
+const items: JSX.Element[] = [
   <div className="carouselItems" data-value="1">
     <img className="MaxenceImg" src={Maxence} alt="Maxence" />
     <p>
@@ -41,7 +36,7 @@ const items: any = [
   <div className="carouselItems" data-value="3">
     <img className="JustineImg" src={Justine} alt="Justine" />
     <p>
-      Justine Truphème
+      Justine Trupheme
       <br />
       CMO
     </p>
@@ -104,7 +99,7 @@ const items: any = [
   </div>
 ];
 
-function AboutUs() {
+const AboutUs: FC = () => {
   return (
     <>
       <Navbar />
@@ -130,6 +125,6 @@ function AboutUs() {
       </div>
     </>
   );
-}
+};
 
 export default AboutUs;

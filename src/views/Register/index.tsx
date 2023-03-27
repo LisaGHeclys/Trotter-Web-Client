@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./index.scss";
 
@@ -9,10 +9,9 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-const RegisterPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+const RegisterPage: FC = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
 
   async function register() {
@@ -29,7 +28,7 @@ const RegisterPage = () => {
         Password: password
       }
     });
-    if (response.data.status != 200 || !response.data.accessToken) {
+    if (response.data.status !== 200 || !response.data.accessToken) {
       //Alert user ("An error occured, please try again later")
     } else {
       localStorage.setItem("jwt", response.data.accessToken);

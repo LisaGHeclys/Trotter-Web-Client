@@ -18,13 +18,8 @@ import Auckland from "../../assets/auckland.jpg";
 import { styled } from "@mui/material/styles";
 
 import "./index.scss";
-
-const responsive = {
-  0: { items: 1 },
-  568: { items: 2 },
-  1024: { items: 2 },
-  1440: { items: 3 }
-};
+import responsive from "../../constants";
+import { FC } from "react";
 
 const CardContentNoPadding = styled(CardContent)(`
     padding: 0;
@@ -33,7 +28,7 @@ const CardContentNoPadding = styled(CardContent)(`
     }
 `);
 
-const items: any = [
+const items: JSX.Element[] = [
   <div className="carouselItems" data-value="1">
     <Card style={{ borderRadius: "50px" }}>
       <CardContentNoPadding>
@@ -71,7 +66,7 @@ const items: any = [
   </div>
 ];
 
-function LandingPage() {
+const LandingPage: FC = () => {
   const theme = useTheme();
 
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -109,6 +104,6 @@ function LandingPage() {
       </Grid>
     </div>
   );
-}
+};
 
 export default LandingPage;

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { DateRange } from "react-date-range";
 import "./index.scss";
 import "react-date-range/dist/styles.css";
@@ -20,6 +20,7 @@ import { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 import { Popup } from "mapbox-gl";
 import Routes from "./Routes";
 import Dropoffs from "./Dropoffs";
+import { RootState } from "../../store";
 
 type BaseMapProps = {
   length: number;
@@ -27,6 +28,17 @@ type BaseMapProps = {
   lng: number;
   lat: number;
   cityName: string;
+};
+
+export type GeoJsonRes = {
+  features: {
+    geometry: {
+      coordinates: number[];
+    };
+    properties: {
+      name: string;
+    };
+  }[];
 };
 
 const BaseMapPropsDefault: BaseMapProps = {
@@ -47,7 +59,7 @@ const weekColors: { primary: string; secondary: string }[] = [
   { primary: "brown", secondary: "lightbrown" }
 ];
 
-const BaseMap = () => {
+const BaseMap: FC = () => {
   const ref = React.useRef<number>(0);
   const mapRef = React.useRef<MapRef>(null);
   const [dropoffs, setDropoffs] = useState<{
@@ -56,14 +68,14 @@ const BaseMap = () => {
   const [routes, setRoutes] = useState<{
     [id: string]: FeatureCollection<Geometry, GeoJsonProperties>;
   }>({});
-  const state = useSelector((state: any) => state);
+  const state = useSelector<RootState, RootState>((state) => state);
   const [cityName, setCityName] = useState<string>(
     state.search.place === ""
       ? BaseMapPropsDefault.cityName
       : state.search.place
   );
   const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
-  const [price, setPrice] = useState<number>(BaseMapPropsDefault.price);
+  const [price /*_setPrice*/] = useState<number>(BaseMapPropsDefault.price);
   const [lng, setLng] = useState<number>(BaseMapPropsDefault.lng);
   const [lat, setLat] = useState<number>(BaseMapPropsDefault.lat);
   const [src, setSrc] = useState<string>("https://picsum.photos/200/300");
@@ -112,8 +124,8 @@ const BaseMap = () => {
         });
         setMarkers([]);
         setDropoffs({});
-        const resJson = await ress.json();
-        resJson.features.forEach((element: any, i: number) => {
+        const resJson: GeoJsonRes = await ress.json();
+        resJson.features.forEach((element, i: number) => {
           setMarkers((old) => [
             ...old,
             <Marker
@@ -131,28 +143,46 @@ const BaseMap = () => {
           ]);
         });
 
-        const a = resJson.features.filter((feature: any, i: number) => {
+        const a = resJson.features.filter((_feature, i: number) => {
           //! TO REFORMAT
           return i <= 5;
         });
-        const b = resJson.features.filter((feature: any, i: number) => {
+        const b = resJson.features.filter((_feature, i: number) => {
           return i > 5 && i <= 10;
         });
-        const c = resJson.features.filter((feature: any, i: number) => {
+        const c = resJson.features.filter((_feature, i: number) => {
           return i > 10;
         });
         const coords = [lng, lat];
         resJson.features = a;
-        setDropoffs((old) => ({ ...old, dropoffs: resJson }));
-        let route = await newDropoffs(coords, coords, resJson, 0, []);
+        setDropoffs((old) => ({
+          ...old,
+          dropoffs: resJson as unknown as FeatureCollection<
+            Geometry,
+            GeoJsonProperties
+          >
+        }));
+        let route = await newDropoffs(coords as number[], resJson);
         setRoutes((old) => ({ ...old, route: route }));
         resJson.features = b;
-        setDropoffs((old) => ({ ...old, dropoffs2: resJson }));
-        route = await newDropoffs(coords, coords, resJson, 0, []);
+        setDropoffs((old) => ({
+          ...old,
+          dropoffs2: resJson as unknown as FeatureCollection<
+            Geometry,
+            GeoJsonProperties
+          >
+        }));
+        route = await newDropoffs(coords as number[], resJson);
         setRoutes((old) => ({ ...old, route2: route }));
         resJson.features = c;
-        setDropoffs((old) => ({ ...old, dropoffs3: resJson }));
-        route = await newDropoffs(coords, coords, resJson, 0, []);
+        setDropoffs((old) => ({
+          ...old,
+          dropoffs3: resJson as unknown as FeatureCollection<
+            Geometry,
+            GeoJsonProperties
+          >
+        }));
+        route = await newDropoffs(coords as number[], resJson);
         setRoutes((old) => ({ ...old, route3: route }));
       } catch (e) {
         console.log(e);

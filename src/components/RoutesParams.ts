@@ -1,4 +1,9 @@
-const routesList = [
+type RoutesListType = {
+  name: string;
+  routes: string;
+}[];
+
+const routesList: RoutesListType = [
   {
     name: "Home",
     routes: "/"

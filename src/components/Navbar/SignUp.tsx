@@ -1,14 +1,14 @@
-import * as React from "react";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 
 import "../../scss/navbar.scss";
 
-function SignUp() {
+const SignUp: FC = () => {
   return (
     <Link className={"signUp"} to={"/register"}>
       Sign Up
     </Link>
   );
-}
+};
 
 export default SignUp;

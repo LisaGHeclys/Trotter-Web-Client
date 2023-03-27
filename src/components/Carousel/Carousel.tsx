@@ -1,13 +1,13 @@
+import { FC } from "react";
 import AliceCarousel, { Responsive } from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 
-function Carousel({
-  items,
-  responsive
-}: {
+type CarouselProps = {
   items: JSX.Element[];
   responsive: Responsive;
-}) {
+};
+
+const Carousel: FC<CarouselProps> = ({ items, responsive }) => {
   return (
     <AliceCarousel
       animationDuration={3800}
@@ -18,6 +18,6 @@ function Carousel({
       responsive={responsive}
     />
   );
-}
+};
 
 export default Carousel;
