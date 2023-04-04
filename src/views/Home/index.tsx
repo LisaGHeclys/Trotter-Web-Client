@@ -1,7 +1,8 @@
+import { FC } from "react";
 import "./index.scss";
 
-function Home() {
+const Home: FC = () => {
   return <div>HomePage</div>;
-}
+};
 
 export default Home;

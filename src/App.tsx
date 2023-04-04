@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
@@ -10,10 +9,11 @@ import Home from "./views/Home";
 import BaseMap from "./views/Map";
 import TravelPage from "./views/Travel";
 import Dashboard from "./views/Dashboard";
-import Protected from "./components/Protected";
+// import Protected from "./components/Protected";
 import AboutUs from "./views/AboutUs";
+import { FC } from "react";
 
-function App() {
+const App: FC = () => {
   return (
     <div className="page">
       <BrowserRouter>
@@ -29,9 +29,9 @@ function App() {
           <Route
             path="/map"
             element={
-              <Protected>
-                <BaseMap />
-              </Protected>
+              // <Protected>
+              <BaseMap />
+              // </Protected>
             }
           />
           {/* <Route path="*" element={<NotFound />} /> */}
@@ -39,6 +39,6 @@ function App() {
       </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;
