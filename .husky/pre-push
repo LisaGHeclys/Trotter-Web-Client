@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Get the current branch name
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Check if the branch is "production"
+if [[ "$BRANCH" == "production" ]]; then
+  echo "For safety reasons, you can't push to the production branch. Please use a Pull Request or contact @mpellouin"
+  exit 1
+fi
