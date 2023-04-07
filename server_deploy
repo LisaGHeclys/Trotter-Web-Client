@@ -3,8 +3,7 @@ set -e
 
 echo "Pull modifications"
 
-git reset --hard
-git pull origin production
+git fetch && git reset --hard @{u}
 
 echo "Check for dependencies..."
 
