@@ -16,4 +16,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: "cd ~/Trotter_Client; ./server_deploy;"
+          script: "cd ~/Trotter_Client; git fetch && git reset --hard @{u} ; ./server_deploy;"
