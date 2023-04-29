@@ -10,13 +10,35 @@ const Oauth2Button: FC<Oauth2ButtonProps> = ({ service }) => {
   switch (service) {
     case "google":
       return (
-        <button type="button">
+        <button
+          onClick={() =>
+            window.open(
+              "/googleLogin",
+              "_blank",
+              `popup, left=${window.screenLeft / 2}, top=${
+                window.screenTop / 2
+              }`
+            )
+          }
+          type="button"
+        >
           <GoogleIcon style={{ width: "45px", height: "45px" }} />
         </button>
       );
     case "facebook":
       return (
-        <button type="button">
+        <button
+          onClick={() =>
+            window.open(
+              "/facebookLogin",
+              "_blank",
+              `popup, left=${window.screenLeft / 2}, top=${
+                window.screenTop / 2
+              }`
+            )
+          }
+          type="button"
+        >
           <FacebookIcon style={{ width: "45px", height: "45px" }} />
         </button>
       );
