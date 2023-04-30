@@ -269,7 +269,13 @@ const BaseMap: FC = () => {
         <br />
         <b>Only for {price}€!</b>
       </div>
-      <div id="mapContainer" className="map">
+      <div
+        id="mapContainer"
+        className={
+          "map" +
+          (isHotelSelectionActivated ? " mapContainerHotelSelectionOn" : "")
+        }
+      >
         {/* {isHotelSelectionActivated && <div className="hotelSelectionFilter"/>} */}
         <Map
           mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
