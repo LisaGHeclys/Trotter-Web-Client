@@ -29,7 +29,7 @@ const LoginPage: FC = () => {
     if (response.data.status !== 200 || !response.data.accessToken) {
     } else {
       localStorage.setItem("jwt", response.data.accessToken);
-      dispatch({ type: "LOGIN", payload: { isLoggedIn: true } });
+      dispatch({ type: "LOGIN", payload: response.data.accessToken });
       navigate("/travel");
     }
   }

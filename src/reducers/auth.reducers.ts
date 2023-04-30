@@ -14,7 +14,8 @@ export default function authReducers(state = initialState, action: AnyAction) {
     case "LOGIN":
       return {
         ...state,
-        isLoggedIn: true
+        isLoggedIn: true,
+        token: action.payload
       };
     case "LOGOUT":
       return {
