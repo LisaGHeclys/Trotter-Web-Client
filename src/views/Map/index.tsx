@@ -21,6 +21,7 @@ import { Popup } from "mapbox-gl";
 import Routes from "./Routes";
 import Dropoffs from "./Dropoffs";
 import { RootState } from "../../store";
+import { Button } from "@mui/material";
 
 type BaseMapProps = {
   length: number;
@@ -87,7 +88,11 @@ const BaseMap: FC = () => {
     }
   ]);
   const [markers, setMarkers] = useState<React.ReactElement[]>([]);
+  const [hotel, setHotel] = useState<React.ReactElement[]>([]);
   const [cursor, setCursor] = useState<string>("grab");
+  const [isHotelSelectionActivated, setIsHotelSelectionActivated] =
+    useState<boolean>(false);
+  const token = useSelector((state: RootState) => state.auth.token);
 
   useEffect(() => {
     if (range.length === 0 || !range[0].endDate || !range[0].startDate) return;
@@ -114,7 +119,8 @@ const BaseMap: FC = () => {
         const ress = await fetch(process.env.REACT_APP_SERVER_URI + "/IA", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token || ""}`
           },
           body: JSON.stringify({
             lon: lng,
@@ -180,7 +186,7 @@ const BaseMap: FC = () => {
         console.log(e);
       }
     },
-    [length]
+    [length, token]
   );
 
   useEffect(() => {
@@ -247,12 +253,30 @@ const BaseMap: FC = () => {
           }
           weekStartsOn={1}
         />
+        <Button
+          variant="contained"
+          onClick={() => setIsHotelSelectionActivated((prev) => !prev)}
+          className={isHotelSelectionActivated ? "hotelSelectionActivated" : ""}
+        >
+          Add my hôtel
+        </Button>
+        <label style={{ fontSize: 11, marginTop: 6 }}>
+          Double click on the map when the dd an hotel option is on to register
+          your hotel
+        </label>
         <h5>Some monument</h5>
         <img width={250} height={200} alt={"Eiffel Tower"} src={src} />
         <br />
         <b>Only for {price}€!</b>
       </div>
-      <div id="mapContainer" className="map">
+      <div
+        id="mapContainer"
+        className={
+          "map" +
+          (isHotelSelectionActivated ? " mapContainerHotelSelectionOn" : "")
+        }
+      >
+        {/* {isHotelSelectionActivated && <div className="hotelSelectionFilter"/>} */}
         <Map
           mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           initialViewState={{
@@ -290,6 +314,31 @@ const BaseMap: FC = () => {
               duration: 1000
             });
           }}
+          onDblClick={async (e) => {
+            if (isHotelSelectionActivated) {
+              const newMarker = (
+                <Marker
+                  key={markers.length}
+                  longitude={e.lngLat.lng}
+                  latitude={e.lngLat.lat}
+                >
+                  <img
+                    width={36}
+                    height={36}
+                    alt={"hotel"}
+                    src={
+                      "https://em-content.zobj.net/source/microsoft-teams/337/house_1f3e0.png"
+                    }
+                    className="hotelMarker"
+                  />
+                </Marker>
+              );
+              setHotel((old) => [newMarker]);
+              setLng(e.lngLat.lng);
+              setLat(e.lngLat.lat);
+              setIsHotelSelectionActivated(false);
+            }
+          }}
         >
           <GeolocateControl
             positionOptions={{ enableHighAccuracy: true }}
@@ -316,6 +365,7 @@ const BaseMap: FC = () => {
           />
 
           {markers.map((marker) => marker)}
+          {hotel.map((marker) => marker)}
 
           <Dropoffs dropoffs={dropoffs} colors={weekColors} />
           <Routes routes={routes} colors={weekColors} />

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { AnyAction, Dispatch } from "redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Oauth2Button from "../../components/Oauth2/Oauth2Button";
 
 const LoginPage: FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -29,7 +30,7 @@ const LoginPage: FC = () => {
     if (response.data.status !== 200 || !response.data.accessToken) {
     } else {
       localStorage.setItem("jwt", response.data.accessToken);
-      dispatch({ type: "LOGIN", payload: { isLoggedIn: true } });
+      dispatch({ type: "LOGIN", payload: response.data.accessToken });
       navigate("/travel");
     }
   }
@@ -65,9 +66,8 @@ const LoginPage: FC = () => {
           </div>
           <hr className="lineText" data-content="Or sign with" />
           <div className="alternateLogins">
-            <button type="button">
-              <GoogleIcon style={{ width: "45px", height: "45px" }} />
-            </button>
+            <Oauth2Button service="google" />
+            <Oauth2Button service="facebook" />
           </div>
         </div>
       </div>
