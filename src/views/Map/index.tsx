@@ -22,6 +22,7 @@ import Routes from "./Routes";
 import Dropoffs from "./Dropoffs";
 import { RootState } from "../../store";
 import { Button } from "@mui/material";
+import { format, addDays } from "date-fns";
 
 type BaseMapProps = {
   length: number;
@@ -76,6 +77,7 @@ const BaseMap: FC = () => {
       : state.search.place
   );
   const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
+  const [itineraryDay, setItineraryDay] = useState<number>(0);
   const [price /*_setPrice*/] = useState<number>(BaseMapPropsDefault.price);
   const [lng, setLng] = useState<number>(BaseMapPropsDefault.lng);
   const [lat, setLat] = useState<number>(BaseMapPropsDefault.lat);
@@ -102,6 +104,8 @@ const BaseMap: FC = () => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
     setLength(diffDays);
   }, [range]);
+
+  console.log(dropoffs);
 
   const fetchCoordinates = useCallback(
     async (cityName?: string, lng?: number, lat?: number) => {
@@ -132,7 +136,80 @@ const BaseMap: FC = () => {
         setDropoffs({});
         setRoutes({});
         const resJson: GeoJsonRes = await ress.json();
-        resJson.features.forEach((element, i: number) => {
+        // resJson.features.forEach((element, i: number) => {
+        //   setMarkers((old) => [
+        //     ...old,
+        //     <Marker
+        //       key={element.properties.name + i}
+        //       latitude={element.geometry.coordinates[1]}
+        //       longitude={element.geometry.coordinates[0]}
+        //       popup={new Popup({
+        //         offset: 20,
+        //         className: "markerPopup",
+        //         anchor: "bottom",
+        //         closeOnMove: true,
+        //         closeOnClick: true
+        //       }).setText(element.properties.name)}
+        //     />
+        //   ]);
+        // });
+
+        // create arrays of 5 elements from resJson.features
+        const featuresPerDay = resJson.features
+          .map((feature, i) => {
+            return i % 5 === 0 ? resJson.features.slice(i, i + 5) : null;
+          })
+          .filter((feature) => feature !== null);
+        console.log(featuresPerDay);
+
+        featuresPerDay.forEach(async (features, i) => {
+          const geoJsonFromFeatures = {
+            ...resJson,
+            features: features as any
+          };
+          setDropoffs((old) => ({
+            ...old,
+            [i]: geoJsonFromFeatures as unknown as FeatureCollection
+          }));
+          const coords = [lng, lat];
+          const route = await newDropoffs(coords as number[], {
+            ...resJson,
+            features: features as any
+          });
+          setRoutes((old) => ({ ...old, [i]: route }));
+        });
+
+        // const a = resJson.features.filter((_feature, i: number) => {
+        //   //! TO REFORMAT
+        //   return i <= 5;
+        // });
+        // const b = resJson.features.filter((_feature, i: number) => {
+        //   return i > 5 && i <= 10;
+        // });
+        // const c = resJson.features.filter((_feature, i: number) => {
+        //   return i > 10;
+        // });
+        // resJson.features = a;
+        // setDropoffs((old) => ({
+        //   ...old,
+        //   dropoffs: resJson as unknown as FeatureCollection
+        // }));
+        // let route = await newDropoffs(coords as number[], resJson);
+        // setRoutes((old) => ({ ...old, route: route }));
+        // resJson.features = b;
+        // setDropoffs((old) => ({
+        //   ...old,
+        //   dropoffs2: resJson as unknown as FeatureCollection
+        // }));
+        // route = await newDropoffs(coords as number[], resJson);
+        // setRoutes((old) => ({ ...old, route2: route }));
+        // resJson.features = c;
+        // setDropoffs((old) => ({
+        //   ...old,
+        //   dropoffs3: resJson as unknown as FeatureCollection
+        // }));
+
+        featuresPerDay[itineraryDay]?.forEach((element, i: number) => {
           setMarkers((old) => [
             ...old,
             <Marker
@@ -149,44 +226,11 @@ const BaseMap: FC = () => {
             />
           ]);
         });
-
-        const a = resJson.features.filter((_feature, i: number) => {
-          //! TO REFORMAT
-          return i <= 5;
-        });
-        const b = resJson.features.filter((_feature, i: number) => {
-          return i > 5 && i <= 10;
-        });
-        const c = resJson.features.filter((_feature, i: number) => {
-          return i > 10;
-        });
-        const coords = [lng, lat];
-        resJson.features = a;
-        setDropoffs((old) => ({
-          ...old,
-          dropoffs: resJson as unknown as FeatureCollection
-        }));
-        let route = await newDropoffs(coords as number[], resJson);
-        setRoutes((old) => ({ ...old, route: route }));
-        resJson.features = b;
-        setDropoffs((old) => ({
-          ...old,
-          dropoffs2: resJson as unknown as FeatureCollection
-        }));
-        route = await newDropoffs(coords as number[], resJson);
-        setRoutes((old) => ({ ...old, route2: route }));
-        resJson.features = c;
-        setDropoffs((old) => ({
-          ...old,
-          dropoffs3: resJson as unknown as FeatureCollection
-        }));
-        route = await newDropoffs(coords as number[], resJson);
-        setRoutes((old) => ({ ...old, route3: route }));
       } catch (e) {
         console.log(e);
       }
     },
-    [length, token]
+    [length, token, itineraryDay]
   );
 
   useEffect(() => {
@@ -252,6 +296,7 @@ const BaseMap: FC = () => {
             new Date(new Date().setFullYear(new Date().getFullYear() + 1))
           }
           weekStartsOn={1}
+          showDateDisplay={false}
         />
         <Button
           variant="contained"
@@ -261,13 +306,29 @@ const BaseMap: FC = () => {
           Add my hôtel
         </Button>
         <label style={{ fontSize: 11, marginTop: 6 }}>
-          Double click on the map when the dd an hotel option is on to register
+          Double click on the map when the add an hotel option is on to register
           your hotel
         </label>
-        <h5>Some monument</h5>
-        <img width={250} height={200} alt={"Eiffel Tower"} src={src} />
-        <br />
-        <b>Only for {price}€!</b>
+        <button onClick={() => setItineraryDay((old) => old + 1)}>next</button>
+        <h3
+          className="underline--magical"
+          style={{
+            backgroundImage: `linear-gradient(120deg, ${weekColors[itineraryDay].primary} 0%, ${weekColors[itineraryDay].secondary} 30%, ${weekColors[itineraryDay].secondary} 70%, ${weekColors[itineraryDay].primary} 100%)`
+          }}
+        >
+          {format(
+            addDays(range[0]?.startDate || new Date(), itineraryDay),
+            "dd/MM/yyyy"
+          )}{" "}
+        </h3>
+        <>{console.log(dropoffs[itineraryDay], itineraryDay)}</>
+        {dropoffs[itineraryDay]?.features.map((feature: any, i) => {
+          return (
+            <div key={i}>
+              <p>{feature.properties.name}</p>
+            </div>
+          );
+        })}
       </div>
       <div
         id="mapContainer"
@@ -367,8 +428,12 @@ const BaseMap: FC = () => {
           {markers.map((marker) => marker)}
           {hotel.map((marker) => marker)}
 
-          <Dropoffs dropoffs={dropoffs} colors={weekColors} />
-          <Routes routes={routes} colors={weekColors} />
+          {/* <Dropoffs dropoffs={dropoffs} colors={weekColors} itineraryDay={itineraryDay}/> */}
+          <Routes
+            routes={routes}
+            colors={weekColors}
+            itineraryDay={itineraryDay}
+          />
         </Map>
       </div>
     </div>

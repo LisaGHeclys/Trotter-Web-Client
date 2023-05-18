@@ -5,30 +5,29 @@ import { Layer, Source } from "react-map-gl";
 type DropoffsProps = {
   dropoffs: { [id: string]: FeatureCollection<Geometry, GeoJsonProperties> };
   colors: { primary: string; secondary: string }[];
+  itineraryDay: number;
 };
 
-const Dropoffs: FC<DropoffsProps> = ({ dropoffs, colors }) => {
+const Dropoffs: FC<DropoffsProps> = ({ dropoffs, colors, itineraryDay }) => {
   return (
-    <>
-      {Object.keys(dropoffs).map((key, i) => {
-        return (
-          <Fragment key={key}>
-            <Source id={`dropoffs${key}`} type="geojson" data={dropoffs[key]} />
-            <Layer
-              id={`dropoff${key}`}
-              type="circle"
-              source={`dropoffs${key}`}
-              paint={{
-                "circle-radius": 6,
-                "circle-color": colors[i].primary,
-                "circle-stroke-color": colors[i].secondary,
-                "circle-stroke-width": 1
-              }}
-            />
-          </Fragment>
-        );
-      })}
-    </>
+    <Fragment key={itineraryDay}>
+      <Source
+        id={`dropoffs${itineraryDay}`}
+        type="geojson"
+        data={dropoffs[itineraryDay]}
+      />
+      <Layer
+        id={`dropoff${itineraryDay}`}
+        type="circle"
+        source={`dropoffs${itineraryDay}`}
+        paint={{
+          "circle-radius": 6,
+          "circle-color": colors[itineraryDay].primary,
+          "circle-stroke-color": colors[itineraryDay].secondary,
+          "circle-stroke-width": 1
+        }}
+      />
+    </Fragment>
   );
 };
 

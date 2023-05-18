@@ -66,3 +66,13 @@
 .hotelSelectionActivated {
   color: red !important;
 }
+
+.underline--magical {
+  background-repeat: no-repeat;
+  background-size: 100% 0.4em;
+  background-position: 15% 88%;
+  transition: background-size 0.25s ease-in;
+  &:hover {
+    background-size: 100% 88%;
+  }
+}
