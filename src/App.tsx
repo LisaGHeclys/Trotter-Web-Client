@@ -13,6 +13,7 @@ import Dashboard from "./views/Dashboard";
 import AboutUs from "./views/AboutUs";
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import OauthCallback from "./views/Oauth";
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const App: FC = () => {
           <Route path="/travel" element={<TravelPage />} />
           <Route path="/services" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/oauth/callback" element={<OauthCallback />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route
             path="/map"

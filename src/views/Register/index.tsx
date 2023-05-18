@@ -3,11 +3,13 @@ import Navbar from "../../components/Navbar/Navbar";
 import "./index.scss";
 
 import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
+import OauthButton from "../../components/Oauth/OauthButton";
 
 const RegisterPage: FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -63,9 +65,14 @@ const RegisterPage: FC = () => {
           </button>
           <hr className="lineText" data-content="Or sign with" />
           <div className="alternateLogins">
-            <button type="button">
-              <GoogleIcon style={{ width: "45px", height: "45px" }} />
-            </button>
+            <OauthButton
+              service="google"
+              icon={<GoogleIcon style={{ width: 45, height: 45 }} />}
+            />
+            <OauthButton
+              service="facebook"
+              icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
+            />
           </div>
         </div>
         <div className="spacer">
