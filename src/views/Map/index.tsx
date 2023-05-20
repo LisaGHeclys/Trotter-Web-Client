@@ -114,8 +114,6 @@ const BaseMap: FC = () => {
     setLength(diffDays);
   }, [range]);
 
-  console.log(dropoffs);
-
   const fetchCoordinates = useCallback(
     async (cityName?: string, lng?: number, lat?: number) => {
       if (!cityName && !lng && !lat) return;
@@ -151,7 +149,6 @@ const BaseMap: FC = () => {
             return i % 5 === 0 ? resJson.features.slice(i, i + 5) : null;
           })
           .filter((feature) => feature !== null);
-        console.log(featuresPerDay);
 
         featuresPerDay.forEach(async (features, i) => {
           const geoJsonFromFeatures = {
@@ -206,7 +203,6 @@ const BaseMap: FC = () => {
   }, [dropoffs, itineraryDay]);
 
   useEffect(() => {
-    console.log(lat, lng, fetchCoordinates);
     if (!ref.current) {
       fetchCoordinates(cityName, lng, lat).catch((err) => console.log(err));
       ref.current = 1;
@@ -226,12 +222,7 @@ const BaseMap: FC = () => {
         flexDirection: "row"
       }}
     >
-      <div
-        className="mapSidebar"
-        onDoubleClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
+      <div className="mapSidebar">
         <h1>Go world trotting!</h1>
         <p>
           <b>{length} days</b> in {cityName}!
