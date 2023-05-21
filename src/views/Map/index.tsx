@@ -23,6 +23,9 @@ import { RootState } from "../../store";
 import { Button, IconButton } from "@mui/material";
 import { format, addDays } from "date-fns";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { SearchState } from "../../reducers/search.reducers";
+import { Feature, Geometry, Position } from "@turf/helpers";
+import { GeoJsonProperties } from "geojson";
 
 type BaseMapProps = {
   length: number;
@@ -32,10 +35,16 @@ type BaseMapProps = {
   cityName: string;
 };
 
+type FeatureDTO = {
+  properties: {
+    [name: string]: string;
+  } | null;
+};
+
 export type GeoJsonRes = {
   features: {
     geometry: {
-      coordinates: number[];
+      coordinates: Position[];
     };
     properties: {
       name: string;
@@ -56,8 +65,8 @@ const weekColors: { primary: string; secondary: string }[] = [
   { primary: "blue", secondary: "lightblue" },
   { primary: "green", secondary: "lightgreen" },
   { primary: "yellow", secondary: "lightyellow" },
-  { primary: "orange", secondary: "lightorange" },
-  { primary: "purple", secondary: "lightpurple" },
+  { primary: "orange", secondary: "orange" },
+  { primary: "purple", secondary: "purple" },
   { primary: "brown", secondary: "lightbrown" }
 ];
 
@@ -70,11 +79,11 @@ const BaseMap: FC = () => {
   const [routes, setRoutes] = useState<{
     [id: string]: FeatureCollection;
   }>({});
-  const state = useSelector<RootState, RootState>((state) => state);
+  const searchState = useSelector<RootState, SearchState>(
+    (state) => state.search
+  );
   const [cityName, setCityName] = useState<string>(
-    state.search.place === ""
-      ? BaseMapPropsDefault.cityName
-      : state.search.place
+    searchState.place === "" ? BaseMapPropsDefault.cityName : searchState.place
   );
   const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
   const [itineraryDay, setItineraryDay] = useState<number>(0);
@@ -149,11 +158,14 @@ const BaseMap: FC = () => {
             return i % 5 === 0 ? resJson.features.slice(i, i + 5) : null;
           })
           .filter((feature) => feature !== null);
-
         featuresPerDay.forEach(async (features, i) => {
+          if (!features) return;
           const geoJsonFromFeatures = {
             ...resJson,
-            features: features as any
+            features: features as unknown as Feature<
+              Geometry,
+              GeoJsonProperties
+            >[]
           };
           setDropoffs((old) => ({
             ...old,
@@ -162,7 +174,7 @@ const BaseMap: FC = () => {
           const coords = [lng, lat];
           const route = await newDropoffs(coords as number[], {
             ...resJson,
-            features: features as any
+            features: features
           });
           setRoutes((old) => ({ ...old, [i]: route }));
         });
@@ -180,8 +192,14 @@ const BaseMap: FC = () => {
         ...old,
         <Marker
           key={element?.properties?.name + i}
-          latitude={(element.geometry as any).coordinates[1]}
-          longitude={(element.geometry as any).coordinates[0]}
+          latitude={
+            (element.geometry as Partial<Geometry> & { coordinates: number[] })
+              .coordinates[1]
+          }
+          longitude={
+            (element.geometry as Partial<Geometry> & { coordinates: number[] })
+              .coordinates[0]
+          }
           popup={new Popup({
             offset: 20,
             className: "markerPopup",
@@ -209,6 +227,7 @@ const BaseMap: FC = () => {
     } else {
       fetchCoordinates(undefined, lng, lat).catch((err) => console.log(err));
     }
+    setItineraryDay(0);
   }, [lat, lng, fetchCoordinates, cityName]);
 
   return (
@@ -289,16 +308,16 @@ const BaseMap: FC = () => {
             <ChevronRight />
           </IconButton>
         </div>
-        {dropoffs[itineraryDay]?.features.map((feature: any, i) => {
+        {dropoffs[itineraryDay]?.features.map((feature: FeatureDTO, i) => {
           return (
             <div key={i} className="interestPicture">
-              <p>{feature.properties.name}</p>
+              <p>{feature.properties?.name}</p>
               <img
                 src={`https://picsum.photos/${
                   Math.floor(Math.random() * 100) + 200
                 }/${Math.floor(Math.random() * 100) + 200}`}
                 alt="dropoff"
-                title={feature.properties.name}
+                title={feature.properties?.name}
                 width={200}
                 height={100}
               />
