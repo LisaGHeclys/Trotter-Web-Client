@@ -1,22 +1,27 @@
 import { AnyAction } from "redux";
 
-interface authState {
+export interface AuthState {
   isLoggedIn: boolean;
   token?: string;
 }
 
-const initialState: authState = {
+const initialState: AuthState = {
   isLoggedIn: false
 };
 
-export default function authReducers(state = initialState, action: AnyAction) {
+export default function authReducers(
+  state: AuthState = initialState,
+  action: AnyAction
+) {
   switch (action.type) {
     case "LOGIN":
-      return {
-        ...state,
-        isLoggedIn: true,
-        token: action.payload
-      };
+      if (typeof action.payload === "string")
+        return {
+          ...state,
+          isLoggedIn: true,
+          token: action.payload
+        };
+      break;
     case "LOGOUT":
       return {
         ...state,
@@ -25,4 +30,5 @@ export default function authReducers(state = initialState, action: AnyAction) {
     default:
       return state;
   }
+  return state;
 }

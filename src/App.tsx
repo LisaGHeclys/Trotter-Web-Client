@@ -11,9 +11,17 @@ import TravelPage from "./views/Travel";
 import Dashboard from "./views/Dashboard";
 // import Protected from "./components/Protected";
 import AboutUs from "./views/AboutUs";
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 const App: FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: "LOGIN", payload: localStorage.getItem("jwt") });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="page">
       <BrowserRouter>
