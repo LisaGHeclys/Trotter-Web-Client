@@ -19,9 +19,13 @@ import {
 import { FeatureCollection } from "geojson";
 import { Popup } from "mapbox-gl";
 import Routes from "./Routes";
-import Dropoffs from "./Dropoffs";
 import { RootState } from "../../store";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
+import { format, addDays } from "date-fns";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { SearchState } from "../../reducers/search.reducers";
+import { Feature, Geometry, Position } from "@turf/helpers";
+import { GeoJsonProperties } from "geojson";
 
 type BaseMapProps = {
   length: number;
@@ -31,10 +35,16 @@ type BaseMapProps = {
   cityName: string;
 };
 
+type FeatureDTO = {
+  properties: {
+    [name: string]: string;
+  } | null;
+};
+
 export type GeoJsonRes = {
   features: {
     geometry: {
-      coordinates: number[];
+      coordinates: Position[];
     };
     properties: {
       name: string;
@@ -55,8 +65,8 @@ const weekColors: { primary: string; secondary: string }[] = [
   { primary: "blue", secondary: "lightblue" },
   { primary: "green", secondary: "lightgreen" },
   { primary: "yellow", secondary: "lightyellow" },
-  { primary: "orange", secondary: "lightorange" },
-  { primary: "purple", secondary: "lightpurple" },
+  { primary: "orange", secondary: "orange" },
+  { primary: "purple", secondary: "purple" },
   { primary: "brown", secondary: "lightbrown" }
 ];
 
@@ -69,17 +79,16 @@ const BaseMap: FC = () => {
   const [routes, setRoutes] = useState<{
     [id: string]: FeatureCollection;
   }>({});
-  const state = useSelector<RootState, RootState>((state) => state);
+  const searchState = useSelector<RootState, SearchState>(
+    (state) => state.search
+  );
   const [cityName, setCityName] = useState<string>(
-    state.search.place === ""
-      ? BaseMapPropsDefault.cityName
-      : state.search.place
+    searchState.place === "" ? BaseMapPropsDefault.cityName : searchState.place
   );
   const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
-  const [price /*_setPrice*/] = useState<number>(BaseMapPropsDefault.price);
+  const [itineraryDay, setItineraryDay] = useState<number>(0);
   const [lng, setLng] = useState<number>(BaseMapPropsDefault.lng);
   const [lat, setLat] = useState<number>(BaseMapPropsDefault.lat);
-  const [src, setSrc] = useState<string>("https://picsum.photos/200/300");
   const [range, setRange] = useState<Range[]>([
     {
       startDate: new Date(),
@@ -93,6 +102,17 @@ const BaseMap: FC = () => {
   const [isHotelSelectionActivated, setIsHotelSelectionActivated] =
     useState<boolean>(false);
   const token = useSelector((state: RootState) => state.auth.token);
+
+  const decrementItineraryDay = useCallback((old: number) => {
+    if (old - 1 >= 0) setItineraryDay(old - 1);
+  }, []);
+
+  const incrementItineraryDay = useCallback(
+    (old: number) => {
+      if (old + 1 < length) setItineraryDay(old + 1);
+    },
+    [length]
+  );
 
   useEffect(() => {
     if (range.length === 0 || !range[0].endDate || !range[0].startDate) return;
@@ -132,56 +152,32 @@ const BaseMap: FC = () => {
         setDropoffs({});
         setRoutes({});
         const resJson: GeoJsonRes = await ress.json();
-        resJson.features.forEach((element, i: number) => {
-          setMarkers((old) => [
-            ...old,
-            <Marker
-              key={element.properties.name + i}
-              latitude={element.geometry.coordinates[1]}
-              longitude={element.geometry.coordinates[0]}
-              popup={new Popup({
-                offset: 20,
-                className: "markerPopup",
-                anchor: "bottom",
-                closeOnMove: true,
-                closeOnClick: true
-              }).setText(element.properties.name)}
-            />
-          ]);
-        });
 
-        const a = resJson.features.filter((_feature, i: number) => {
-          //! TO REFORMAT
-          return i <= 5;
+        const featuresPerDay = resJson.features
+          .map((feature, i) => {
+            return i % 5 === 0 ? resJson.features.slice(i, i + 5) : null;
+          })
+          .filter((feature) => feature !== null);
+        featuresPerDay.forEach(async (features, i) => {
+          if (!features) return;
+          const geoJsonFromFeatures = {
+            ...resJson,
+            features: features as unknown as Feature<
+              Geometry,
+              GeoJsonProperties
+            >[]
+          };
+          setDropoffs((old) => ({
+            ...old,
+            [i]: geoJsonFromFeatures as unknown as FeatureCollection
+          }));
+          const coords = [lng, lat];
+          const route = await newDropoffs(coords as number[], {
+            ...resJson,
+            features: features
+          });
+          setRoutes((old) => ({ ...old, [i]: route }));
         });
-        const b = resJson.features.filter((_feature, i: number) => {
-          return i > 5 && i <= 10;
-        });
-        const c = resJson.features.filter((_feature, i: number) => {
-          return i > 10;
-        });
-        const coords = [lng, lat];
-        resJson.features = a;
-        setDropoffs((old) => ({
-          ...old,
-          dropoffs: resJson as unknown as FeatureCollection
-        }));
-        let route = await newDropoffs(coords as number[], resJson);
-        setRoutes((old) => ({ ...old, route: route }));
-        resJson.features = b;
-        setDropoffs((old) => ({
-          ...old,
-          dropoffs2: resJson as unknown as FeatureCollection
-        }));
-        route = await newDropoffs(coords as number[], resJson);
-        setRoutes((old) => ({ ...old, route2: route }));
-        resJson.features = c;
-        setDropoffs((old) => ({
-          ...old,
-          dropoffs3: resJson as unknown as FeatureCollection
-        }));
-        route = await newDropoffs(coords as number[], resJson);
-        setRoutes((old) => ({ ...old, route3: route }));
       } catch (e) {
         console.log(e);
       }
@@ -190,21 +186,49 @@ const BaseMap: FC = () => {
   );
 
   useEffect(() => {
+    setMarkers([]);
+    dropoffs[itineraryDay]?.features.forEach((element, i: number) => {
+      setMarkers((old) => [
+        ...old,
+        <Marker
+          key={element?.properties?.name + i}
+          latitude={
+            (element.geometry as Partial<Geometry> & { coordinates: number[] })
+              .coordinates[1]
+          }
+          longitude={
+            (element.geometry as Partial<Geometry> & { coordinates: number[] })
+              .coordinates[0]
+          }
+          popup={new Popup({
+            offset: 20,
+            className: "markerPopup",
+            anchor: "bottom",
+            closeOnMove: true,
+            closeOnClick: true
+          })
+            // .setText(element?.properties?.name)
+            .setHTML(
+              `<h3>${
+                element?.properties?.name
+              }</h3><img width="200" height="100" src="${`https://picsum.photos/${
+                Math.floor(Math.random() * 100) + 200
+              }/${Math.floor(Math.random() * 100) + 200}`}" />`
+            )}
+        />
+      ]);
+    });
+  }, [dropoffs, itineraryDay]);
+
+  useEffect(() => {
     if (!ref.current) {
       fetchCoordinates(cityName, lng, lat).catch((err) => console.log(err));
       ref.current = 1;
-    } else
+    } else {
       fetchCoordinates(undefined, lng, lat).catch((err) => console.log(err));
+    }
+    setItineraryDay(0);
   }, [lat, lng, fetchCoordinates, cityName]);
-
-  useEffect(() => {
-    setSrc(
-      `https://picsum.photos/${Math.floor(Math.random() * 100) + 200}/${
-        Math.floor(Math.random() * 100) + 200
-      }`
-    );
-    setMarkers([]);
-  }, [cityName]);
 
   return (
     <div
@@ -252,6 +276,7 @@ const BaseMap: FC = () => {
             new Date(new Date().setFullYear(new Date().getFullYear() + 1))
           }
           weekStartsOn={1}
+          showDateDisplay={false}
         />
         <Button
           variant="contained"
@@ -261,13 +286,44 @@ const BaseMap: FC = () => {
           Add my hôtel
         </Button>
         <label style={{ fontSize: 11, marginTop: 6 }}>
-          Double click on the map when the dd an hotel option is on to register
+          Double click on the map when the add an hotel option is on to register
           your hotel
         </label>
-        <h5>Some monument</h5>
-        <img width={250} height={200} alt={"Eiffel Tower"} src={src} />
-        <br />
-        <b>Only for {price}€!</b>
+        <div className="flexRow">
+          <IconButton onClick={() => decrementItineraryDay(itineraryDay)}>
+            <ChevronLeft />
+          </IconButton>
+          <h3
+            className="underline--magical"
+            style={{
+              backgroundImage: `linear-gradient(120deg, ${weekColors[itineraryDay].primary} 0%, ${weekColors[itineraryDay].secondary} 30%, ${weekColors[itineraryDay].secondary} 70%, ${weekColors[itineraryDay].primary} 100%)`
+            }}
+          >
+            {format(
+              addDays(range[0]?.startDate || new Date(), itineraryDay),
+              "dd/MM/yyyy"
+            )}{" "}
+          </h3>
+          <IconButton onClick={() => incrementItineraryDay(itineraryDay)}>
+            <ChevronRight />
+          </IconButton>
+        </div>
+        {dropoffs[itineraryDay]?.features.map((feature: FeatureDTO, i) => {
+          return (
+            <div key={i} className="interestPicture">
+              <p>{feature.properties?.name}</p>
+              <img
+                src={`https://picsum.photos/${
+                  Math.floor(Math.random() * 100) + 200
+                }/${Math.floor(Math.random() * 100) + 200}`}
+                alt="dropoff"
+                title={feature.properties?.name}
+                width={200}
+                height={100}
+              />
+            </div>
+          );
+        })}
       </div>
       <div
         id="mapContainer"
@@ -276,7 +332,6 @@ const BaseMap: FC = () => {
           (isHotelSelectionActivated ? " mapContainerHotelSelectionOn" : "")
         }
       >
-        {/* {isHotelSelectionActivated && <div className="hotelSelectionFilter"/>} */}
         <Map
           mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           initialViewState={{
@@ -367,8 +422,11 @@ const BaseMap: FC = () => {
           {markers.map((marker) => marker)}
           {hotel.map((marker) => marker)}
 
-          <Dropoffs dropoffs={dropoffs} colors={weekColors} />
-          <Routes routes={routes} colors={weekColors} />
+          <Routes
+            routes={routes}
+            colors={weekColors}
+            itineraryDay={itineraryDay}
+          />
         </Map>
       </div>
     </div>

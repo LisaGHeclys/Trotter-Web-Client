@@ -1,23 +1,25 @@
 import { AnyAction } from "redux";
 
-interface searchState {
+export interface SearchState {
   place: string;
 }
 
-const initialState: searchState = {
+const initialState: SearchState = {
   place: "Paris"
 };
 
 export default function searchReducers(
-  state = initialState,
+  state: SearchState = initialState,
   action: AnyAction
-) {
+): SearchState {
   switch (action.type) {
     case "SEARCH":
-      return {
-        ...state,
-        place: action.payload.place
-      };
+      if (typeof action.payload.place === "string")
+        return {
+          ...state,
+          place: action.payload.place
+        };
+      break;
     case "CLEAR_SEARCH":
       return {
         place: ""
@@ -25,4 +27,5 @@ export default function searchReducers(
     default:
       return state;
   }
+  return state;
 }

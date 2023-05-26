@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./index.scss";
-import GoogleIcon from "@mui/icons-material/Google";
 import { useDispatch } from "react-redux";
 import { AnyAction, Dispatch } from "redux";
 import { useNavigate } from "react-router-dom";
