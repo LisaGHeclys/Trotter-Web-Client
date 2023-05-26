@@ -19,11 +19,13 @@ enum OauthServices {
   twitter = "twitter",
   linkedin = "linkedin"
 }
+import { useDispatch } from "react-redux";
 
 const RegisterPage: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   async function register() {
     const response = await axios({
@@ -43,6 +45,7 @@ const RegisterPage: FC = () => {
       //Alert user ("An error occured, please try again later")
     } else {
       localStorage.setItem("jwt", response.data.accessToken);
+      dispatch({ type: "LOGIN", payload: response.data.accessToken });
       navigate("/travel");
     }
   }

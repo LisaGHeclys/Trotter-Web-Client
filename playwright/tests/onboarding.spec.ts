@@ -1,6 +1,10 @@
 import { test, expect } from "@playwright/test";
+import { seedDb } from "./helpers";
 
 const BASE_URL = "http://localhost:3000";
+
+test.beforeAll(async () => await seedDb());
+test.afterAll(async () => await seedDb());
 
 test("register", async ({ page }) => {
   await page.goto(`${BASE_URL}/register`);
@@ -19,13 +23,11 @@ test("register", async ({ page }) => {
 
   const cityNameInput = page.getByTestId("cityName");
   await cityNameInput.click();
-  await cityNameInput.type("Lisboa");
+  await cityNameInput.type("Paris");
 
   await page.getByTestId("goOnTrip").click();
 
   await expect(page).toHaveURL(`${BASE_URL}/map`);
-
-  //TODO: check why api calls not made
 });
 
 test("login and modify trip", async ({ page }) => {

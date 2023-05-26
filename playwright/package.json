@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test --workers 1",
+    "test:ui": "npx playwright test --headed --debug"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.34.0"
+    "@playwright/test": "^1.34.3"
+  },
+  "dependencies": {
+    "mongodb": "^5.5.0"
   }
 }

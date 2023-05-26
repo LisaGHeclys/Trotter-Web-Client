@@ -11,6 +11,10 @@ import { defineConfig, devices } from "@playwright/test";
  */
 export default defineConfig({
   testDir: "./tests",
+  timeout: 90000,
+  expect: {
+    timeout: 10000
+  },
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -27,14 +31,15 @@ export default defineConfig({
     // baseURL: 'http://127.0.0.1:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "on-first-retry"
+    trace: "on-first-retry",
+    actionTimeout: 0
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] }
+      use: { ...devices["Desktop Chrome"], locale: "fr-FR" }
     }
 
     // {
@@ -66,12 +71,12 @@ export default defineConfig({
     //   name: 'Google Chrome',
     //   use: { ..devices['Desktop Chrome'], channel: 'chrome' },
     // },
-  ]
+  ],
 
   /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://127.0.0.1:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
+  webServer: {
+    command: "npm run start",
+    port: 3000,
+    reuseExistingServer: true
+  }
 });
