@@ -11,6 +11,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import OauthButton from "../../components/Oauth/OauthButton";
 
+enum OauthServices {
+  google = "google",
+  facebook = "facebook"
+}
+
 const RegisterPage: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -66,11 +71,11 @@ const RegisterPage: FC = () => {
           <hr className="lineText" data-content="Or sign with" />
           <div className="alternateLogins">
             <OauthButton
-              service="google"
+              service={OauthServices.google}
               icon={<GoogleIcon style={{ width: 45, height: 45 }} />}
             />
             <OauthButton
-              service="facebook"
+              service={OauthServices.facebook}
               icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
             />
           </div>
