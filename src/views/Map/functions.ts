@@ -37,7 +37,7 @@ function assembleQueryURL(
   hotelCoordinates: number[],
   poiCoordinates: GeoJsonRes
 ) {
-  const distribs = poiCoordinates.features.map((feature, index) => {
+  const distribs = poiCoordinates.features.map((feature) => {
     return `${feature.geometry.coordinates.join(",")}`;
   });
   distribs.unshift(hotelCoordinates.join(","));
