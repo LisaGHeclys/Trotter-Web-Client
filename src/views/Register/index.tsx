@@ -4,6 +4,8 @@ import "./index.scss";
 
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
@@ -13,7 +15,9 @@ import OauthButton from "../../components/Oauth/OauthButton";
 
 enum OauthServices {
   google = "google",
-  facebook = "facebook"
+  facebook = "facebook",
+  twitter = "twitter",
+  linkedin = "linkedin"
 }
 
 const RegisterPage: FC = () => {
@@ -77,6 +81,14 @@ const RegisterPage: FC = () => {
             <OauthButton
               service={OauthServices.facebook}
               icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
+            />
+            <OauthButton
+              service={OauthServices.twitter}
+              icon={<TwitterIcon style={{ width: 45, height: 45 }} />}
+            />
+            <OauthButton
+              service={OauthServices.linkedin}
+              icon={<LinkedInIcon style={{ width: 45, height: 45 }} />}
             />
           </div>
         </div>
