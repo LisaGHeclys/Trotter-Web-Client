@@ -1,11 +1,22 @@
 import { FC, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./index.scss";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { useDispatch } from "react-redux";
 import { AnyAction, Dispatch } from "redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Oauth2Button from "../../components/Oauth2/Oauth2Button";
+import OauthButton from "../../components/Oauth/OauthButton";
+
+enum OauthServices {
+  google = "google",
+  facebook = "facebook",
+  twitter = "twitter",
+  linkedin = "linkedin"
+}
 
 const LoginPage: FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -65,8 +76,22 @@ const LoginPage: FC = () => {
           </div>
           <hr className="lineText" data-content="Or sign with" />
           <div className="alternateLogins">
-            <Oauth2Button service="google" />
-            <Oauth2Button service="facebook" />
+            <OauthButton
+              service={OauthServices.google}
+              icon={<GoogleIcon style={{ width: 45, height: 45 }} />}
+            />
+            <OauthButton
+              service={OauthServices.facebook}
+              icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
+            />
+            <OauthButton
+              service={OauthServices.twitter}
+              icon={<TwitterIcon style={{ width: 45, height: 45 }} />}
+            />
+            <OauthButton
+              service={OauthServices.linkedin}
+              icon={<LinkedInIcon style={{ width: 45, height: 45 }} />}
+            />
           </div>
         </div>
       </div>
