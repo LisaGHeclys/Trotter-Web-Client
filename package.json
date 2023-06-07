@@ -48,7 +48,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint --resolve-plugins-relative-to \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -70,6 +71,12 @@
   },
   "devDependencies": {
     "@types/react-date-range": "^1.4.4",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "eslint": "^8.41.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-react": "^7.32.2",
     "husky": "^8.0.0",
     "prettier": "2.8.0",
     "pretty-quick": "^3.1.3"

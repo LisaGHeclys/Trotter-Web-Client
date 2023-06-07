@@ -1,0 +1,34 @@
+image: node:latest
+
+variables:
+  REACT_APP_MAPBOX_TOKEN: "$REACT_APP_MAPBOX_TOKEN"
+  REACT_APP_OTM_KEY: "$REACT_APP_OTM_KEY"
+  REACT_APP_SERVER_URI: "$REACT_APP_SERVER_URI"
+
+test-secrets:
+  stage: build
+  script:
+    - echo $REACT_APP_MAPBOX_TOKEN
+    - echo $REACT_APP_OTM_KEY
+    - echo $REACT_APP_SERVER_URI
+
+build-client:
+  stage: build
+  before_script:
+    - yarn install
+  script:
+    - yarn run build
+
+lint-client:
+  stage: test
+  before_script:
+    - yarn install
+  script:
+    - yarn run lint
+# no unit test yet
+# test-client:
+#  stage: test
+#  before_script:
+#    - yarn install
+#  script:
+#    - yarn run test
