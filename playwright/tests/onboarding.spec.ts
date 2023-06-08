@@ -35,7 +35,7 @@ test("login and modify trip", async ({ page }) => {
 
   const emailInput = page.getByTestId("emailInput");
   await emailInput.click();
-  await emailInput.type("playwright@trotter.app");
+  await emailInput.type("playwright-login@trotter.app");
 
   const passwordInput = page.getByTestId("passwordInput");
   await passwordInput.click();

@@ -13,6 +13,13 @@ export const seedDb = async () => {
     await db
       .collection("users")
       .deleteMany({ Email: "playwright@trotter.app" });
+    await db
+      .collection("users")
+      .deleteMany({ Email: "playwright-login@trotter.app" });
+    await db.collection("users").insertOne({
+      Email: "playwright-login@trotter.app",
+      Password: "$2a$10$noaktlifqQENDoLZ8rZMjOvOMz0GbSaMLpVvODWDZiyQpPwpMyFey"
+    });
   } catch (err) {
     console.log(err.stack);
   }
