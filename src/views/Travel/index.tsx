@@ -76,6 +76,7 @@ const TravelPage: FC = () => {
               <input
                 placeholder="City..."
                 onChange={(e) => setCity(e.target.value)}
+                data-testid="cityName"
               />
             </Grid>
             <Grid container item xs={isMobile ? 6 : 12} className={"input"}>
@@ -93,6 +94,7 @@ const TravelPage: FC = () => {
                   dispatch({ type: "SEARCH", payload: { place: city } });
                   navigate("/map");
                 }}
+                data-testid="goOnTrip"
               >
                 Submit
               </button>
