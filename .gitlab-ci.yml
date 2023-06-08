@@ -84,7 +84,10 @@ deploy_image:
     - docker info
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
     - echo "Login success"
-    - docker build -t $CI_REGISTRY:$TAG .
+    - docker build -t $CI_REGISTRY:$TAG . --build-arg \
+        REACT_APP_MAPBOX_TOKEN=$REACT_APP_MAPBOX_TOKEN \
+        REACT_APP_OTM_KEY=$REACT_APP_OTM_KEY \
+        REACT_APP_SERVER_URI=$REACT_APP_SERVER_URI
     - docker push $CI_REGISTRY:$TAG
   after_script:
     - docker logout registry.gitlab.com
