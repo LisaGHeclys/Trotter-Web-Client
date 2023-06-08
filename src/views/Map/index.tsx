@@ -154,7 +154,7 @@ const BaseMap: FC = () => {
         const resJson: GeoJsonRes = await ress.json();
 
         const featuresPerDay = resJson.features
-          .map((feature, i) => {
+          ?.map((feature, i) => {
             return i % 5 === 0 ? resJson.features.slice(i, i + 5) : null;
           })
           .filter((feature) => feature !== null);
@@ -421,7 +421,7 @@ const BaseMap: FC = () => {
 
           {markers.map((marker) => marker)}
           {hotel.map((marker) => marker)}
-
+          {console.log(routes)}
           <Routes
             routes={routes}
             colors={weekColors}
