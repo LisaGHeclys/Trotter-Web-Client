@@ -388,7 +388,7 @@ const BaseMap: FC = () => {
                   />
                 </Marker>
               );
-              setHotel((old) => [newMarker]);
+              setHotel([newMarker]);
               setLng(e.lngLat.lng);
               setLat(e.lngLat.lat);
               setIsHotelSelectionActivated(false);
