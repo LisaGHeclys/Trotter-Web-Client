@@ -1,22 +1,92 @@
-image: node:latest
+Install Dependencies:
+  stage: .pre
+  needs: []
+  only:
+    - merge_requests
+    - develop
+    - main
+    - production
+    - tags
+  tags:
+    - docker
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 day
+  script:
+    - npm ci
 
-build-client:
+build:
   stage: build
-  before_script:
-    - yarn install
+  tags: [docker]
+  interruptible: true
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 day
+  needs:
+    - Install Dependencies
+  only:
+    - merge_requests
+    - develop
+    - main
+    - production
+    - tags
   script:
-    - yarn run build
+    - npm run build
 
-lint-client:
+lint-api:
   stage: test
-  before_script:
-    - yarn install
+  tags: [docker]
+  interruptible: true
+  only:
+    - merge_requests
+    - push
+  needs:
+    - Install Dependencies
   script:
-    - yarn run lint
-# no unit test yet
-# test-client:
-#  stage: test
-#  before_script:
-#    - yarn install
-#  script:
-#    - yarn run test
+    - echo "Linting API"
+    - npm run lint
+
+deploy_image:
+  image: docker
+  tags: [docker]
+  stage: deploy
+  needs:
+    - build
+  services:
+    - docker:dind
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      when: never
+    - if: $CI_COMMIT_REF_NAME == "main"
+      variables:
+        TAG: "recette"
+    - if: $CI_COMMIT_REF_NAME == "production"
+      variables:
+        TAG: "production"
+    - if: "$CI_COMMIT_TAG"
+      when: always
+      variables:
+        TAG: "$CI_COMMIT_TAG"
+  script:
+    - apk update && apk add git
+    - docker info
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - echo "Login success"
+    - docker build -t $CI_REGISTRY:$TAG .
+    - docker push $CI_REGISTRY:$TAG
+  after_script:
+    - docker logout registry.gitlab.com
+# reload_image_on_VPS:
+#   image: curlimages/curl:latest
+#   tags: [docker]
+#   needs:
+#     - deploy_image
+#   stage: deploy
+#   only:
+#     - master
+#   script:
+#     - echo "Reloading image on VPS"
+#     # - curl -k -X POST https://XXXXX/api/webhooks/2ed89d3a-ce8d-4b82-abaf-49a7a9bc0a1e
+
