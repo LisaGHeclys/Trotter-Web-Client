@@ -31,13 +31,25 @@ test("register", async ({ page }) => {
 });
 
 test("login and modify trip", async ({ page }) => {
-  await page.goto("https://playwright.dev/");
+  await page.goto(`${BASE_URL}/login`);
 
-  // Click the get started link.
-  await page.getByRole("link", { name: "Get started" }).click();
+  const emailInput = page.getByTestId("emailInput");
+  await emailInput.click();
+  await emailInput.type("playwright@trotter.app");
 
-  // Expects the URL to contain intro.
-  await expect(page).toHaveURL(/.*intro/);
+  const passwordInput = page.getByTestId("passwordInput");
+  await passwordInput.click();
+  await passwordInput.type("playwright");
 
-  //TODO: the test xd
+  await page.getByTestId("submitLogin").click();
+
+  await expect(page).toHaveURL(`${BASE_URL}/travel`);
+
+  const cityNameInput = page.getByTestId("cityName");
+  await cityNameInput.click();
+  await cityNameInput.type("Lisboa");
+
+  await page.getByTestId("goOnTrip").click();
+
+  await expect(page).toHaveURL(`${BASE_URL}/map`);
 });
