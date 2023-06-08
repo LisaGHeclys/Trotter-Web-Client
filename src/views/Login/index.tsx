@@ -57,18 +57,21 @@ const LoginPage: FC = () => {
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
               className="loginInput"
+              data-testid="emailInput"
             />
             <input
               type="password"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
               className="loginInput"
+              data-testid="passwordInput"
             />
             <button
               className="loginButton"
               onClick={() => {
                 login();
               }}
+              data-testid="submitLogin"
             >
               Submit
             </button>
