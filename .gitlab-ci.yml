@@ -1,10 +1,16 @@
 image: node:lts-alpine3.16
 
+stages:
+  - prebuild
+  - build
+  - test
+  - deploy
+
 variables:
-  APPLICATION_NAME: ylodstat-api
+  APPLICATION_NAME: trotter-client
 
 Install Dependencies:
-  stage: .pre
+  stage: prebuild
   needs: []
   only:
     - merge_requests
@@ -40,13 +46,12 @@ build:
   script:
     - npm run build
 
-lint-api:
+test:
   stage: test
   tags: [docker]
   interruptible: true
   only:
     - merge_requests
-    - push
   needs:
     - Install Dependencies
   script:
@@ -79,10 +84,11 @@ deploy_image:
     - docker info
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
     - echo "Login success"
-    - docker build -t $CI_REGISTRY:$TAG .
+    - docker build -t $CI_REGISTRY:$TAG --build-arg TEST1=$REACT_APP_MAPBOX_TOKEN --build-arg TEST2=$REACT_APP_OTM_KEY --build-arg TEST3=$REACT_APP_SERVER_URI .
     - docker push $CI_REGISTRY:$TAG
   after_script:
     - docker logout registry.gitlab.com
+
 # reload_image_on_VPS:
 #   image: curlimages/curl:latest
 #   tags: [docker]
