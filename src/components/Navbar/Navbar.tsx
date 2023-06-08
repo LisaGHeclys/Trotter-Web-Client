@@ -18,7 +18,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 
 import "../../scss/navbar.scss";
-import { FC } from "react";
+import React, { FC } from "react";
 
 const Navbar: FC = () => {
   const theme = useTheme();
@@ -50,7 +50,7 @@ const Navbar: FC = () => {
               container
               item
               xs={isMobile ? 10 : 8}
-              className={isMobile ? `drawer` : `pages`}
+              className={isMobile ? "drawer" : "pages"}
             >
               {isMobile ? (
                 <>

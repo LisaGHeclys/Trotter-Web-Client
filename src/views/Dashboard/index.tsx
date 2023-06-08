@@ -1,5 +1,5 @@
 import "./index.scss";
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 
 import { DateRange } from "react-date-range";

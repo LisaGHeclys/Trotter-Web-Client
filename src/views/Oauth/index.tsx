@@ -1,5 +1,5 @@
 import "./index.scss";
-import { FC, useEffect } from "react";
+import React, { FC, useEffect } from "react";
 
 const OauthCallback: FC = () => {
   useEffect(() => {
@@ -19,11 +19,11 @@ const OauthCallback: FC = () => {
   return (
     <>
       <div className="containerOauthCallback">
-        <h1>You're connected !</h1>
+        <h1>You&apos;re connected !</h1>
         <hr />
         <p>
-          Welcome back ! This window should close on its own now. If it doesn't,
-          you can close it manually.
+          Welcome back ! This window should close on its own now. If it
+          doesn&apos;t, you can close it manually.
         </p>
       </div>
     </>

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
+import React from "react";
 
 import LandingPage from "./views/LandingPage";
 import LoginPage from "./views/Login";
@@ -20,7 +21,6 @@ const App: FC = () => {
 
   useEffect(() => {
     dispatch({ type: "LOGIN", payload: localStorage.getItem("jwt") });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

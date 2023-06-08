@@ -19,7 +19,7 @@ import { styled } from "@mui/material/styles";
 
 import "./index.scss";
 import responsive from "../../constants";
-import { FC } from "react";
+import React, { FC } from "react";
 
 const CardContentNoPadding = styled(CardContent)(`
     padding: 0;
@@ -29,38 +29,38 @@ const CardContentNoPadding = styled(CardContent)(`
 `);
 
 const items: JSX.Element[] = [
-  <div className="carouselItems" data-value="1">
+  <div className="carouselItems" data-value="1" key="Lyon">
     <Card style={{ borderRadius: "50px" }}>
       <CardContentNoPadding>
         <img src={Lyon} width="350" height="100%" alt={"lyon"} />
       </CardContentNoPadding>
     </Card>
   </div>,
-  <div className="carouselItems" data-value="2">
+  <div className="carouselItems" data-value="2" key="Seoul">
     <Card style={{ borderRadius: "50px" }}>
       <CardContentNoPadding>
-        <img src={Seoul} width="350" height="100%" alt={"lyon"} />
+        <img src={Seoul} width="350" height="100%" alt={"Seoul"} />
       </CardContentNoPadding>
     </Card>
   </div>,
-  <div className="carouselItems" data-value="3">
+  <div className="carouselItems" data-value="3" key="London">
     <Card style={{ borderRadius: "50px" }}>
       <CardContentNoPadding>
-        <img src={Londre} width="350" height="100%" alt={"lyon"} />
+        <img src={Londre} width="350" height="100%" alt={"London"} />
       </CardContentNoPadding>
     </Card>
   </div>,
-  <div className="carouselItems" data-value="4">
+  <div className="carouselItems" data-value="4" key="Peru">
     <Card style={{ borderRadius: "50px" }}>
       <CardContentNoPadding>
-        <img src={Peru} width="350" height="100%" alt={"lyon"} />
+        <img src={Peru} width="350" height="100%" alt={"Peru"} />
       </CardContentNoPadding>
     </Card>
   </div>,
-  <div className="carouselItems" data-value="4">
+  <div className="carouselItems" data-value="4" key="Auckland">
     <Card style={{ borderRadius: "50px" }}>
       <CardContentNoPadding>
-        <img src={Auckland} width="350" height="100%" alt={"lyon"} />
+        <img src={Auckland} width="350" height="100%" alt={"Auckland"} />
       </CardContentNoPadding>
     </Card>
   </div>
