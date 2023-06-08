@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnyAction, Dispatch } from "redux";
 import { useDispatch } from "react-redux";
@@ -15,6 +15,7 @@ const OauthButton: FC<Oauth2ButtonProps> = ({ service, icon }) => {
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const navigate = useNavigate();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const receiveMessage = (event: any) => {
     // Check if we trust the sender
     if (event.origin !== window.location.origin) {

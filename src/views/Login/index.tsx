@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./index.scss";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -37,8 +37,7 @@ const LoginPage: FC = () => {
         Password: password
       }
     });
-    if (response.data.status !== 200 || !response.data.accessToken) {
-    } else {
+    if (response.data.status === 200 && response.data.accessToken) {
       localStorage.setItem("jwt", response.data.accessToken);
       dispatch({ type: "LOGIN", payload: response.data.accessToken });
       navigate("/travel");

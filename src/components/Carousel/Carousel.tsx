@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import AliceCarousel, { Responsive } from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 
