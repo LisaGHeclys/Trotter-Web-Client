@@ -20,6 +20,7 @@ import { styled } from "@mui/material/styles";
 import "./index.scss";
 import responsive from "../../constants";
 import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 const CardContentNoPadding = styled(CardContent)(`
     padding: 0;
@@ -68,6 +69,7 @@ const items: JSX.Element[] = [
 
 const LandingPage: FC = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -85,7 +87,7 @@ const LandingPage: FC = () => {
           <Navbar />
         </Grid>
         <Grid p={0} m={0} item className={"title"} xs={12}>
-          Travelling alone never has been so easy
+          {t("description.landingPart1")}
         </Grid>
         <Grid p={0} m={0} item className={"backgroundCarousel"} xs={12}>
           <div className="blur"></div>
@@ -98,8 +100,7 @@ const LandingPage: FC = () => {
           />
         </Grid>
         <Grid p={0} m={0} item className={"description"} xs={isMobile ? 8 : 6}>
-          Plan your solo trip with us and discover the activities we can offer
-          you
+          {t("description.landingPart2")}
         </Grid>
       </Grid>
     </div>

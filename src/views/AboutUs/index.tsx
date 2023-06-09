@@ -14,6 +14,7 @@ import Lilian from "../../assets/team/Lilian.png";
 import "./index.scss";
 import React, { FC } from "react";
 import responsive from "../../constants";
+import { useTranslation } from "react-i18next";
 
 const items: JSX.Element[] = [
   <div className="carouselItems" data-value="1" key="Maxence">
@@ -91,25 +92,24 @@ const items: JSX.Element[] = [
 ];
 
 const AboutUs: FC = () => {
+  const { t } = useTranslation();
   return (
     <>
       <Navbar />
       <div className="containerAboutUs">
         <div className="containerStory">
-          <h1>Our project</h1>
+          <h1>{t("description.aboutPart1")}</h1>
           <hr />
           <p>
-            Trotter is the mobile application that automates the travel planning
-            process for solo travellers.
+            {t("description.aboutPart2")}
             <br />
-            Take advantage of itineraries adapted to your desires and your trip,
-            live close to the locals and meet other international travellers.
+            {t("description.aboutPart3")}
             <br />
-            Trotter is the perfect tool to make your trip unforgettable.
+            {t("description.aboutPart4")}
           </p>
         </div>
         <div className="containerMembers">
-          <h1>Our members</h1>
+          <h1>{t("description.aboutPart5")}</h1>
           <hr />
           <Carousel items={items} responsive={responsive} />
         </div>
