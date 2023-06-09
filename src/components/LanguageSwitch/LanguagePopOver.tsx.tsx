@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import React, { FC } from "react";
 import { useCallback } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";

@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { usePopover } from "../../hooks/use-popover";
