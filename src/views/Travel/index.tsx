@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AnyAction, Dispatch } from "redux";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";
 
 const TravelPage: FC = () => {
   const theme = useTheme();
@@ -38,6 +39,7 @@ const TravelPage: FC = () => {
   const [isFav, setIsFav] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<AnyAction>>();
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -63,7 +65,7 @@ const TravelPage: FC = () => {
             xs={isMobile ? 12 : 6}
           >
             <Grid item p={0} m={0} xs={12} mb={2}>
-              Plan your travel
+              {t("description.travelPart1")}
             </Grid>
             <Grid
               container
@@ -72,7 +74,7 @@ const TravelPage: FC = () => {
               className={"input"}
               style={{ marginTop: isMobile ? "0px" : "35px" }}
             >
-              Location
+              {t("description.travelPart2")}
               <input
                 placeholder="City..."
                 onChange={(e) => setCity(e.target.value)}
@@ -80,7 +82,7 @@ const TravelPage: FC = () => {
               />
             </Grid>
             <Grid container item xs={isMobile ? 6 : 12} className={"input"}>
-              Date
+              {t("description.travelPart3")}
               <input
                 type={"date"}
                 placeholder="From ... to ..."
@@ -96,7 +98,7 @@ const TravelPage: FC = () => {
                 }}
                 data-testid="goOnTrip"
               >
-                Submit
+                {t("description.travelPart4")}
               </button>
             </Grid>
           </Grid>
@@ -117,7 +119,7 @@ const TravelPage: FC = () => {
           xs={8}
         >
           <Grid item p={0} m={0} xs={12} className={"textPlaces"}>
-            Popular places
+            {t("description.travelPart5")}
           </Grid>
           <Grid item className={"favoritePlaces"}>
             <Grid item>

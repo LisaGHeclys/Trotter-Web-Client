@@ -10,6 +10,7 @@ import { AnyAction, Dispatch } from "redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import OauthButton from "../../components/Oauth/OauthButton";
+import { useTranslation } from "react-i18next";
 
 enum OauthServices {
   google = "google",
@@ -23,6 +24,7 @@ const LoginPage: FC = () => {
   const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   async function login() {
     const response = await axios({
@@ -51,7 +53,7 @@ const LoginPage: FC = () => {
         <img src="/login.jpg" className="bgImage" alt="Mountain landscape" />
         <div className="loginForm">
           <div className="flexColumn">
-            <h2>Login to your account</h2>
+            <h2>{t("description.logInPart1")}</h2>
             <input
               type="text"
               placeholder="Email"
@@ -73,7 +75,7 @@ const LoginPage: FC = () => {
               }}
               data-testid="submitLogin"
             >
-              Submit
+              {t("description.logInPart2")}
             </button>
           </div>
           <hr className="lineText" data-content="Or sign with" />
