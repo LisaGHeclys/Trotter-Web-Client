@@ -4,8 +4,10 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 
 import { DateRange } from "react-date-range";
 import { Range } from "react-date-range/index";
+import { useTranslation } from "react-i18next";
 
 const Dashboard: FC = () => {
+  const { t } = useTranslation();
   const [range, setRange] = useState<Range[]>([
     {
       startDate: new Date(),
@@ -19,7 +21,7 @@ const Dashboard: FC = () => {
       <Sidebar />
       <div className="dashboardContent">
         <div className="dashboardElement">
-          <h2>calendar</h2>
+          <h2>{t("description.dashboardPart1")}</h2>
           <hr />
           <DateRange
             editableDateInputs={true}
@@ -43,11 +45,11 @@ const Dashboard: FC = () => {
           />
         </div>
         <div className="dashboardElement">
-          <h2>travel</h2>
+          <h2>{t("description.dashboardPart2")}</h2>
           <hr />
         </div>
         <div className="dashboardElement">
-          <h2>exemple post-it</h2>
+          <h2>{t("description.dashboardPart3")}</h2>
           <hr />
         </div>
       </div>

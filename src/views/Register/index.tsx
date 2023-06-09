@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import OauthButton from "../../components/Oauth/OauthButton";
+import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 enum OauthServices {
   google = "google",
@@ -19,13 +21,13 @@ enum OauthServices {
   twitter = "twitter",
   linkedin = "linkedin"
 }
-import { useDispatch } from "react-redux";
 
 const RegisterPage: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   async function register() {
     const response = await axios({
@@ -54,11 +56,11 @@ const RegisterPage: FC = () => {
     <>
       <Navbar />
       <div className="register">
-        <p className="registerTitle">Create a new account</p>
+        <p className="registerTitle">{t("description.registerPart1")}</p>
         <div className="registerText">
-          Already a member ?{" "}
+          {t("description.registerPart2")}{" "}
           <Link to="/login" className="registerLogin">
-            Log in
+            {t("description.registerPart3")}
           </Link>
         </div>
         <div className="registerForm">
@@ -79,7 +81,7 @@ const RegisterPage: FC = () => {
             onClick={register}
             data-testid="submitRegister"
           >
-            Register
+            {t("description.registerPart4")}
           </button>
           <hr className="lineText" data-content="Or sign with" />
           <div className="alternateLogins">

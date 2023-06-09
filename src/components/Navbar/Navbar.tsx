@@ -11,7 +11,7 @@ import {
 
 import simpleLogo from "../../assets/simpleLogo.png";
 
-import routesList from "../RoutesParams";
+import { LanguageSwitch } from "../LanguageSwitch/LanguageSwitch";
 
 import DrawerComponent from "./DrawerComponent";
 import Login from "./Login";
@@ -19,10 +19,36 @@ import SignUp from "./SignUp";
 
 import "../../scss/navbar.scss";
 import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 const Navbar: FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const { t } = useTranslation();
+  type RoutesListType = {
+    name: string;
+    routes: string;
+  }[];
+
+  const routesList: RoutesListType = [
+    {
+      name: t("description.navbarPart1"),
+      routes: "/"
+    },
+    {
+      name: t("description.navbarPart2"),
+      routes: "/travel"
+    },
+    {
+      name: t("description.navbarPart3"),
+      routes: "/destination"
+    },
+    {
+      name: t("description.navbarPart4"),
+      routes: "/about"
+    }
+  ];
 
   return (
     <header>
@@ -55,15 +81,33 @@ const Navbar: FC = () => {
               {isMobile ? (
                 <>
                   <DrawerComponent />
+                  <LanguageSwitch />
                 </>
               ) : (
-                routesList.map((route, index: number) => (
-                  <Grid item xs={isMobile ? 0 : 2} columnGap={2} key={index}>
-                    <Link className={"text"} to={route.routes}>
-                      {route.name}
-                    </Link>
-                  </Grid>
-                ))
+                <>
+                  {routesList.map((route, index: number) => (
+                    <Grid
+                      item
+                      xs={isMobile ? 0 : 2}
+                      columnGap={2}
+                      key={index}
+                      sx={{
+                        textAlign: "center",
+                        whiteSpace: "nowrap",
+                        px: 1
+                      }}
+                    >
+                      <Link
+                        className={"text"}
+                        to={route.routes}
+                        style={{ fontSize: 22 }}
+                      >
+                        {route.name}
+                      </Link>
+                    </Grid>
+                  ))}
+                  <LanguageSwitch />
+                </>
               )}
             </Grid>
             {!isMobile && (

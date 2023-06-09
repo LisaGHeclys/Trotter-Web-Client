@@ -15,6 +15,7 @@ import AboutUs from "./views/AboutUs";
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import OauthCallback from "./views/Oauth";
+import "./i18n/config";
 
 const App: FC = () => {
   const dispatch = useDispatch();
