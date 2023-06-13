@@ -11,13 +11,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import OauthButton from "../../components/Oauth/OauthButton";
 import { useTranslation } from "react-i18next";
-
-enum OauthServices {
-  google = "google",
-  facebook = "facebook",
-  twitter = "twitter",
-  linkedin = "linkedin"
-}
+import { OauthServices } from "../../model/LoginPage/LoginPage";
 
 const LoginPage: FC = () => {
   const [email, setEmail] = useState<string>("");

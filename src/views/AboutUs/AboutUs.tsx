@@ -12,19 +12,26 @@ import Florian from "../../assets/team/Florian.png";
 import Lilian from "../../assets/team/Lilian.png";
 
 import "./index.scss";
-import React, { FC } from "react";
+import React from "react";
 import responsive from "../../constants";
 import { useTranslation } from "react-i18next";
+import { TrotterMemberProps } from "../../model/AboutUs/AboutUs";
+
+/*const Member = ({name, job, image} : TrotterMemberProps) => {
+  return (
+      <div className="carouselItems" key={name}>
+        <img className="MaxenceImg" src={Maxence} alt="Maxence" />
+        <p>
+          Maxence Pellouin
+          <br />
+          CEO
+        </p>
+      </div>
+  )
+}
 
 const items: JSX.Element[] = [
-  <div className="carouselItems" data-value="1" key="Maxence">
-    <img className="MaxenceImg" src={Maxence} alt="Maxence" />
-    <p>
-      Maxence Pellouin
-      <br />
-      CEO
-    </p>
-  </div>,
+  ,
   <div className="carouselItems" data-value="2" key="Laurent">
     <img className="LaurentImg" src={Laurent} alt="Laurent" />
     <p>
@@ -89,9 +96,9 @@ const items: JSX.Element[] = [
       Developper Front-end
     </p>
   </div>
-];
+];*/
 
-const AboutUs: FC = () => {
+const AboutUs = () => {
   const { t } = useTranslation();
   return (
     <>
@@ -111,7 +118,6 @@ const AboutUs: FC = () => {
         <div className="containerMembers">
           <h1>{t("description.aboutPart5")}</h1>
           <hr />
-          <Carousel items={items} responsive={responsive} />
         </div>
       </div>
     </>

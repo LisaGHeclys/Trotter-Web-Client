@@ -2,11 +2,10 @@ import "./index.scss";
 import React, { FC, useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 
-import { DateRange } from "react-date-range";
-import { Range } from "react-date-range/index";
+import { DateRange, Range } from "react-date-range";
 import { useTranslation } from "react-i18next";
 
-const Dashboard: FC = () => {
+const DashboardPage: FC = () => {
   const { t } = useTranslation();
   const [range, setRange] = useState<Range[]>([
     {
@@ -57,4 +56,4 @@ const Dashboard: FC = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardPage;
