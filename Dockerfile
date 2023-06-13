@@ -7,6 +7,8 @@ COPY package*.json ./
 
 RUN npm ci
 
+RUN ls
+
 ARG TEST1
 ARG TEST2
 ARG TEST3
