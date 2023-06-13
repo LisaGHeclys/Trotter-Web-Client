@@ -14,13 +14,7 @@ import axios from "axios";
 import OauthButton from "../../components/Oauth/OauthButton";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-
-enum OauthServices {
-  google = "google",
-  facebook = "facebook",
-  twitter = "twitter",
-  linkedin = "linkedin"
-}
+import { OauthServices } from "../../model/LoginPage/LoginPage";
 
 const RegisterPage: FC = () => {
   const [email, setEmail] = useState<string>("");

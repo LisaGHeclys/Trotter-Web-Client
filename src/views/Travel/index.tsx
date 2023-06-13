@@ -142,7 +142,7 @@ const TravelPage: FC = () => {
                   setIsFav(!isFav);
                 }}
               >
-                {isFav === false ? <FavoriteBorderIcon /> : <FavoriteIcon />}
+                {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               </IconButton>
             </Grid>
           </Grid>

@@ -1,6 +1,5 @@
 import React from "react";
-import Navbar from "../../components/Navbar/Navbar";
-import { styled } from "@mui/material/styles";
+import styled from "styled-components";
 import {
   Card,
   CardContent,
@@ -14,6 +13,7 @@ import Seoul from "../../assets/seoul.jpg";
 import London from "../../assets/londre.jpg";
 import Peru from "../../assets/peru.jpg";
 import Auckland from "../../assets/auckland.jpg";
+import Navbar from "../../components/Navbar/Navbar";
 
 import "./index.scss";
 import responsive from "../../constants";
