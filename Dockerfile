@@ -1,23 +1,16 @@
-FROM node:lts-alpine
-
-# RUN apk add --update nodejs npm
+FROM nginx:1.25.0-alpine
 
 WORKDIR /usr/src/app
-COPY package*.json ./
 
-RUN npm ci
+COPY build /usr/share/nginx/html
+COPY nginx/nginx.conf /etc/nginx/conf.d/
 
-ARG TEST1
-ARG TEST2
-ARG TEST3
-ENV REACT_APP_MAPBOX_TOKEN=$TEST1
-ENV REACT_APP_OTM_KEY=$TEST2
-ENV REACT_APP_SERVER_URI=$TEST3
+RUN ls
+RUN pwd
 
-COPY . .
+RUN rm /etc/nginx/conf.d/default.conf
 
-RUN npm run build
 
-EXPOSE 3000
+EXPOSE 80
 
-CMD ["npm", "run", "start"]
+CMD ["nginx", "-g", "daemon off;"]
