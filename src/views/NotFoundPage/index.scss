@@ -1,0 +1,54 @@
+@import "../../scss/_vars.scss";
+
+.world {
+  width: 150px;
+  height: 150px;
+  border-radius: 150px;
+  background: #7baecb;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+.land {
+  position: absolute;
+  height: 20px;
+  background: #99cc99;
+  border-radius: 150px;
+}
+
+.clouds {
+  width: 170px;
+  height: 170px;
+  border-radius: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+.cloud {
+  width: 20px;
+  height: 10px;
+  background: white;
+  border-radius: 20px;
+}
+.description-notfound {
+    padding-top: 20px;
+  h1 {
+    color: $text;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  p {
+    color: $text;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-right: 25%;
+    margin-left: 25%;
+    margin-top: 20px;
+  }
+}

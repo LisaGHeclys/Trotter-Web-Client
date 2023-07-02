@@ -43,6 +43,9 @@
     "profileDeletePart2": "¿Está seguro de que desea eliminar la cuenta?",
     "profileDeletePart3": "Una vez que decida eliminarlo, no podrá recuperarlo y todos sus datos también se eliminarán.",
     "profileDeletePart4": "Cancelar",
-    "profileDeletePart5": "Borrar"
+    "profileDeletePart5": "Borrar",
+    "notFoundPart1": "¡Ups! Te has perdido en el ciberespacio",
+    "notFoundPart2": "Lo sentimos, pero la página que estás buscando está en vacaciones digitales. Nuestro equipo está trabajando para traerlo de vuelta. Mientras tanto, ¿por qué no explora nuestras otras páginas?",
+    "notFoundPart3": "¡Sigue navegando!"
   }
 }

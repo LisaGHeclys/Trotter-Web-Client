@@ -19,7 +19,7 @@ export const resources = {
 i18next.use(initReactI18next).init({
   lng: localStorage.getItem("language")
     ? String(localStorage.getItem("language"))
-    : "en", // if you're using a language detector, do not define the lng option
+    : "en",
   debug: true,
   fallbackLng: "en",
   resources

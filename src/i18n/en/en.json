@@ -43,6 +43,9 @@
     "profileDeletePart2": "Are you sure you want to delete the account?",
     "profileDeletePart3": "Once you decide to delete it, it cannot be recovered and all your data will be deleted as well.",
     "profileDeletePart4": "Cancel",
-    "profileDeletePart5": "Delete"
+    "profileDeletePart5": "Delete",
+    "notFoundPart1": "Oops! You've lost your way in cyberspace.",
+    "notFoundPart2": "Sorry, but the page you're looking for is on a digital vacation. Our team is working to bring it back. In the meantime, why not explore our other pages?",
+    "notFoundPart3": "Keep browsing!"
   }
 }

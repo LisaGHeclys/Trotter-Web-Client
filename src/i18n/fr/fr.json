@@ -43,6 +43,9 @@
     "profileDeletePart2": "Voulez-vous vraiment supprimer le compte ?",
     "profileDeletePart3": "Une fois que vous décidez de le supprimer, il ne peut pas être récupéré et toutes vos données seront également supprimées.",
     "profileDeletePart4": "Annuler",
-    "profileDeletePart5": "Supprimer"
+    "profileDeletePart5": "Supprimer",
+    "notFoundPart1": "Oops! Vous vous êtes égaré dans le cyberespace.",
+    "notFoundPart2": "Désolé, mais la page que vous recherchez est en vacances. Notre équipe travaille pour le ramener. En attendant, pourquoi ne pas explorer nos autres pages ?",
+    "notFoundPart3": "Continuez à naviguer !"
   }
 }
