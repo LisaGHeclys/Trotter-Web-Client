@@ -9,11 +9,9 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
 import Navbar from "../../components/Navbar/Navbar";
 import Louvre from "../../assets/PalaisLouvre.jpg";
 import London from "../../assets/London.jpg";
-
 import "./index.scss";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
