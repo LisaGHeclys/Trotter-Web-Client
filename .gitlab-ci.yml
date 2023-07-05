@@ -33,7 +33,7 @@ build:
   interruptible: true
   artifacts:
     paths:
-      - dist/
+      - build/
     expire_in: 1 day
   needs:
     - Install Dependencies
@@ -88,7 +88,6 @@ deploy_image:
     - docker push $CI_REGISTRY:$TAG
   after_script:
     - docker logout registry.gitlab.com
-
 # reload_image_on_VPS:
 #   image: curlimages/curl:latest
 #   tags: [docker]
