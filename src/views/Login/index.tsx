@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./index.scss";
 import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
+import FacebookSharpIcon from "@mui/icons-material/FacebookSharp";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { useDispatch } from "react-redux";
@@ -50,7 +50,6 @@ const LoginPage: FC = () => {
     <>
       <Navbar />
       <div className="loginFormWrapper">
-        <img src="/login.jpg" className="bgImage" alt="Mountain landscape" />
         <div className="loginForm">
           <div className="flexColumn">
             <h2>{t("description.logInPart1")}</h2>
@@ -68,6 +67,7 @@ const LoginPage: FC = () => {
               className="loginInput"
               data-testid="passwordInput"
             />
+            <p className="forgotPassword">{t("description.forgotPassword")}</p>
             <button
               className="loginButton"
               onClick={() => {
@@ -78,7 +78,7 @@ const LoginPage: FC = () => {
               {t("description.logInPart2")}
             </button>
           </div>
-          <hr className="lineText" data-content="Or sign with" />
+          <hr className="lineText" data-content={t("description.separator")} />
           <div className="alternateLogins">
             <OauthButton
               service={OauthServices.google}
@@ -86,7 +86,7 @@ const LoginPage: FC = () => {
             />
             <OauthButton
               service={OauthServices.facebook}
-              icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
+              icon={<FacebookSharpIcon style={{ width: 45, height: 45 }} />}
             />
             <OauthButton
               service={OauthServices.twitter}
@@ -96,6 +96,26 @@ const LoginPage: FC = () => {
               service={OauthServices.linkedin}
               icon={<LinkedInIcon style={{ width: 45, height: 45 }} />}
             />
+          </div>
+        </div>
+        <div className="imageWrapper">
+          <img
+            src="/login.jpg"
+            alt="loginImageMontain"
+            className="imageWrapper"
+          />
+          <div className="registerCard">
+            <h1>Welcome !</h1>
+            <br />
+            <h2>Do not have an account ?</h2>
+            <button
+              className="registerLinkPageButton"
+              onClick={() => {
+                navigate("/register");
+              }}
+            >
+              {t("description.registerPart4")}
+            </button>
           </div>
         </div>
       </div>

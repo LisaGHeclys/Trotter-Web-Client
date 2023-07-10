@@ -41,10 +41,6 @@ const Navbar: FC = () => {
       routes: "/travel"
     },
     {
-      name: t("description.navbarPart3"),
-      routes: "/destination"
-    },
-    {
       name: t("description.navbarPart4"),
       routes: "/about"
     }

@@ -1,134 +1,178 @@
 @import "../../scss/_vars.scss";
 
-.loginForm {
-  margin: auto;
-  width: 360px;
-  height: 480px;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-radius: 25px;
-  border: 1px solid white;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  justify-content: space-between;
-  align-items: center;
-  z-index: 2;
-}
-
-.bgImage {
-  position: absolute;
-  aspect-ratio: 1/1;
-  top: 80px;
-  left: -10px;
-  width: 120%;
-  height: calc(100% - 80px);
-  z-index: 1;
-  filter: blur(5px);
-}
-
 .loginFormWrapper {
-  position: relative;
+  display: flex;
+  flex-direction: row;
   width: 100%;
   height: 100%;
+  overflow-y: hidden;
+
+  .loginForm {
+    flex: 1;
+    margin-top: 200px;
+
+    @media screen and (max-width: 912px) {
+      margin-top: 100px;
+    }
+
+    .flexColumn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .loginInput {
+        background-color: $bg;
+        width: 400px;
+        height: 60px;
+        padding: 0 10px;
+        border: 1px solid lightgray;
+        border-radius: 10px;
+        font-size: 16px;
+        outline: none;
+
+        @media screen and (max-width: 540px) {
+          width: 320px;
+          height: 50px;
+        }
+      }
+      .loginButton {
+        margin-top: 34px;
+        width: 180px;
+        height: 48px;
+        z-index: 1;
+
+        background-color: $grey;
+        border: none;
+        border-radius: 10px;
+        color: $text;
+        cursor: pointer;
+
+        font-weight: bold;
+        font-size: 20px;
+
+        &:hover {
+          background-color: $links;
+          transition-duration: 0.4s;
+        }
+      }
+    }
+
+    .lineText {
+      line-height: 1em;
+      width: 50%;
+      outline: 0;
+      border: 0;
+      position: relative;
+      text-align: center;
+      margin-top: 42px;
+
+      color: $grey;
+      opacity: 0.5;
+
+      &:before {
+        content: "";
+        background: linear-gradient(to right, transparent, $text, transparent);
+
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height: 1px;
+      }
+
+      &:after {
+        content: attr(data-content);
+        position: relative;
+        display: inline-block;
+        color: $text;
+
+        padding: 0 0.5em;
+        line-height: 1.5em;
+        background-color: $bg;
+      }
+    }
+  }
+}
+
+.imageWrapper {
+  flex: 1;
+  margin-left: auto;
+  filter: brightness(70%);
+  width: 100%;
+  height: 980px;
+  border-radius: 200px 0 0 0;
+
+  @media screen and (max-width: 912px) {
+    display: none;
+  }
+
+  .registerCard {
+    position: absolute;
+    top: 25%;
+    left: 340px;
+    color: $bg;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .registerLinkPageButton {
+    margin-top: 34px;
+    width: 180px;
+    height: 48px;
+    z-index: 1;
+
+    background-color: $grey;
+    border: none;
+    border-radius: 10px;
+    color: $bg;
+    cursor: pointer;
+
+    font-weight: bold;
+    font-size: 20px;
+
+    &:hover {
+      background-color: gray;
+      transition-duration: 0.4s;
+    }
+  }
+}
+
+.forgotPassword {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: none;
-}
-
-.flexColumn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.loginInput {
-  width: 280px;
-  height: 40px;
-  margin: 12px 0px;
-  padding: 0 10px;
-  border: 1px solid lightgray;
-  border-radius: 10px;
-  font-size: 16px;
-  outline: none;
-}
-
-.loginButton {
-  margin: 2.5%;
-  width: 180px;
-  height: 48px;
-  z-index: 1;
-
-  background-color: $links;
-  border: 1px $links solid;
-  border-radius: 40px;
-  color: $white;
+  margin-left: 220px;
+  margin-top: 0;
+  justify-content: right;
+  color: gray;
   cursor: pointer;
 
-  font-weight: bolder;
-  font-size: 20px;
-
   &:hover {
-    background-color: $blueGreen;
-    transition-duration: 0.4s;
-  }
-}
-
-.lineText {
-  line-height: 1em;
-  width: 80%;
-  outline: 0;
-  border: 0;
-  position: relative;
-  text-align: center;
-
-  color: $grey;
-  opacity: 0.5;
-
-  &:before {
-    content: "";
-    background: linear-gradient(to right, transparent, $text, transparent);
-
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    height: 1px;
-  }
-
-  &:after {
-    content: attr(data-content);
-    position: relative;
-    display: inline-block;
-    color: $text;
-
-    padding: 0 0.5em;
-    line-height: 1.5em;
-    background-color: white;
+    color: $links;
+    transition-duration: 0.3s;
   }
 }
 
 .alternateLogins {
+  margin-top: 60px;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   width: 100%;
   padding-bottom: 24px;
   z-index: 1;
+  gap: 48px;
 
   button {
     width: 60px;
     height: 60px;
-    border: 1px $text solid;
-    border-radius: 10px;
+    border: none;
+    border-radius: 50%;
     background-color: $bg;
     cursor: pointer;
 
     &:hover {
-      border: 1px $detail solid;
-      background-color: $white;
+      background-color: #cccc;
       transition-duration: 0.4s;
     }
 
