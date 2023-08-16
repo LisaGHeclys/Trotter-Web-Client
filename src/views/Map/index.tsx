@@ -5,7 +5,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { Range } from "react-date-range";
 import { useSelector } from "react-redux";
-import { getCoordinates, newDropoffs } from "./functions";
+import { getCoordinates } from "./service";
 import {
   GeolocateControl,
   Layer,
@@ -17,15 +17,14 @@ import {
   Source
 } from "react-map-gl";
 import { FeatureCollection } from "geojson";
-import { Popup } from "mapbox-gl";
+import { Popup, MapLayerMouseEvent } from "mapbox-gl";
 import Routes from "./Routes";
 import { RootState } from "../../store";
 import { Button, IconButton } from "@mui/material";
 import { format, addDays } from "date-fns";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { SearchState } from "../../reducers/search.reducers";
-import { Feature, Geometry, Position } from "@turf/helpers";
-import { GeoJsonProperties } from "geojson";
+import { Geometry, Position } from "@turf/helpers";
 
 type BaseMapProps = {
   length: number;
@@ -43,12 +42,24 @@ type FeatureDTO = {
 
 export type GeoJsonRes = {
   features: {
-    geometry: {
-      coordinates: Position[];
-    };
-    properties: {
-      name: string;
-    };
+    features: {
+      geometry: {
+        coordinates: Position[];
+      };
+      properties: {
+        name: string;
+      };
+    }[];
+  }[];
+  routes: {
+    features: {
+      geometry: {
+        coordinates: Position[];
+      };
+      properties: {
+        name: string;
+      };
+    }[];
   }[];
 };
 
@@ -114,6 +125,48 @@ const BaseMap: FC = () => {
     [length]
   );
 
+  const handleMapClick = async (e: MapLayerMouseEvent) => {
+    if (!e.features || (e.features[0]?.layer?.id ?? "") !== "city-layer")
+      return;
+    setCityName(e.features[0].properties?.name || "");
+    setLng(e.features[0].properties?.longitude || 0);
+    setLat(e.features[0].properties?.latitude || 0);
+    mapRef.current?.flyTo({
+      center: [
+        e.features[0].properties?.longitude || 0,
+        e.features[0].properties?.latitude || 0
+      ],
+      zoom: 10,
+      duration: 1000
+    });
+  };
+
+  const handleMapDblClick = async (e: MapLayerMouseEvent) => {
+    if (isHotelSelectionActivated) {
+      const newMarker = (
+        <Marker
+          key={markers.length}
+          longitude={e.lngLat.lng}
+          latitude={e.lngLat.lat}
+        >
+          <img
+            width={36}
+            height={36}
+            alt={"hotel"}
+            src={
+              "https://em-content.zobj.net/source/microsoft-teams/337/house_1f3e0.png"
+            }
+            className="hotelMarker"
+          />
+        </Marker>
+      );
+      setHotel([newMarker]);
+      setLng(e.lngLat.lng);
+      setLat(e.lngLat.lat);
+      setIsHotelSelectionActivated(false);
+    }
+  };
+
   useEffect(() => {
     if (range.length === 0 || !range[0].endDate || !range[0].startDate) return;
     const diffTime = Math.abs(
@@ -153,31 +206,25 @@ const BaseMap: FC = () => {
         setRoutes({});
         const resJson: GeoJsonRes = await ress.json();
 
-        const featuresPerDay = resJson.features
-          ?.map((feature, i) => {
-            return i % 5 === 0 ? resJson.features.slice(i, i + 5) : null;
-          })
-          .filter((feature) => feature !== null);
-        featuresPerDay.forEach(async (features, i) => {
-          if (!features) return;
-          const geoJsonFromFeatures = {
-            ...resJson,
-            features: features as unknown as Feature<
-              Geometry,
-              GeoJsonProperties
-            >[]
-          };
-          setDropoffs((old) => ({
-            ...old,
-            [i]: geoJsonFromFeatures as unknown as FeatureCollection
-          }));
-          const coords = [lng, lat];
-          const route = await newDropoffs(coords as number[], {
-            ...resJson,
-            features: features
+        if (resJson.features) {
+          resJson.features.forEach(async (features, i) => {
+            if (!features) return;
+            setDropoffs((old) => ({
+              ...old,
+              [i]: features as unknown as FeatureCollection
+            }));
           });
-          setRoutes((old) => ({ ...old, [i]: route }));
-        });
+        }
+
+        if (resJson.routes) {
+          resJson.routes.forEach(async (routes, i) => {
+            if (!routes) return;
+            setRoutes((old) => ({
+              ...old,
+              [i]: routes
+            }));
+          });
+        }
       } catch (e) {
         console.log(e);
       }
@@ -351,49 +398,8 @@ const BaseMap: FC = () => {
           interactiveLayerIds={["city-layer"]}
           onMouseEnter={() => setCursor("pointer")}
           onMouseLeave={() => setCursor("grab")}
-          onClick={async (e) => {
-            if (
-              !e.features ||
-              (e.features[0]?.layer?.id ?? "") !== "city-layer"
-            )
-              return;
-            setCityName(e.features[0].properties?.name || "");
-            setLng(e.features[0].properties?.longitude || 0);
-            setLat(e.features[0].properties?.latitude || 0);
-            mapRef.current?.flyTo({
-              center: [
-                e.features[0].properties?.longitude || 0,
-                e.features[0].properties?.latitude || 0
-              ],
-              zoom: 10,
-              duration: 1000
-            });
-          }}
-          onDblClick={async (e) => {
-            if (isHotelSelectionActivated) {
-              const newMarker = (
-                <Marker
-                  key={markers.length}
-                  longitude={e.lngLat.lng}
-                  latitude={e.lngLat.lat}
-                >
-                  <img
-                    width={36}
-                    height={36}
-                    alt={"hotel"}
-                    src={
-                      "https://em-content.zobj.net/source/microsoft-teams/337/house_1f3e0.png"
-                    }
-                    className="hotelMarker"
-                  />
-                </Marker>
-              );
-              setHotel([newMarker]);
-              setLng(e.lngLat.lng);
-              setLat(e.lngLat.lat);
-              setIsHotelSelectionActivated(false);
-            }
-          }}
+          onClick={handleMapClick}
+          onDblClick={handleMapDblClick}
         >
           <GeolocateControl
             positionOptions={{ enableHighAccuracy: true }}
@@ -421,7 +427,6 @@ const BaseMap: FC = () => {
 
           {markers.map((marker) => marker)}
           {hotel.map((marker) => marker)}
-          {console.log(routes)}
           <Routes
             routes={routes}
             colors={weekColors}
