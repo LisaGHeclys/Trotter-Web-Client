@@ -3,14 +3,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import React from "react";
 
-import LoginPage from "./views/Login";
 import RegisterPage from "./views/Register";
 import BaseMap from "./views/Map";
 import TravelPage from "./views/Travel";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import OauthCallback from "./views/Oauth";
 import "./i18n/config";
+import LoginPage from "./views/LoginPage/LoginPage";
 
 const App = () => {
   const dispatch = useDispatch();
