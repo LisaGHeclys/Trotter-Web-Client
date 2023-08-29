@@ -9,7 +9,7 @@ import {
   Grid
 } from "@mui/material";
 
-import simpleLogo from "../../assets/simpleLogo.png";
+import simpleLogo from "../../assets/Trotter_logo.png";
 
 import { LanguageSwitch } from "../LanguageSwitch/LanguageSwitch";
 
