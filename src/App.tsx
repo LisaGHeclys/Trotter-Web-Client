@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
-import RegisterPage from "./views/Register";
+import RegisterPage from "./views/Authentification/Register";
 import BaseMap from "./views/Map";
 import TravelPage from "./views/Travel";
-import OauthCallback from "./views/Oauth";
-import LoginPage from "./views/LoginPage/LoginPage";
+import OauthCallback from "./views/Authentification/Oauth";
+import LoginPage from "./views/Authentification/LoginPage/LoginPage";
 import "./i18n/config";
 import "./App.css";
 

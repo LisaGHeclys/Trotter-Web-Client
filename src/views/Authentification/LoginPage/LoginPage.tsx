@@ -7,11 +7,11 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../../components/Navbar/Navbar";
 import { useTranslation } from "react-i18next";
-import OauthButton from "../../components/Oauth/OauthButton";
+import OauthButton from "../../../components/Oauth/OauthButton";
 import { loginUser } from "./LoginPage.utils";
-import { OauthServices } from "./LoginPage.type";
+import { OauthServices } from "../Authentification.type";
 import "./index.scss";
 
 const LoginPage: FC = () => {
