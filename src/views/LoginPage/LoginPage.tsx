@@ -14,60 +14,6 @@ import { OauthServices } from "../../model/LoginPage/LoginPage";
 import { loginUser } from "./LoginPage.utils";
 import styled from "styled-components";
 
-const LoginWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-`;
-
-const LoginImage = styled.img`
-  position: absolute;
-  aspect-ratio: 1/1;
-  top: 80px;
-  left: -10px;
-  width: 120%;
-  height: calc(100% - 80px);
-  z-index: 1;
-  filter: blur(5px);
-`;
-
-const FormWrapper = styled.div`
-  margin: auto;
-  width: 360px;
-  height: 480px;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-radius: 25px;
-  border: 1px solid white;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  justify-content: space-between;
-  align-items: center;
-  z-index: 2;
-`;
-
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const LoginInput = styled.input`
-  width: 280px;
-  height: 40px;
-  margin: 12px 0px;
-  padding: 0 10px;
-  border: 1px solid lightgray;
-  border-radius: 10px;
-  font-size: 16px;
-  outline: none;
-`;
-
 const LoginPage: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
@@ -143,5 +89,59 @@ const LoginPage: FC = () => {
     </>
   );
 };
+
+const LoginWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+`;
+
+const LoginImage = styled.img`
+  position: absolute;
+  aspect-ratio: 1/1;
+  top: 80px;
+  left: -10px;
+  width: 120%;
+  height: calc(100% - 80px);
+  z-index: 1;
+  filter: blur(5px);
+`;
+
+const FormWrapper = styled.div`
+  margin: auto;
+  width: 360px;
+  height: 480px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 25px;
+  border: 1px solid white;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+`;
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const LoginInput = styled.input`
+  width: 280px;
+  height: 40px;
+  margin: 12px 0px;
+  padding: 0 10px;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+`;
 
 export default LoginPage;

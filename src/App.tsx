@@ -1,16 +1,14 @@
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import "./App.css";
-import React from "react";
-
+import styled from "styled-components";
 import RegisterPage from "./views/Register";
 import BaseMap from "./views/Map";
 import TravelPage from "./views/Travel";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import OauthCallback from "./views/Oauth";
-import "./i18n/config";
 import LoginPage from "./views/LoginPage/LoginPage";
+import "./i18n/config";
+import "./App.css";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -20,7 +18,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="page">
+    <AppWrapper>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<TravelPage />} />
@@ -30,8 +28,14 @@ const App = () => {
           <Route path="/map" element={<BaseMap />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </AppWrapper>
   );
 };
+
+const AppWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #f3f4f8;
+`;
 
 export default App;

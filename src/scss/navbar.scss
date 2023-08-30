@@ -1,30 +1,5 @@
 @import "../scss/_vars.scss";
 
-.navbar {
-  padding: 0px;
-  display: flex;
-  align-items: center;
-  background-color: rgba($color: $bg, $alpha: 0);
-  z-index: 9999;
-
-  .pages {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .drawer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-}
-
-.grid {
-  display: flex;
-  align-items: center;
-}
-
 .logo {
   display: flex;
   align-items: center;
@@ -71,48 +46,4 @@
   align-self: center;
   text-align: center;
   justify-content: flex-end;
-}
-
-.login {
-  display: flex;
-  align-items: center;
-  align-self: center;
-  text-align: center;
-  justify-content: space-between;
-  color: $black;
-  font-weight: 700;
-  font-size: 20px;
-  text-decoration: none;
-  font-family: $font;
-  transition: all ease-in-out 0.2s;
-}
-
-.login:hover {
-  color: $detail;
-}
-
-.signUp {
-  display: flex;
-  align-items: center;
-  align-self: center;
-  text-align: center;
-  justify-content: center;
-  color: $black;
-  font-weight: 700;
-  font-size: 20px;
-  text-decoration: none;
-  font-family: $font;
-  transition: all ease-in-out 0.2s;
-  padding: 3px;
-  padding-left: 10px;
-  padding-right: 10px;
-
-  border-style: solid;
-  border-color: $detail;
-  border-radius: 50px;
-  border-width: 4px;
-}
-
-.signUp:hover {
-  background-color: $detail;
 }
