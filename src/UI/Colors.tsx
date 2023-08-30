@@ -9,4 +9,4 @@ export const COLORS = {
   detail: "#AA7455"
 };
 
-export const FONT = '"Lato", sans-serif;';
+export const FONT = "'Lato', sans-serif;";

@@ -14,7 +14,7 @@ import axios from "axios";
 import OauthButton from "../../components/Oauth/OauthButton";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { OauthServices } from "../../model/LoginPage/LoginPage";
+import { OauthServices } from "../LoginPage/LoginPage.type";
 
 const RegisterPage: FC = () => {
   const [email, setEmail] = useState<string>("");

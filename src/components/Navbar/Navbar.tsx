@@ -6,7 +6,6 @@ import { AppBar, useMediaQuery, useTheme, CssBaseline } from "@mui/material";
 import { LanguageSwitch } from "../LanguageSwitch/LanguageSwitch";
 import simpleLogo from "../../assets/simpleLogo.png";
 import DrawerComponent from "./DrawerComponent";
-import "../../scss/navbar.scss";
 import { COLORS, FONT } from "../../UI/Colors";
 
 const Navbar: FC = () => {
