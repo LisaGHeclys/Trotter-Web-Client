@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../../components/Navbar/Navbar";
 import "./index.scss";
 
 import GoogleIcon from "@mui/icons-material/Google";
@@ -11,10 +11,10 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
-import OauthButton from "../../components/Oauth/OauthButton";
+import OauthButton from "../../../components/Oauth/OauthButton";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { OauthServices } from "../LoginPage/LoginPage.type";
+import { OauthServices } from "../Authentification.type";
 
 const RegisterPage: FC = () => {
   const [email, setEmail] = useState<string>("");

@@ -1,4 +1,4 @@
-@import "../../scss/_vars.scss";
+@import "../../../scss/vars";
 
 .register {
   width: 100%;
@@ -197,7 +197,7 @@
     .wavy {
       width: 50%;
       height: 100%;
-      background-image: url("../../assets/wavy.svg");
+      background-image: url("../../../assets/wavy.svg");
       background-repeat: no-repeat;
       position: absolute;
       right: 0;

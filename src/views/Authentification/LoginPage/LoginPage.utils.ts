@@ -1,4 +1,4 @@
-import { headers } from "../../utils/Utils";
+import { headers } from "../../../utils/Utils";
 
 export const loginUser = async (
   email: string,
