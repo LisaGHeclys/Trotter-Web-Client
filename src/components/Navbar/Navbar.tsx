@@ -52,10 +52,16 @@ const Navbar: FC = () => {
         <CssBaseline />
         <Toolbar className={"navbar"}>
           <Grid container p={0} m={0} className={"grid"}>
-            <Grid container item xs={2} className={"logo"} columnGap={2}>
+            <Grid
+              container
+              item
+              xs={2}
+              className={"logo-container"}
+              columnGap={2}
+            >
               <Grid item xs={isMobile ? 4 : 2}>
                 <a href={"/"}>
-                  <img src={simpleLogo} alt={"Logo"} className={"photo"} />
+                  <img src={simpleLogo} alt={"Logo"} className={"logo"} />
                 </a>
               </Grid>
               <Grid item xs={isMobile ? 0 : 2}>

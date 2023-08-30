@@ -58,6 +58,19 @@ const RegisterPage: FC = () => {
       <div className="registerFormWrapper">
         <div className="imageWrapper">
           <img src="/login.png" className="imageWrapper" />
+          <div className="loginCard">
+            <h1>Welcome !</h1>
+            <br />
+            <h2>Already a member ?</h2>
+            <button
+              className="loginLinkPageButton"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              {t("description.registerPart3")}
+            </button>
+          </div>
         </div>
         <div className="registerForm">
           <div className="flexColumn">

@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./index.scss";
 import GoogleIcon from "@mui/icons-material/Google";
-import FacebookSharpIcon from "@mui/icons-material/FacebookSharp";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { useDispatch } from "react-redux";
@@ -86,7 +86,7 @@ const LoginPage: FC = () => {
             />
             <OauthButton
               service={OauthServices.facebook}
-              icon={<FacebookSharpIcon style={{ width: 45, height: 45 }} />}
+              icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
             />
             <OauthButton
               service={OauthServices.twitter}

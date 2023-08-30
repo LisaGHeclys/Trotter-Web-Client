@@ -10,6 +10,10 @@
   height: 100%;
   overflow-y: hidden;
 
+  @media screen and (max-width: 1024px) {
+    overflow-y: visible;
+  }
+
   .imageWrapper {
     flex: 1;
     margin-left: auto;
@@ -22,7 +26,7 @@
       display: none;
     }
 
-    .registerCard {
+    .loginCard {
       position: absolute;
       top: 25%;
       left: 340px;
@@ -32,7 +36,7 @@
       justify-content: center;
     }
 
-    .registerLinkPageButton {
+    .loginLinkPageButton {
       margin-top: 34px;
       width: 180px;
       height: 48px;
@@ -59,8 +63,8 @@
     margin-left: 10%;
   }
 
-  @media screen and (max-width: 390px) {
-    margin-top: 20%;
+  @media screen and (max-width: 912px) {
+    // margin-top: 20%;
     overflow-y: visible;
   }
 
@@ -99,27 +103,33 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     user-select: none;
     z-index: 1;
 
     background-color: $bg;
 
-    @media screen and (max-width: 1300px) {
-      width: 40%;
-      font-size: medium !important;
+    // @media screen and (max-width: 1300px) {
+    //   width: 40%;
+    //   font-size: medium !important;
+    // }
+
+    @media screen and (max-width: 912px) {
+      margin-top: 150px;
+      height: 100%;
+      padding: 0px;
     }
 
-    @media screen and (max-width: 1024px) {
-      width: 50%;
-    }
-    @media screen and (max-width: 768px) {
-      width: 80%;
-    }
-    @media screen and (max-width: 480px) {
-      width: 85%;
-    }
+    // @media screen and (max-width: 1024px) {
+    //   width: 50%;
+    // }
+    // @media screen and (max-width: 768px) {
+    //   // width: 80%;
+    // }
+    // @media screen and (max-width: 480px) {
+    //   width: 85%;
+    // }
 
     .flexColumn {
       display: flex;
@@ -169,11 +179,12 @@
 
     .lineText {
       line-height: 1em;
-      width: 80%;
+      width: 90%;
       outline: 0;
       border: 0;
       position: relative;
       text-align: center;
+      margin-top: 42px;
 
       color: $grey;
       opacity: 0.5;
@@ -226,8 +237,8 @@
         cursor: pointer;
 
         &:hover {
-          background-color: #cccc;
           transition-duration: 0.4s;
+          scale: 1.2;
         }
 
         &disabled {

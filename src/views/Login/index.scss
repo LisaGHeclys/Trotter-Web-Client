@@ -16,7 +16,8 @@
     margin-top: 200px;
 
     @media screen and (max-width: 912px) {
-      margin-top: 100px;
+      margin-top: 150px;
+      height: 100%;
     }
 
     .flexColumn {
@@ -195,7 +196,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: #cccc;
+      scale: 1.2;
       transition-duration: 0.4s;
     }
 
