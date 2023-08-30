@@ -1,18 +1,18 @@
 import React, { FC, useState } from "react";
-import Navbar from "../../components/Navbar/Navbar";
-import "./index.scss";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AnyAction, Dispatch } from "redux";
+import styled from "styled-components";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { useDispatch } from "react-redux";
-import { AnyAction, Dispatch } from "redux";
-import { useNavigate } from "react-router-dom";
-import OauthButton from "../../components/Oauth/OauthButton";
+import Navbar from "../../components/Navbar/Navbar";
 import { useTranslation } from "react-i18next";
-import { OauthServices } from "../../model/LoginPage/LoginPage";
+import OauthButton from "../../components/Oauth/OauthButton";
 import { loginUser } from "./LoginPage.utils";
-import styled from "styled-components";
+import { OauthServices } from "./LoginPage.type";
+import "./index.scss";
 
 const LoginPage: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -43,8 +43,8 @@ const LoginPage: FC = () => {
       <Navbar />
       <LoginWrapper>
         <LoginImage src="/login.jpg" alt="Mountain landscape" />
-        <FormWrapper className="loginForm">
-          <Column className="flexColumn">
+        <FormWrapper>
+          <Column>
             <h2>{t("description.logInPart1")}</h2>
             <LoginInput
               placeholder="Email"
@@ -142,6 +142,12 @@ const LoginInput = styled.input`
   border-radius: 10px;
   font-size: 16px;
   outline: none;
+`;
+
+const LoginButton = styled.button`
+  margin: 2.5%;
+  width: 180px;
+  height: 48px;
 `;
 
 export default LoginPage;
