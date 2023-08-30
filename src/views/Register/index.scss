@@ -1,22 +1,67 @@
 @import "../../scss/_vars.scss";
 
-.register {
-  width: 100%;
-  height: auto;
-  margin-top: 11%;
-  margin-left: 14%;
+.registerFormWrapper {
   color: $text;
   font-family: $font;
   user-select: none;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+
+  .imageWrapper {
+    flex: 1;
+    margin-left: auto;
+    filter: brightness(100%);
+    width: 100%;
+    height: 980px;
+    border-radius: 0 200px 0 0;
+
+    @media screen and (max-width: 1024px) {
+      display: none;
+    }
+
+    .registerCard {
+      position: absolute;
+      top: 25%;
+      left: 340px;
+      color: $bg;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .registerLinkPageButton {
+      margin-top: 34px;
+      width: 180px;
+      height: 48px;
+      z-index: 1;
+
+      background-color: $grey;
+      border: none;
+      border-radius: 10px;
+      color: $bg;
+      cursor: pointer;
+
+      font-weight: bold;
+      font-size: 20px;
+
+      &:hover {
+        background-color: gray;
+        transition-duration: 0.4s;
+      }
+    }
+  }
 
   @media screen and (max-width: 1024px) {
     margin-top: 13%;
     margin-left: 10%;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 390px) {
     margin-top: 20%;
-    margin-left: 2%;
+    overflow-y: visible;
   }
 
   .registerTitle {
@@ -25,16 +70,13 @@
     z-index: 1;
     font-size: 35px;
     margin-block-end: 0;
-    left: 70px;
   }
 
   .registerText {
-    color: $grey;
+    color: aqua;
     font-size: 20px;
     z-index: 1;
 
-    left: 70px;
-    top: 18px;
     position: relative;
 
     a {
@@ -53,7 +95,7 @@
   .registerForm {
     position: relative;
     top: 30px;
-    width: 32%;
+    width: 50%;
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -66,7 +108,9 @@
 
     @media screen and (max-width: 1300px) {
       width: 40%;
+      font-size: medium !important;
     }
+
     @media screen and (max-width: 1024px) {
       width: 50%;
     }
@@ -74,49 +118,51 @@
       width: 80%;
     }
     @media screen and (max-width: 480px) {
-      width: 90%;
+      width: 85%;
+    }
+
+    .flexColumn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     input {
-      width: 80%;
+      width: 400px;
       height: 60px;
       z-index: 1;
 
       background-color: $bg;
-      border: 1.5px $grey solid;
+      border: 1px lightgray solid;
       border-radius: 10px;
 
-      &::placeholder {
-        color: $grey;
-      }
-
       &:hover {
-        border: 1.5px $blueGreen solid;
+        border: 1px gray solid;
         transition-duration: 0.4s;
       }
       &:focus {
-        border: 1.5px $blueGreen solid;
+        border: 1.5px #aaaa solid;
         transition-duration: 0.4s;
       }
     }
 
     .registerButton {
-      margin: 2.5%;
+      margin-top: 34px;
       width: 180px;
-      height: 60px;
+      height: 52px;
       z-index: 1;
 
-      background-color: $links;
-      border: 1px $links solid;
-      border-radius: 40px;
-      color: $white;
+      background-color: $grey;
+      border: none;
+      border-radius: 10px;
+      color: $text;
       cursor: pointer;
 
-      font-weight: bolder;
+      font-weight: bold;
       font-size: 20px;
 
       &:hover {
-        background-color: $blueGreen;
+        background-color: $links;
         transition-duration: 0.4s;
       }
     }
@@ -156,25 +202,31 @@
     }
 
     .alternateLogins {
+      margin-top: 60px;
       display: flex;
       flex-direction: row;
-      justify-content: space-evenly;
+      justify-content: center;
       align-items: center;
       width: 100%;
-      padding-top: 24px;
+      padding-bottom: 24px;
       z-index: 1;
+      gap: 48px;
+
+      @media screen and (max-width: 768px) {
+        gap: 32px;
+        margin-top: 30px;
+      }
 
       button {
         width: 60px;
         height: 60px;
-        border: 1px $text solid;
-        border-radius: 10px;
+        border: none;
+        border-radius: 50%;
         background-color: $bg;
         cursor: pointer;
 
         &:hover {
-          border: 1px $detail solid;
-          background-color: $white;
+          background-color: #cccc;
           transition-duration: 0.4s;
         }
 
@@ -182,25 +234,6 @@
           cursor: not-allowed;
         }
       }
-    }
-  }
-  .spacer {
-    aspect-ratio: 1/1;
-    position: absolute;
-    top: 0;
-    right: -50px;
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    z-index: 0;
-
-    .wavy {
-      width: 50%;
-      height: 100%;
-      background-image: url("../../assets/wavy.svg");
-      background-repeat: no-repeat;
-      position: absolute;
-      right: 0;
     }
   }
 }

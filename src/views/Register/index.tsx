@@ -55,56 +55,55 @@ const RegisterPage: FC = () => {
   return (
     <>
       <Navbar />
-      <div className="register">
-        <p className="registerTitle">{t("description.registerPart1")}</p>
-        <div className="registerText">
-          {t("description.registerPart2")}{" "}
-          <Link to="/login" className="registerLogin">
-            {t("description.registerPart3")}
-          </Link>
+      <div className="registerFormWrapper">
+        <div className="imageWrapper">
+          <img src="/login.png" className="imageWrapper" />
         </div>
         <div className="registerForm">
-          <input
-            type="text"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-            data-testid="emailInput"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-            data-testid="passwordInput"
-          />
-          <button
-            className="registerButton"
-            onClick={register}
-            data-testid="submitRegister"
-          >
-            {t("description.registerPart4")}
-          </button>
-          <hr className="lineText" data-content="Or sign with" />
-          <div className="alternateLogins">
-            <OauthButton
-              service={OauthServices.google}
-              icon={<GoogleIcon style={{ width: 45, height: 45 }} />}
+          <div className="flexColumn">
+            <p className="registerTitle">{t("description.registerPart1")}</p>
+            <input
+              type="text"
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+              data-testid="emailInput"
             />
-            <OauthButton
-              service={OauthServices.facebook}
-              icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
+            <input
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              data-testid="passwordInput"
             />
-            <OauthButton
-              service={OauthServices.twitter}
-              icon={<TwitterIcon style={{ width: 45, height: 45 }} />}
+            <button
+              className="registerButton"
+              onClick={register}
+              data-testid="submitRegister"
+            >
+              {t("description.registerPart4")}
+            </button>
+            <hr
+              className="lineText"
+              data-content={t("description.separator")}
             />
-            <OauthButton
-              service={OauthServices.linkedin}
-              icon={<LinkedInIcon style={{ width: 45, height: 45 }} />}
-            />
+            <div className="alternateLogins">
+              <OauthButton
+                service={OauthServices.google}
+                icon={<GoogleIcon style={{ width: 45, height: 45 }} />}
+              />
+              <OauthButton
+                service={OauthServices.facebook}
+                icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
+              />
+              <OauthButton
+                service={OauthServices.twitter}
+                icon={<TwitterIcon style={{ width: 45, height: 45 }} />}
+              />
+              <OauthButton
+                service={OauthServices.linkedin}
+                icon={<LinkedInIcon style={{ width: 45, height: 45 }} />}
+              />
+            </div>
           </div>
-        </div>
-        <div className="spacer">
-          <div className="wavy" />
         </div>
       </div>
     </>

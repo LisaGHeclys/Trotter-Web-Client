@@ -100,7 +100,7 @@ const LoginPage: FC = () => {
         </div>
         <div className="imageWrapper">
           <img
-            src="/login.jpg"
+            src="/login.png"
             alt="loginImageMontain"
             className="imageWrapper"
           />
