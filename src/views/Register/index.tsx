@@ -7,13 +7,10 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { Link } from "react-router-dom";
-
-import { useNavigate } from "react-router-dom";
-
-import axios from "axios";
 import OauthButton from "../../components/Oauth/OauthButton";
-import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useRegisterClient } from "../../hooks/api/auth.hooks";
+import { CircularProgress } from "@mui/material";
 
 enum OauthServices {
   google = "google",
@@ -25,32 +22,13 @@ enum OauthServices {
 const RegisterPage: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  async function register() {
-    const response = await axios({
-      method: "post",
-      url: `${process.env.REACT_APP_SERVER_URI}/auth/register`,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": process.env.REACT_APP_SERVIER_URI,
-        "Access-Control-Allow-Credentials": true
-      },
-      data: {
-        Email: email,
-        Password: password
-      }
-    });
-    if (response.data.status !== 200 || !response.data.accessToken) {
-      //Alert user ("An error occured, please try again later")
-    } else {
-      localStorage.setItem("jwt", response.data.accessToken);
-      dispatch({ type: "LOGIN", payload: response.data.accessToken });
-      navigate("/travel");
-    }
-  }
+  const [registerClientState, registerClient] = useRegisterClient();
+
+  const handleRegister = () => {
+    registerClient({ email, password });
+  };
 
   return (
     <>
@@ -77,11 +55,16 @@ const RegisterPage: FC = () => {
             data-testid="passwordInput"
           />
           <button
+            disabled={registerClientState.loading}
             className="registerButton"
-            onClick={register}
+            onClick={handleRegister}
             data-testid="submitRegister"
           >
-            {t("description.registerPart4")}
+            {registerClientState.loading ? (
+              <CircularProgress />
+            ) : (
+              t("description.registerPart4")
+            )}
           </button>
           <hr className="lineText" data-content="Or sign with" />
           <div className="alternateLogins">

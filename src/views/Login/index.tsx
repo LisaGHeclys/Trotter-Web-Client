@@ -5,12 +5,10 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { useDispatch } from "react-redux";
-import { AnyAction, Dispatch } from "redux";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import OauthButton from "../../components/Oauth/OauthButton";
 import { useTranslation } from "react-i18next";
+import { useLoginClient } from "../../hooks/api/auth.hooks";
+import { CircularProgress } from "@mui/material";
 
 enum OauthServices {
   google = "google",
@@ -22,29 +20,12 @@ enum OauthServices {
 const LoginPage: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const dispatch = useDispatch<Dispatch<AnyAction>>();
-  const navigate = useNavigate();
   const { t } = useTranslation();
+  const [loginClientState, loginClient] = useLoginClient();
 
-  async function login() {
-    const response = await axios({
-      method: "post",
-      url: `${process.env.REACT_APP_SERVER_URI}/auth/login`,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      },
-      data: {
-        Email: email,
-        Password: password
-      }
-    });
-    if (response.data.status === 200 && response.data.accessToken) {
-      localStorage.setItem("jwt", response.data.accessToken);
-      dispatch({ type: "LOGIN", payload: response.data.accessToken });
-      navigate("/travel");
-    }
-  }
+  const handleLogin = () => {
+    loginClient({ email, password });
+  };
 
   return (
     <>
@@ -69,13 +50,16 @@ const LoginPage: FC = () => {
               data-testid="passwordInput"
             />
             <button
+              disabled={loginClientState.loading}
               className="loginButton"
-              onClick={() => {
-                login();
-              }}
+              onClick={handleLogin}
               data-testid="submitLogin"
             >
-              {t("description.logInPart2")}
+              {loginClientState.loading ? (
+                <CircularProgress />
+              ) : (
+                t("description.logInPart2")
+              )}
             </button>
           </div>
           <hr className="lineText" data-content="Or sign with" />

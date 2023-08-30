@@ -1,4 +1,5 @@
 import { AnyAction } from "redux";
+import { RootState } from "../store";
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -32,3 +33,5 @@ export default function authReducers(
   }
   return state;
 }
+
+export const getUserToken = (store: RootState) => store.auth.token;

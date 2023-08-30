@@ -16,6 +16,7 @@ import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import OauthCallback from "./views/Oauth";
 import "./i18n/config";
+import { PATHS } from "./reducers/routes";
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -28,17 +29,16 @@ const App: FC = () => {
     <div className="page">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/travel" element={<TravelPage />} />
-          <Route path="/services" element={<Home />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/oauth/callback" element={<OauthCallback />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path={PATHS.LANDING} element={<LandingPage />} />
+          <Route path={PATHS.LOGIN} element={<LoginPage />} />
+          <Route path={PATHS.REGISTER} element={<RegisterPage />} />
+          <Route path={PATHS.HOME} element={<Home />} />
+          <Route path={PATHS.TRAVEL} element={<TravelPage />} />
+          <Route path={PATHS.ABOUT} element={<AboutUs />} />
+          <Route path={PATHS.OAUTH_CALLBACK} element={<OauthCallback />} />
+          <Route path={PATHS.DASHBOARD} element={<Dashboard />} />
           <Route
-            path="/map"
+            path={PATHS.MAP}
             element={
               // <Protected>
               <BaseMap />
