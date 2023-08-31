@@ -23,12 +23,14 @@ import { Button, IconButton } from "@mui/material";
 import { format, addDays } from "date-fns";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { SearchState } from "../../reducers/search.reducers";
-import { Geometry } from "@turf/helpers";
 import { BaseMapPropsDefault, getCoordinates, weekColors } from "./Maps.utils";
 import { FeatureDTO, GeoJsonRes, UnderLineProps } from "./Maps.type";
 import styled from "styled-components";
+import { Geometry } from "@turf/helpers";
+import { useTranslation } from "react-i18next";
 
 const BaseMap: FC = () => {
+  const { t } = useTranslation();
   const ref = React.useRef<number>(0);
   const mapRef = React.useRef<MapRef>(null);
   const [dropoffs, setDropoffs] = useState<{
@@ -228,9 +230,12 @@ const BaseMap: FC = () => {
   return (
     <MapWrapper>
       <MapSideMenu>
-        <h1>Go world trotting!</h1>
+        <h1>{t("description.mapPart1")}</h1>
         <p>
-          <b>{length} days</b> in {cityName}!
+          <b>
+            {length} {t("description.mapPart2")}
+          </b>{" "}
+          {t("description.mapPart3")} {cityName}!
         </p>
         <DateRangeWrapper
           editableDateInputs={true}
@@ -268,11 +273,10 @@ const BaseMap: FC = () => {
           onClick={() => setIsHotelSelectionActivated((prev) => !prev)}
           className={isHotelSelectionActivated ? "hotelSelectionActivated" : ""}
         >
-          Add my staying place
+          {t("description.mapPart4")}
         </Button>
         <label style={{ fontSize: 11, marginTop: 6 }}>
-          Double click on the map when the add an hotel option is on to register
-          your hotel
+          {t("description.mapPart5")}
         </label>
         <Row>
           <IconButton onClick={() => decrementItineraryDay(itineraryDay)}>
