@@ -115,20 +115,18 @@ const LoginWrapper = styled.div`
 
 const FormWrapper = styled.div`
   flex: 1;
-  margin-top: 200px;
-
-  @media screen and (max-width: 912px) {
-    margin-top: 150px;
-    height: 100%;
-  }
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const ImageWrapper = styled.div`
   flex: 1;
-  margin-left: auto;
   filter: brightness(100%);
   width: 100%;
-  height: 980px;
+  height: 100%;
+
   border-radius: 200px 0 0 0;
 
   @media screen and (max-width: 1024px) {
@@ -137,13 +135,13 @@ const ImageWrapper = styled.div`
 `;
 
 const LoginImage = styled.img`
-  flex: 1;
   margin-left: auto;
   filter: brightness(100%);
   width: 100%;
-  height: fit-content;
+  height: 100%;
   border-radius: 200px 0 0 0;
-  z-index: 5;
+  z-index: 1;
+  position: fixed;
 
   @media screen and (max-width: 1024px) {
     display: none;
@@ -152,12 +150,15 @@ const LoginImage = styled.img`
 
 const RegisterCard = styled.div`
   width: 100%;
-  position: absolute;
-  top: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   color: ${COLORS.bg};
   align-items: center;
   text-align: center;
   justify-content: center;
+  position: relative;
+  z-index: 10;
 `;
 
 const RegisterLinkBtn = styled.button`
@@ -254,6 +255,7 @@ const DividerText = styled.hr`
   text-align: center;
   color: ${COLORS.grey};
   opacity: 0.5;
+  padding: 30px 0;
 
   @media screen and (max-width: 767px) {
     width: 80%;
