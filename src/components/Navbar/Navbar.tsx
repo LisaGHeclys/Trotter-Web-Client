@@ -1,19 +1,38 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { AppBar, useMediaQuery, useTheme, CssBaseline } from "@mui/material";
+import styled from "styled-components";
+import simpleLogo from "../../assets/Trotter_logo.png";
 import { LanguageSwitch } from "../LanguageSwitch/LanguageSwitch";
-import simpleLogo from "../../assets/simpleLogo.png";
 import DrawerComponent from "./DrawerComponent";
 import { COLORS, FONT } from "../../UI/Colors";
+
+interface RoutesListType {
+  name: string;
+  routes: string;
+}
 
 const Navbar: FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { t } = useTranslation();
 
-  console.log(isMobile);
+  const routesList: RoutesListType[] = [
+    {
+      name: t("description.navbarPart1"),
+      routes: "/"
+    },
+    {
+      name: t("description.navbarPart2"),
+      routes: "/travel"
+    },
+    {
+      name: t("description.navbarPart4"),
+      routes: "/about"
+    }
+  ];
+
   return (
     <AppBar elevation={0} color="transparent">
       <CssBaseline />
@@ -47,7 +66,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: ${COLORS.bg};
-  z-index: 9999;
+  z-index: 1;
 
   .pages {
     display: flex;
@@ -75,8 +94,8 @@ const LogoWrapper = styled.div`
 `;
 
 const PictureWrapper = styled.img`
-  height: 50px;
-  width: 38px;
+  height: 55px;
+  width: fit-content;
 
   &:hover {
     color: ${COLORS.links};

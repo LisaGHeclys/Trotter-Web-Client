@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
-import RegisterPage from "./views/Authentification/Register";
+import RegisterPage from "./views/Authentification/Register/Register";
 import BaseMap from "./views/Map";
 import TravelPage from "./views/Travel";
 import OauthCallback from "./views/Authentification/Oauth";
-import LoginPage from "./views/Authentification/LoginPage/LoginPage";
+import Login from "./views/Authentification/Login/Login";
 import "./i18n/config";
 import "./App.css";
 
@@ -22,7 +22,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<TravelPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/oauth/callback" element={<OauthCallback />} />
           <Route path="/map" element={<BaseMap />} />

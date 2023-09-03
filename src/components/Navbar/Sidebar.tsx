@@ -8,7 +8,7 @@ import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-import simpleLogo from "../../assets/simpleLogo.png";
+import simpleLogo from "../../assets/Trotter_logo.png";
 
 import "../../scss/sidebar.scss";
 

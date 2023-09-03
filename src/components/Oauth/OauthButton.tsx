@@ -2,6 +2,8 @@ import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnyAction, Dispatch } from "redux";
 import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import { COLORS } from "../../UI/Colors";
 
 export interface Oauth2ButtonProps {
   service: string;
@@ -44,10 +46,24 @@ const OauthButton: FC<Oauth2ButtonProps> = ({ service, icon }) => {
   };
 
   return (
-    <button onClick={() => WindowOpener(service)} type="button">
+    <OAuthButtonWrapper onClick={() => WindowOpener(service)} type="button">
       {icon}
-    </button>
+    </OAuthButtonWrapper>
   );
 };
+
+const OAuthButtonWrapper = styled.button`
+  border: none;
+  background-color: ${COLORS.bg};
+  cursor: pointer;
+
+  &:hover {
+    scale: 1.2;
+    transition-duration: 0.4s;
+  }
+  &disabled {
+    cursor: not-allowed;
+  }
+`;
 
 export default OauthButton;
