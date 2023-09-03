@@ -9,6 +9,7 @@ import TravelPage from "./views/Travel/Travel";
 import OauthCallback from "./views/Authentification/Oauth/OAuth";
 import Login from "./views/Authentification/Login/Login";
 import Profile from "./views/Profile/Profile";
+import Activite from "./views/Activite/Activite";
 import "./i18n/config";
 import "./App.css";
 import Onboarding from "./views/Onboarding/Onboarding";
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/welcome" element={<Onboarding />} />
           <Route path="/suggest" element={<SuggestPage />} />
+          <Route path="/activite" element={<Activite />} />
         </Routes>
       </BrowserRouter>
     </AppWrapper>

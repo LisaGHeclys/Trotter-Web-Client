@@ -1,0 +1,19 @@
+.ModalContent {
+  margin: 300px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.ModalTitle {
+  display: flex;
+  flex-direction: row;
+
+  .CloseButton {
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+    margin-left: auto;
+    scale: 1.5;
+  }
+}
