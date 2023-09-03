@@ -1,6 +1,5 @@
 import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
-
 import {
   Drawer,
   List,
@@ -8,9 +7,7 @@ import {
   ListItemText,
   IconButton
 } from "@mui/material";
-
 import MenuIcon from "@mui/icons-material/Menu";
-
 import routesList from "../RoutesParams";
 
 const DrawerComponent: FC = () => {
