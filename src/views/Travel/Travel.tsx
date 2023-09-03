@@ -38,7 +38,18 @@ const TravelPage: FC = () => {
           rowGap={isMobile ? 5 : 0}
         >
           <ChoseDestination container item xs={isMobile ? 12 : 6}>
-            <Grid item p={0} m={0} xs={12} mb={2}>
+            <Grid
+              item
+              p={0}
+              m={0}
+              xs={12}
+              mb={2}
+              style={{
+                textDecoration: "underline",
+                textUnderlineOffset: "6px",
+                marginBottom: "40px"
+              }}
+            >
               {t("description.travelPart1")}
             </Grid>
             <GridInput
@@ -74,9 +85,6 @@ const TravelPage: FC = () => {
               </SearchButton>
             </Grid>
           </ChoseDestination>
-          <Grid item p={0} m={0} xs={isMobile ? 12 : 6}>
-            <CardContentPhoto src={Louvre} alt="louvre" />
-          </Grid>
         </DestinationComponentWrapper>
         <DestinationPossibilities container item p={0} m={0} xs={8}>
           <Grid item p={0} m={0} xs={12}>
@@ -146,6 +154,7 @@ const ChoseDestination = styled(Grid)`
   color: ${COLORS.black};
   justify-content: center;
   align-items: center;
+  text-align: center;
 
   @media (max-width: 768px) {
     font-size: 30px;
@@ -182,7 +191,7 @@ const GridInput = styled(Grid)<GridProps>`
     height: 5vh;
     width: 25vw;
     border-style: solid;
-    border-color: ${COLORS.grey};
+    border-color: ${COLORS.border};
     border-radius: 10px;
     border-width: 1px;
   }
@@ -194,11 +203,11 @@ const SearchButton = styled.button`
   z-index: 1;
   position: relative;
   margin-top: 20px;
-  background-color: ${COLORS.links};
-  border: 1px ${COLORS.links} solid;
+  background-color: ${COLORS.grey};
+  border: none !important;
   border-radius: 10px;
   color: ${COLORS.white};
-  box-shadow: 3px 2px 10px rgba(${COLORS.text}, 0.2);
+  box-shadow: 3px 2px 10px rgba(${COLORS.text}, 0.1);
   cursor: pointer;
   font-weight: bolder;
   font-size: 20px;
@@ -216,16 +225,14 @@ const SearchButton = styled.button`
 `;
 
 const DestinationPossibilities = styled(Grid)`
-  display: flex;
-  flex-direction: column;
   position: relative;
   height: 20vh;
   font-weight: 200;
   font-size: 20px;
+  row-gap: 0px !important;
 `;
 
 const FavoritePlaces = styled(Grid)`
-  margin-top: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

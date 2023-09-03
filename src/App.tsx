@@ -7,6 +7,7 @@ import BaseMap from "./views/Map/Map";
 import TravelPage from "./views/Travel/Travel";
 import OauthCallback from "./views/Authentification/Oauth/OAuth";
 import Login from "./views/Authentification/Login/Login";
+// import Home from './views/Home/index'
 import "./i18n/config";
 import "./App.css";
 
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/" element={<TravelPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/travel" element={<TravelPage />} />
           <Route path="/oauth/callback" element={<OauthCallback />} />
           <Route path="/map" element={<BaseMap />} />
         </Routes>

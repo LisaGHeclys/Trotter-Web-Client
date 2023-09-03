@@ -6,7 +6,8 @@ export const COLORS = {
   bg: "#F3F4F8",
   text: "#101223",
   links: "#008E8B",
-  detail: "#AA7455"
+  detail: "#AA7455",
+  border: "#BBBBBB"
 };
 
 export const FONT = "'Lato', sans-serif;";

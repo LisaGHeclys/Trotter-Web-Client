@@ -136,7 +136,7 @@ const LoginLink = styled(Link)`
 
 const RegisterLink = styled(Link)`
   display: flex;
-  background-color: ${COLORS.links};
+  background-color: ${COLORS.grey};
   color: ${COLORS.white};
   font-weight: 700;
   font-size: 20px;
@@ -144,7 +144,7 @@ const RegisterLink = styled(Link)`
   font-family: ${FONT};
   transition: all ease-in-out 0.2s;
   padding: 4px 12px;
-  border-radius: 50px;
+  border-radius: 10px;
 
   &:hover {
     background-color: ${COLORS.blueGreen};
