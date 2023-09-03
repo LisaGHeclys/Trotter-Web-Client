@@ -1,22 +1,30 @@
 import React, { FC, useState } from "react";
-import Navbar from "../../../components/Navbar/Navbar";
-
+import { useNavigate } from "react-router-dom";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-
-import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import OauthButton from "../../../components/Oauth/OauthButton";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { OauthServices } from "../Authentification.type";
+import styled from "styled-components";
+import { COLORS, FONT } from "../../../UI/Colors";
+import {
+  AuthentificationButton,
+  AuthentificationInput,
+  Column,
+  DividerText,
+  LinkToOtherAuthButton,
+  OAuthButtonRow
+} from "../Authentification.style";
+import Navbar from "../../../components/Navbar/Navbar";
 
 const Register: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -47,50 +55,47 @@ const Register: FC = () => {
   return (
     <>
       <Navbar />
-      <div className="registerFormWrapper">
-        <div className="imageWrapper">
-          <img src="/login.png" className="imageWrapper" />
-          <div className="loginCard">
+      <RegisterWrapper>
+        <ImageWrapper>
+          <RegisterImage src="/login.png" />
+          <LoginCard>
             <h1>Welcome !</h1>
             <br />
             <h2>Already a member ?</h2>
-            <button
-              className="loginLinkPageButton"
-              onClick={() => {
-                navigate("/login");
-              }}
-            >
+            <LinkToOtherAuthButton onClick={() => navigate("/login")}>
               {t("description.registerPart3")}
-            </button>
-          </div>
-        </div>
-        <div className="registerForm">
-          <div className="flexColumn">
-            <p className="registerTitle">{t("description.registerPart1")}</p>
-            <input
+            </LinkToOtherAuthButton>
+          </LoginCard>
+        </ImageWrapper>
+        <FormWrapper>
+          <Column>
+            <h2>{t("description.registerPart1")}</h2>
+            <AuthentificationInput
               type="text"
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
               data-testid="emailInput"
             />
-            <input
+            <AuthentificationInput
               type="password"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
               data-testid="passwordInput"
             />
-            <button
-              className="registerButton"
+            <AuthentificationInput
+              type="password"
+              placeholder="Confirm Password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              data-testid="passwordConfirmInput"
+            />
+            <AuthentificationButton
               onClick={register}
               data-testid="submitRegister"
             >
               {t("description.registerPart4")}
-            </button>
-            <hr
-              className="lineText"
-              data-content={t("description.separator")}
-            />
-            <div className="alternateLogins">
+            </AuthentificationButton>
+            <DividerText data-content={t("description.separator")} />
+            <OAuthButtonRow>
               <OauthButton
                 service={OauthServices.google}
                 icon={<GoogleIcon style={{ width: 45, height: 45 }} />}
@@ -107,12 +112,92 @@ const Register: FC = () => {
                 service={OauthServices.linkedin}
                 icon={<LinkedInIcon style={{ width: 45, height: 45 }} />}
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </OAuthButtonRow>
+          </Column>
+        </FormWrapper>
+      </RegisterWrapper>
     </>
   );
 };
+
+const RegisterWrapper = styled.div`
+  color: ${COLORS.text};
+  font-family: ${FONT};
+  user-select: none;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+
+  @media screen and (max-width: 1024px) {
+    margin-top: 13%;
+    margin-left: 10%;
+  }
+
+  @media screen and (max-width: 912px) {
+    overflow-y: visible;
+  }
+`;
+
+const ImageWrapper = styled.div`
+  flex: 1;
+  filter: brightness(100%);
+  width: 100%;
+  height: 100%;
+  border-radius: 0 200px 0 0;
+
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
+`;
+
+const RegisterImage = styled.img`
+  flex: 1;
+  margin-left: auto;
+  filter: brightness(100%);
+  width: 100%;
+  height: 100%;
+  border-radius: 0 200px 0 0;
+  z-index: 1;
+  position: fixed;
+
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
+`;
+
+const LoginCard = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: ${COLORS.bg};
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+`;
+
+const FormWrapper = styled.div`
+  position: relative;
+  height: 100%;
+  width: 50%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  z-index: 1;
+  background-color: ${COLORS.bg};
+
+  @media screen and (max-width: 912px) {
+    margin-top: 150px;
+    height: 100%;
+    padding: 0;
+  }
+`;
 
 export default Register;
