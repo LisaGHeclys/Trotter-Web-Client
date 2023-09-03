@@ -1,23 +1,16 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import "./App.css";
-import React from "react";
-
-import LandingPage from "./views/LandingPage";
-import LoginPage from "./views/Login";
-import RegisterPage from "./views/Register";
-import Home from "./views/Home";
-import BaseMap from "./views/Map";
-import TravelPage from "./views/Travel";
-import Dashboard from "./views/Dashboard";
-// import Protected from "./components/Protected";
-import AboutUs from "./views/AboutUs";
-import { FC, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import OauthCallback from "./views/Oauth";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import styled from "styled-components";
+import RegisterPage from "./views/Authentification/Register/Register";
+import BaseMap from "./views/Map/Map";
+import TravelPage from "./views/Travel/Travel";
+import OauthCallback from "./views/Authentification/Oauth/OAuth";
+import Login from "./views/Authentification/Login/Login";
 import "./i18n/config";
+import "./App.css";
 
-const App: FC = () => {
+const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,31 +18,24 @@ const App: FC = () => {
   }, []);
 
   return (
-    <div className="page">
+    <AppWrapper>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<TravelPage />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/travel" element={<TravelPage />} />
-          <Route path="/services" element={<Home />} />
-          <Route path="/about" element={<AboutUs />} />
           <Route path="/oauth/callback" element={<OauthCallback />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route
-            path="/map"
-            element={
-              // <Protected>
-              <BaseMap />
-              // </Protected>
-            }
-          />
-          {/* <Route path="*" element={<NotFound />} /> */}
+          <Route path="/map" element={<BaseMap />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </AppWrapper>
   );
 };
+
+const AppWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #f3f4f8;
+`;
 
 export default App;

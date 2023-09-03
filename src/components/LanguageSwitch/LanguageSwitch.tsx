@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { usePopover } from "../../hooks/use-popover";
-import { LanguagePopOver } from "./LanguagePopOver.tsx";
+import { LanguagePopOver } from "./LanguagePopOver";
 import flagUk from "../../assets/flags/flag-uk.svg";
 import flagEs from "../../assets/flags/flag-es.svg";
 import flagFr from "../../assets/flags/flag-fe.png";

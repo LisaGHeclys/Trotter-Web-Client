@@ -2,6 +2,8 @@ import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnyAction, Dispatch } from "redux";
 import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import { COLORS } from "../../UI/Colors";
 
 export interface Oauth2ButtonProps {
   service: string;
@@ -15,16 +17,14 @@ const OauthButton: FC<Oauth2ButtonProps> = ({ service, icon }) => {
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const navigate = useNavigate();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const receiveMessage = (event: any) => {
-    // Check if we trust the sender
+  const receiveMessage = (event: MessageEvent<unknown>) => {
     if (event.origin !== window.location.origin) {
       return;
     }
-
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const message = event.data.toString();
 
-    // Check if the message is what we expected and parse the token
     if (message.slice(0, 5) === "?jwt=") {
       const token = message.slice(5);
       localStorage.setItem("jwt", token);
@@ -34,10 +34,8 @@ const OauthButton: FC<Oauth2ButtonProps> = ({ service, icon }) => {
   };
 
   const WindowOpener = (service: string) => {
-    //Remove previous event listener
     window.removeEventListener("message", receiveMessage);
 
-    //Open popup
     const popup = window.open(
       process.env.REACT_APP_SERVER_URI + "/auth/" + service,
       "_blank",
@@ -45,15 +43,28 @@ const OauthButton: FC<Oauth2ButtonProps> = ({ service, icon }) => {
     );
     if (!popup) return console.error("Failed to open popup window");
 
-    //Add event listener for message event from popup, that's how we get the token
     window.addEventListener("message", (event) => receiveMessage(event), false);
   };
 
   return (
-    <button onClick={() => WindowOpener(service)} type="button">
+    <OAuthButtonWrapper onClick={() => WindowOpener(service)} type="button">
       {icon}
-    </button>
+    </OAuthButtonWrapper>
   );
 };
+
+const OAuthButtonWrapper = styled.button`
+  border: none;
+  background-color: ${COLORS.bg};
+  cursor: pointer;
+
+  &:hover {
+    scale: 1.2;
+    transition-duration: 0.4s;
+  }
+  &disabled {
+    cursor: not-allowed;
+  }
+`;
 
 export default OauthButton;
