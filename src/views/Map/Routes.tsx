@@ -1,13 +1,7 @@
-import { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 import { FC, Fragment } from "react";
 import { Layer, Source } from "react-map-gl";
 import React from "react";
-
-type RoutesProps = {
-  routes: { [id: string]: FeatureCollection<Geometry, GeoJsonProperties> };
-  colors: { primary: string; secondary: string }[];
-  itineraryDay: number;
-};
+import { RoutesProps } from "./Maps.type";
 
 const Routes: FC<RoutesProps> = ({ routes, colors, itineraryDay }) => {
   return (

@@ -1,11 +1,10 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { DateRange } from "react-date-range";
-import "./index.scss";
+import "./Map.scss";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { Range } from "react-date-range";
 import { useSelector } from "react-redux";
-import { getCoordinates } from "./service";
 import {
   GeolocateControl,
   Layer,
@@ -24,62 +23,10 @@ import { Button, IconButton } from "@mui/material";
 import { format, addDays } from "date-fns";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { SearchState } from "../../reducers/search.reducers";
-import { Geometry, Position } from "@turf/helpers";
-
-type BaseMapProps = {
-  length: number;
-  price: number;
-  lng: number;
-  lat: number;
-  cityName: string;
-};
-
-type FeatureDTO = {
-  properties: {
-    [name: string]: string;
-  } | null;
-};
-
-export type GeoJsonRes = {
-  features: {
-    features: {
-      geometry: {
-        coordinates: Position[];
-      };
-      properties: {
-        name: string;
-      };
-    }[];
-  }[];
-  routes: {
-    features: {
-      geometry: {
-        coordinates: Position[];
-      };
-      properties: {
-        name: string;
-      };
-    }[];
-  }[];
-};
-
-const BaseMapPropsDefault: BaseMapProps = {
-  length: 3,
-  price: 0,
-  lng: 2.333333,
-  lat: 48.866667,
-  cityName: "Paris"
-};
-
-const weekColors: { primary: string; secondary: string }[] = [
-  { primary: "red", secondary: "lightcoral" },
-  { primary: "blue", secondary: "lightblue" },
-  { primary: "green", secondary: "lightgreen" },
-  { primary: "yellow", secondary: "lightyellow" },
-  { primary: "orange", secondary: "orange" },
-  { primary: "purple", secondary: "purple" },
-  { primary: "brown", secondary: "lightbrown" }
-];
+import { Geometry } from "@turf/helpers";
+import { BaseMapPropsDefault, getCoordinates, weekColors } from "./Maps.utils";
+import { FeatureDTO, GeoJsonRes, UnderLineProps } from "./Maps.type";
+import styled from "styled-components";
 
 const BaseMap: FC = () => {
   const ref = React.useRef<number>(0);
@@ -149,14 +96,13 @@ const BaseMap: FC = () => {
           longitude={e.lngLat.lng}
           latitude={e.lngLat.lat}
         >
-          <img
+          <HotelMarker
             width={36}
             height={36}
             alt={"hotel"}
             src={
               "https://em-content.zobj.net/source/microsoft-teams/337/house_1f3e0.png"
             }
-            className="hotelMarker"
           />
         </Marker>
       );
@@ -207,23 +153,25 @@ const BaseMap: FC = () => {
         const resJson: GeoJsonRes = await ress.json();
 
         if (resJson.features) {
-          resJson.features.forEach(async (features, i) => {
-            if (!features) return;
+          for (const features of resJson.features) {
+            const i = resJson.features.indexOf(features);
+            if (!features) continue;
             setDropoffs((old) => ({
               ...old,
               [i]: features as unknown as FeatureCollection
             }));
-          });
+          }
         }
 
         if (resJson.routes) {
-          resJson.routes.forEach(async (routes, i) => {
-            if (!routes) return;
+          for (const routes1 of resJson.routes) {
+            const i = resJson.routes.indexOf(routes1);
+            if (!routes1) continue;
             setRoutes((old) => ({
               ...old,
-              [i]: routes
+              [i]: routes1
             }));
-          });
+          }
         }
       } catch (e) {
         console.log(e);
@@ -278,22 +226,13 @@ const BaseMap: FC = () => {
   }, [lat, lng, fetchCoordinates, cityName]);
 
   return (
-    <div
-      style={{
-        overflow: "hidden",
-        width: "100%",
-        height: "100%",
-        position: "relative",
-        display: "flex",
-        flexDirection: "row"
-      }}
-    >
-      <div className="mapSidebar">
+    <MapWrapper>
+      <MapSideMenu>
         <h1>Go world trotting!</h1>
         <p>
           <b>{length} days</b> in {cityName}!
         </p>
-        <DateRange
+        <DateRangeWrapper
           editableDateInputs={true}
           onChange={(item) => {
             if (
@@ -317,7 +256,6 @@ const BaseMap: FC = () => {
           }}
           moveRangeOnFirstSelection={false}
           ranges={range}
-          className="dateRange"
           minDate={new Date()}
           maxDate={
             new Date(new Date().setFullYear(new Date().getFullYear() + 1))
@@ -330,34 +268,29 @@ const BaseMap: FC = () => {
           onClick={() => setIsHotelSelectionActivated((prev) => !prev)}
           className={isHotelSelectionActivated ? "hotelSelectionActivated" : ""}
         >
-          Add my hôtel
+          Add my staying place
         </Button>
         <label style={{ fontSize: 11, marginTop: 6 }}>
           Double click on the map when the add an hotel option is on to register
           your hotel
         </label>
-        <div className="flexRow">
+        <Row>
           <IconButton onClick={() => decrementItineraryDay(itineraryDay)}>
             <ChevronLeft />
           </IconButton>
-          <h3
-            className="underline--magical"
-            style={{
-              backgroundImage: `linear-gradient(120deg, ${weekColors[itineraryDay].primary} 0%, ${weekColors[itineraryDay].secondary} 30%, ${weekColors[itineraryDay].secondary} 70%, ${weekColors[itineraryDay].primary} 100%)`
-            }}
-          >
+          <UnderLine itineraryDay={itineraryDay}>
             {format(
               addDays(range[0]?.startDate || new Date(), itineraryDay),
               "dd/MM/yyyy"
             )}{" "}
-          </h3>
+          </UnderLine>
           <IconButton onClick={() => incrementItineraryDay(itineraryDay)}>
             <ChevronRight />
           </IconButton>
-        </div>
+        </Row>
         {dropoffs[itineraryDay]?.features.map((feature: FeatureDTO, i) => {
           return (
-            <div key={i} className="interestPicture">
+            <InterestsPicture key={i}>
               <p>{feature.properties?.name}</p>
               <img
                 src={`https://picsum.photos/${
@@ -368,10 +301,10 @@ const BaseMap: FC = () => {
                 width={200}
                 height={100}
               />
-            </div>
+            </InterestsPicture>
           );
         })}
-      </div>
+      </MapSideMenu>
       <div
         id="mapContainer"
         className={
@@ -424,7 +357,6 @@ const BaseMap: FC = () => {
               "circle-stroke-color": "white"
             }}
           />
-
           {markers.map((marker) => marker)}
           {hotel.map((marker) => marker)}
           <Routes
@@ -434,8 +366,87 @@ const BaseMap: FC = () => {
           />
         </Map>
       </div>
-    </div>
+    </MapWrapper>
   );
 };
+
+const MapWrapper = styled.div`
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+`;
+
+const MapSideMenu = styled.div`
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 100%;
+  background-color: #f3f4f8;
+  border-right: 1px solid lightgray;
+  border-radius: 4px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  overflow: auto;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 24px;
+  overflow-x: hidden;
+
+  img {
+    border-radius: 10px;
+  }
+`;
+
+const DateRangeWrapper = styled(DateRange)`
+  transform: scale(0.8);
+
+  & > div > div > span > input {
+    height: 24px;
+    margin: 0;
+  }
+`;
+
+const HotelMarker = styled.img`
+  z-index: 999;
+  position: relative;
+`;
+
+const InterestsPicture = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 24px;
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const UnderLine = styled.h3<UnderLineProps>`
+  background-repeat: no-repeat;
+  background-size: 100% 0.4em;
+  background-position: 15% 88%;
+  transition: background-size 0.25s ease-in;
+  backgroundimage: linear-gradient(
+    120deg,
+    ${(props) => weekColors[props.itineraryDay].primary} 0%,
+    ${(props) => weekColors[props.itineraryDay].secondary} 30%,
+    ${(props) => weekColors[props.itineraryDay].secondary} 70%,
+    ${(props) => weekColors[props.itineraryDay].primary} 100%
+  );
+
+  &:hover {
+    background-size: 100% 88%;
+  }
+`;
 
 export default BaseMap;
