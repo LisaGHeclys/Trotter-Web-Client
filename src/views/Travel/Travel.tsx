@@ -12,7 +12,7 @@ import { COLORS, FONT } from "../../UI/Colors";
 import { GridProps } from "./Travel.type";
 import styled from "styled-components";
 
-import Joyride, { Step } from "react-joyride";
+import Joyride from "react-joyride";
 
 const TravelPage: FC = () => {
   const theme = useTheme();
@@ -23,10 +23,21 @@ const TravelPage: FC = () => {
   const [steps, setSteps] = useState<any>([
     {
       content: <h2>Welcome on Trotter Application !</h2>,
-      locale: { skip: <p>skip</p>, next: <p>Next</p> },
+      locale: {
+        skip: (
+          <h4>
+            <b>Skip</b>
+          </h4>
+        ),
+        next: <p>Next</p>
+      },
       placement: "center",
       target: "body"
     },
+    // {
+    // content: <h2>You can have access to our profile directly</h2>,
+    // target:"#profile",
+    // },
     {
       content: <h2>Enter your future destination here</h2>,
       target: "#guided-tour-city"
@@ -40,7 +51,7 @@ const TravelPage: FC = () => {
       target: "#guided-tour-search-button"
     }
   ]);
-  const [run, setRun] = useState<boolean>(false);
+  // const [run, setRun] = useState<boolean>(false);s
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const { t } = useTranslation();
@@ -49,8 +60,9 @@ const TravelPage: FC = () => {
     <div>
       <TravelWrapper container p={0} m={0} rowGap={10}>
         <Joyride
-          showProgress={true}
-          showSkipButton={true}
+          showProgress
+          showSkipButton
+          continuous
           steps={steps}
           styles={{
             options: {
