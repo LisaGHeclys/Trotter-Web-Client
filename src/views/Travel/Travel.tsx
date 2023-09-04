@@ -12,12 +12,35 @@ import { COLORS, FONT } from "../../UI/Colors";
 import { GridProps } from "./Travel.type";
 import styled from "styled-components";
 
+import Joyride, { Step } from "react-joyride";
+
 const TravelPage: FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [city, setCity] = useState<string>("");
   const [, /*period*/ setPeriod] = useState<string>("date");
   const [isFav, setIsFav] = useState<boolean>(false);
+  const [steps, setSteps] = useState<any>([
+    {
+      content: <h2>Welcome on Trotter Application !</h2>,
+      locale: { skip: <p>skip</p>, next: <p>Next</p> },
+      placement: "center",
+      target: "body"
+    },
+    {
+      content: <h2>Enter your future destination here</h2>,
+      target: "#guided-tour-city"
+    },
+    {
+      content: <h2>Set the dates of your travel</h2>,
+      target: "#guided-tour-dates"
+    },
+    {
+      content: <h2>Click on this button and voila ! Your trip is created</h2>,
+      target: "#guided-tour-search-button"
+    }
+  ]);
+  const [run, setRun] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const { t } = useTranslation();
@@ -25,6 +48,19 @@ const TravelPage: FC = () => {
   return (
     <div>
       <TravelWrapper container p={0} m={0} rowGap={10}>
+        <Joyride
+          showProgress={true}
+          showSkipButton={true}
+          steps={steps}
+          styles={{
+            options: {
+              arrowColor: COLORS.grey,
+              backgroundColor: COLORS.bg,
+              textColor: COLORS.text,
+              primaryColor: COLORS.grey
+            }
+          }}
+        />
         <Grid item p={0} m={0} xs={12}>
           <Navbar />
         </Grid>
@@ -48,6 +84,7 @@ const TravelPage: FC = () => {
             >
               {t("description.travelPart2")}
               <input
+                id="guided-tour-city"
                 placeholder="City..."
                 onChange={(e) => setCity(e.target.value)}
                 data-testid="cityName"
@@ -56,6 +93,7 @@ const TravelPage: FC = () => {
             <GridInput container item xs={isMobile ? 6 : 12}>
               {t("description.travelPart3")}
               <input
+                id="guided-tour-dates"
                 type={"date"}
                 placeholder="From ... to ..."
                 onChange={(e) => setPeriod(e.target.value)}
@@ -63,6 +101,7 @@ const TravelPage: FC = () => {
             </GridInput>
             <Grid>
               <SearchButton
+                id="guided-tour-search-button"
                 onClick={() => {
                   dispatch({ type: "SEARCH", payload: { place: city } });
                   navigate("/map");
