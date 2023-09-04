@@ -24,11 +24,12 @@ import { format, addDays } from "date-fns";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { SearchState } from "../../reducers/search.reducers";
 import { Geometry } from "@turf/helpers";
+import { useTranslation } from "react-i18next";
+import { BaseMapProps, FeatureDTO, GeoJsonRes } from "./Maps.type";
 import { BaseMapPropsDefault, getCoordinates, weekColors } from "./Maps.utils";
-import { FeatureDTO, GeoJsonRes, UnderLineProps } from "./Maps.type";
-import styled from "styled-components";
 
 const BaseMap: FC = () => {
+  const { t } = useTranslation();
   const ref = React.useRef<number>(0);
   const mapRef = React.useRef<MapRef>(null);
   const [dropoffs, setDropoffs] = useState<{
@@ -96,13 +97,14 @@ const BaseMap: FC = () => {
           longitude={e.lngLat.lng}
           latitude={e.lngLat.lat}
         >
-          <HotelMarker
+          <img
             width={36}
             height={36}
             alt={"hotel"}
             src={
               "https://em-content.zobj.net/source/microsoft-teams/337/house_1f3e0.png"
             }
+            className="hotelMarker"
           />
         </Marker>
       );
@@ -153,25 +155,23 @@ const BaseMap: FC = () => {
         const resJson: GeoJsonRes = await ress.json();
 
         if (resJson.features) {
-          for (const features of resJson.features) {
-            const i = resJson.features.indexOf(features);
-            if (!features) continue;
+          resJson.features.forEach(async (features, i) => {
+            if (!features) return;
             setDropoffs((old) => ({
               ...old,
               [i]: features as unknown as FeatureCollection
             }));
-          }
+          });
         }
 
         if (resJson.routes) {
-          for (const routes1 of resJson.routes) {
-            const i = resJson.routes.indexOf(routes1);
-            if (!routes1) continue;
+          resJson.routes.forEach(async (routes, i) => {
+            if (!routes) return;
             setRoutes((old) => ({
               ...old,
-              [i]: routes1
+              [i]: routes
             }));
-          }
+          });
         }
       } catch (e) {
         console.log(e);
@@ -226,13 +226,22 @@ const BaseMap: FC = () => {
   }, [lat, lng, fetchCoordinates, cityName]);
 
   return (
-    <MapWrapper>
-      <MapSideMenu>
+    <div
+      style={{
+        overflow: "hidden",
+        width: "100%",
+        height: "100%",
+        position: "relative",
+        display: "flex",
+        flexDirection: "row"
+      }}
+    >
+      <div className="mapSidebar">
         <h1>Go world trotting!</h1>
         <p>
           <b>{length} days</b> in {cityName}!
         </p>
-        <DateRangeWrapper
+        <DateRange
           editableDateInputs={true}
           onChange={(item) => {
             if (
@@ -256,6 +265,7 @@ const BaseMap: FC = () => {
           }}
           moveRangeOnFirstSelection={false}
           ranges={range}
+          className="dateRange"
           minDate={new Date()}
           maxDate={
             new Date(new Date().setFullYear(new Date().getFullYear() + 1))
@@ -274,23 +284,28 @@ const BaseMap: FC = () => {
           Double click on the map when the add an hotel option is on to register
           your hotel
         </label>
-        <Row>
+        <div className="flexRow">
           <IconButton onClick={() => decrementItineraryDay(itineraryDay)}>
             <ChevronLeft />
           </IconButton>
-          <UnderLine itineraryDay={itineraryDay}>
+          <h3
+            className="underline--magical"
+            style={{
+              backgroundImage: `linear-gradient(120deg, ${weekColors[itineraryDay].primary} 0%, ${weekColors[itineraryDay].secondary} 30%, ${weekColors[itineraryDay].secondary} 70%, ${weekColors[itineraryDay].primary} 100%)`
+            }}
+          >
             {format(
               addDays(range[0]?.startDate || new Date(), itineraryDay),
               "dd/MM/yyyy"
             )}{" "}
-          </UnderLine>
+          </h3>
           <IconButton onClick={() => incrementItineraryDay(itineraryDay)}>
             <ChevronRight />
           </IconButton>
-        </Row>
+        </div>
         {dropoffs[itineraryDay]?.features.map((feature: FeatureDTO, i) => {
           return (
-            <InterestsPicture key={i}>
+            <div key={i} className="interestPicture">
               <p>{feature.properties?.name}</p>
               <img
                 src={`https://picsum.photos/${
@@ -301,10 +316,10 @@ const BaseMap: FC = () => {
                 width={200}
                 height={100}
               />
-            </InterestsPicture>
+            </div>
           );
         })}
-      </MapSideMenu>
+      </div>
       <div
         id="mapContainer"
         className={
@@ -340,7 +355,6 @@ const BaseMap: FC = () => {
           />
           <NavigationControl />
           <ScaleControl maxWidth={100} unit="metric" />
-
           <Source
             id="cities"
             type="geojson"
@@ -366,87 +380,8 @@ const BaseMap: FC = () => {
           />
         </Map>
       </div>
-    </MapWrapper>
+    </div>
   );
 };
-
-const MapWrapper = styled.div`
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
-`;
-
-const MapSideMenu = styled.div`
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 400px;
-  height: 100%;
-  background-color: #f3f4f8;
-  border-right: 1px solid lightgray;
-  border-radius: 4px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  overflow: auto;
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 24px;
-  overflow-x: hidden;
-
-  img {
-    border-radius: 10px;
-  }
-`;
-
-const DateRangeWrapper = styled(DateRange)`
-  transform: scale(0.8);
-
-  & > div > div > span > input {
-    height: 24px;
-    margin: 0;
-  }
-`;
-
-const HotelMarker = styled.img`
-  z-index: 999;
-  position: relative;
-`;
-
-const InterestsPicture = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 24px;
-`;
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
-
-const UnderLine = styled.h3<UnderLineProps>`
-  background-repeat: no-repeat;
-  background-size: 100% 0.4em;
-  background-position: 15% 88%;
-  transition: background-size 0.25s ease-in;
-  backgroundimage: linear-gradient(
-    120deg,
-    ${(props) => weekColors[props.itineraryDay].primary} 0%,
-    ${(props) => weekColors[props.itineraryDay].secondary} 30%,
-    ${(props) => weekColors[props.itineraryDay].secondary} 70%,
-    ${(props) => weekColors[props.itineraryDay].primary} 100%
-  );
-
-  &:hover {
-    background-size: 100% 88%;
-  }
-`;
 
 export default BaseMap;
