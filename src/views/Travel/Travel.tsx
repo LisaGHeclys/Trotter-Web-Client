@@ -70,6 +70,9 @@ const TravelPage: FC = () => {
               backgroundColor: COLORS.bg,
               textColor: COLORS.text,
               primaryColor: COLORS.grey
+            },
+            buttonClose: {
+              display: "none"
             }
           }}
         />
