@@ -184,7 +184,8 @@ const BaseMap: FC = () => {
 
   useEffect(() => {
     setMarkers([]);
-    dropoffs[itineraryDay]?.features.forEach((element, i: number) => {
+    console.log(dropoffs);
+    dropoffs[itineraryDay]?.features?.forEach((element, i: number) => {
       setMarkers((old) => [
         ...old,
         <Marker
@@ -212,7 +213,55 @@ const BaseMap: FC = () => {
                 Math.floor(Math.random() * 100) + 200
               }/${Math.floor(Math.random() * 100) + 200}`}" />`
             )}
-        />
+        >
+          {element?.properties?.kinds.includes("religion") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"hotel"}
+              src={"https://static.thenounproject.com/png/158909-200.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("museums") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"hotel"}
+              src={
+                "https://cdn2.iconfinder.com/data/icons/location-map-simplicity/512/museum-512.png"
+              }
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("natural") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"hotel"}
+              src={"https://static.thenounproject.com/png/743150-200.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("tourist_facilities") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"hotel"}
+              src={
+                "https://cdn4.iconfinder.com/data/icons/map-pins-7/64/map_pin_pointer_location_navigation_shopping_store_shop-512.png"
+              }
+              className="hotelMarker"
+            />
+          ) : (
+            <img
+              width={36}
+              height={36}
+              alt={"hotel"}
+              src={
+                "https://images-ext-2.discordapp.net/external/E1myNIG4k9PFEDvf0YyKxLwLvtz9uOkJCAkuCwojj6k/https/cdn-icons-png.flaticon.com/512/10175/10175378.png?width=1024&height=1024"
+              }
+              className="hotelMarker"
+            />
+          )}
+        </Marker>
       ]);
     });
   }, [dropoffs, itineraryDay]);
@@ -292,7 +341,7 @@ const BaseMap: FC = () => {
             <ChevronRight />
           </IconButton>
         </Row>
-        {dropoffs[itineraryDay]?.features.map((feature: FeatureDTO, i) => {
+        {dropoffs[itineraryDay]?.features?.map((feature: FeatureDTO, i) => {
           return (
             <InterestsPicture key={i}>
               <p>{feature.properties?.name}</p>
@@ -361,8 +410,9 @@ const BaseMap: FC = () => {
               "circle-stroke-color": "white"
             }}
           />
-          {markers.map((marker) => marker)}
-          {hotel.map((marker) => marker)}
+
+          {markers?.map((marker) => marker)}
+          {hotel?.map((marker) => marker)}
           <Routes
             routes={routes}
             colors={weekColors}
