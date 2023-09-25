@@ -8,6 +8,7 @@ import BaseMap from "./views/Map/Map";
 import TravelPage from "./views/Travel/Travel";
 import OauthCallback from "./views/Authentification/Oauth/OAuth";
 import Login from "./views/Authentification/Login/Login";
+import Profile from "./views/Profile/Profile";
 import "./i18n/config";
 import "./App.css";
 
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/oauth/callback" element={<OauthCallback />} />
           <Route path="/map" element={<BaseMap />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </AppWrapper>

@@ -1,0 +1,93 @@
+.ProfileSection {
+  padding: 200px;
+}
+
+.ProfileContent {
+  padding: 70px;
+}
+
+.GridProfileHeader {
+  border-radius: 10px;
+  border: 2px solid #95b0b4;
+  min-height: 256px;
+}
+
+.ProfileImageOutLet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ProfileImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+}
+
+.UserInfo {
+  padding: 30px 0px;
+  padding-left: 12px;
+  border-left: 2px solid #95b0b4;
+  h3 {
+    font-size: 20px;
+  }
+}
+
+.ActionButton {
+  padding-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Filter {
+  cursor: pointer;
+  margin: 20px 0px;
+  border-radius: 10px;
+  border: 2px solid #95b0b4;
+  min-height: 115px;
+  display: flex;
+  align-items: center;
+  padding-left: 50px;
+  h3 {
+    padding: 0 10px;
+  }
+}
+
+.ProfileItem {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #95b0b4;
+  padding: 15px 0;
+  h3 {
+    font-size: 20px;
+  }
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+}
+
+.Logout {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+
+  Button {
+    width: 200px;
+    height: 50px;
+    background-color: #95b0b4;
+    border-radius: 10px;
+
+    .text {
+      font-size: 20px;
+      color: #000000;
+    }
+  }
+}
