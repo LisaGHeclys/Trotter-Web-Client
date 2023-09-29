@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Box, IconButton, Tooltip } from "@mui/material";
+import { Box, Tooltip, Button } from "@mui/material";
 import { usePopover } from "../../hooks/use-popover";
 import { LanguagePopOver } from "./LanguagePopOver";
 import flagUk from "../../assets/flags/flag-uk.svg";
@@ -23,7 +23,7 @@ export const LanguageSwitch: FC = () => {
   return (
     <>
       <Tooltip title="Language">
-        <IconButton onClick={popover.handleOpen} ref={popover.anchorRef}>
+        <Button onClick={popover.handleOpen} ref={popover.anchorRef}>
           <Box
             sx={{
               mx: 2,
@@ -36,7 +36,7 @@ export const LanguageSwitch: FC = () => {
           >
             <img src={flag} />
           </Box>
-        </IconButton>
+        </Button>
       </Tooltip>
       <LanguagePopOver
         anchorEl={popover.anchorRef.current}
