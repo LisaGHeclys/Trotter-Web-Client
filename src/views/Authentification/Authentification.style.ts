@@ -55,10 +55,10 @@ export const OAuthButtonRow = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1;
-  gap: 28px;
+  gap: 42px;
 
   @media screen and (max-width: 768px) {
-    gap: 32px;
+    gap: 28px;
   }
 `;
 
@@ -84,7 +84,7 @@ export const AuthentificationButton = styled.button`
   height: 48px;
   border: none;
   border-radius: 10px;
-  background-color: ${COLORS.links};
+  background-color: ${COLORS.grey};
   color: ${COLORS.white};
   cursor: pointer;
   font-weight: bold;
@@ -92,7 +92,7 @@ export const AuthentificationButton = styled.button`
   transition: all ease-in-out 0.2s;
 
   &:hover {
-    background-color: ${COLORS.blueGreen};
+    background-color: ${COLORS.grey};
     scale: 1.06;
   }
   @media (max-width: 1024px) {
@@ -114,7 +114,7 @@ export const LinkToOtherAuthButton = styled.button`
   font-size: 20px;
 
   &:hover {
-    background-color: gray;
     transition-duration: 0.4s;
+    scale: 1.06;
   }
 `;

@@ -58,14 +58,14 @@ const Register: FC = () => {
       <RegisterWrapper>
         <ImageWrapper>
           <RegisterImage src="/login.png" />
-          <LoginCard>
+          <LoginRedirection>
             <h1>Welcome !</h1>
             <br />
             <h2>Already a member ?</h2>
             <LinkToOtherAuthButton onClick={() => navigate("/login")}>
               {t("description.registerPart3")}
             </LinkToOtherAuthButton>
-          </LoginCard>
+          </LoginRedirection>
         </ImageWrapper>
         <FormWrapper>
           <Column>
@@ -94,26 +94,26 @@ const Register: FC = () => {
             >
               {t("description.registerPart4")}
             </AuthentificationButton>
-            <DividerText data-content={t("description.separator")} />
-            <OAuthButtonRow>
-              <OauthButton
-                service={OauthServices.google}
-                icon={<GoogleIcon style={{ width: 45, height: 45 }} />}
-              />
-              <OauthButton
-                service={OauthServices.facebook}
-                icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
-              />
-              <OauthButton
-                service={OauthServices.twitter}
-                icon={<TwitterIcon style={{ width: 45, height: 45 }} />}
-              />
-              <OauthButton
-                service={OauthServices.linkedin}
-                icon={<LinkedInIcon style={{ width: 45, height: 45 }} />}
-              />
-            </OAuthButtonRow>
           </Column>
+          <DividerText data-content={t("description.separator")} />
+          <OAuthButtonRow>
+            <OauthButton
+              service={OauthServices.google}
+              icon={<GoogleIcon style={{ width: 45, height: 45 }} />}
+            />
+            <OauthButton
+              service={OauthServices.facebook}
+              icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
+            />
+            <OauthButton
+              service={OauthServices.twitter}
+              icon={<TwitterIcon style={{ width: 45, height: 45 }} />}
+            />
+            <OauthButton
+              service={OauthServices.linkedin}
+              icon={<LinkedInIcon style={{ width: 45, height: 45 }} />}
+            />
+          </OAuthButtonRow>
         </FormWrapper>
       </RegisterWrapper>
     </>
@@ -167,7 +167,7 @@ const RegisterImage = styled.img`
   }
 `;
 
-const LoginCard = styled.div`
+const LoginRedirection = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
