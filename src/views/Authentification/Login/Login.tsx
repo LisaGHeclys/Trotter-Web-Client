@@ -19,8 +19,13 @@ import {
   Column,
   DividerText,
   LinkToOtherAuthButton,
-  OAuthButtonRow
+  OAuthButtonRow,
+  IconInput,
+  WrapperInput
 } from "../Authentification.style";
+
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Login: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -54,18 +59,28 @@ const Login: FC = () => {
         <FormWrapper>
           <Column>
             <h2>{t("description.logInPart1")}</h2>
-            <AuthentificationInput
-              type="text"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-              data-testid="emailInput"
-            />
-            <AuthentificationInput
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-              data-testid="passwordInput"
-            />
+            <WrapperInput>
+              <IconInput>
+                <MailOutlineIcon sx={{ color: "#BBBBBB" }} />
+              </IconInput>
+              <AuthentificationInput
+                type="text"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+                data-testid="emailInput"
+              />
+            </WrapperInput>
+            <WrapperInput>
+              <IconInput>
+                <VisibilityOffIcon sx={{ color: "#BBBBBB" }} />
+              </IconInput>
+              <AuthentificationInput
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                data-testid="passwordInput"
+              />
+            </WrapperInput>
             <ForgotPasswordText>
               {t("description.forgotPassword")}
             </ForgotPasswordText>

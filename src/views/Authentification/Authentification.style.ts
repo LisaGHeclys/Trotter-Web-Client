@@ -62,11 +62,27 @@ export const OAuthButtonRow = styled.div`
   }
 `;
 
+export const WrapperInput = styled.div`
+  position: relative;
+`;
+
+export const IconInput = styled.div`
+  height: 1.5rem;
+  width: 1.5rem;
+  position: absolute;
+  box-sizing: border-box;
+  top: 50%;
+  left: 87%;
+  transform: translateY(-50%);
+`;
+
 export const AuthentificationInput = styled.input`
   background-color: ${COLORS.bg};
+  box-sizing: border-box;
   width: 400px;
   height: 60px;
   padding: 0 10px;
+
   border: 1px solid lightgray;
   border-radius: 10px;
   font-size: 16px;

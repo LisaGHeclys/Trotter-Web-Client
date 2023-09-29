@@ -17,9 +17,14 @@ import {
   Column,
   DividerText,
   LinkToOtherAuthButton,
-  OAuthButtonRow
+  OAuthButtonRow,
+  IconInput,
+  WrapperInput
 } from "../Authentification.style";
 import Navbar from "../../../components/Navbar/Navbar";
+
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import LockIcon from "@mui/icons-material/Lock";
 
 const Register: FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -70,24 +75,39 @@ const Register: FC = () => {
         <FormWrapper>
           <Column>
             <h2>{t("description.registerPart1")}</h2>
-            <AuthentificationInput
-              type="text"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-              data-testid="emailInput"
-            />
-            <AuthentificationInput
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-              data-testid="passwordInput"
-            />
-            <AuthentificationInput
-              type="password"
-              placeholder="Confirm Password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              data-testid="passwordConfirmInput"
-            />
+            <WrapperInput>
+              <IconInput>
+                <MailOutlineIcon sx={{ color: "#BBBBBB" }} />
+              </IconInput>
+              <AuthentificationInput
+                type="text"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+                data-testid="emailInput"
+              />
+            </WrapperInput>
+            <WrapperInput>
+              <IconInput>
+                <LockIcon sx={{ color: "#BBBBBB" }} />
+              </IconInput>
+              <AuthentificationInput
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                data-testid="passwordInput"
+              />
+            </WrapperInput>
+            <WrapperInput>
+              <IconInput>
+                <LockIcon sx={{ color: "#BBBBBB" }} />
+              </IconInput>
+              <AuthentificationInput
+                type="password"
+                placeholder="Confirm Password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                data-testid="passwordConfirmInput"
+              />
+            </WrapperInput>
             <AuthentificationButton
               onClick={register}
               data-testid="submitRegister"
@@ -123,17 +143,11 @@ const Register: FC = () => {
 const RegisterWrapper = styled.div`
   color: ${COLORS.text};
   font-family: ${FONT};
-  user-select: none;
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 100%;
   overflow-y: hidden;
-
-  @media screen and (max-width: 1024px) {
-    margin-top: 13%;
-    margin-left: 10%;
-  }
 
   @media screen and (max-width: 912px) {
     overflow-y: visible;
@@ -181,20 +195,13 @@ const LoginRedirection = styled.div`
 `;
 
 const FormWrapper = styled.div`
-  position: relative;
+  flex: 1;
   height: 100%;
-  width: 50%;
-  padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  user-select: none;
-  z-index: 1;
-  background-color: ${COLORS.bg};
 
   @media screen and (max-width: 912px) {
-    margin-top: 150px;
     height: 100%;
     padding: 0;
   }
