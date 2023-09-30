@@ -3,7 +3,6 @@ import { Grid, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Navbar from "../../components/Navbar/Navbar";
-import Louvre from "../../assets/PalaisLouvre.jpg";
 import London from "../../assets/London.jpg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -74,9 +73,6 @@ const TravelPage: FC = () => {
               </SearchButton>
             </Grid>
           </ChoseDestination>
-          <Grid item p={0} m={0} xs={isMobile ? 12 : 6}>
-            <CardContentPhoto src={Louvre} alt="louvre" />
-          </Grid>
         </DestinationComponentWrapper>
         <DestinationPossibilities container item p={0} m={0} xs={8}>
           <Grid item p={0} m={0} xs={12}>
