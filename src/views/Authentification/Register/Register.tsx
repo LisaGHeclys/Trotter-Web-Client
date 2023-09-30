@@ -17,19 +17,29 @@ import {
   Column,
   DividerText,
   LinkToOtherAuthButton,
-  OAuthButtonRow
+  OAuthButtonRow,
+  IconInput,
+  WrapperInput
 } from "../Authentification.style";
 import Navbar from "../../../components/Navbar/Navbar";
+
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import LockIcon from "@mui/icons-material/Lock";
+import toast from "react-hot-toast";
 
 const Register: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [, /*confirmPassword*/ setConfirmPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   async function register() {
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
     const response = await axios({
       method: "post",
       url: `${process.env.REACT_APP_SERVER_URI}/auth/register`,
@@ -44,7 +54,7 @@ const Register: FC = () => {
       }
     });
     if (response.data.status !== 200 || !response.data.accessToken) {
-      //Alert user ("An error occured, please try again later")
+      toast.error("An error occured, please try again later");
     } else {
       localStorage.setItem("jwt", response.data.accessToken);
       dispatch({ type: "LOGIN", payload: response.data.accessToken });
@@ -58,62 +68,77 @@ const Register: FC = () => {
       <RegisterWrapper>
         <ImageWrapper>
           <RegisterImage src="/login.png" />
-          <LoginCard>
+          <LoginRedirection>
             <h1>Welcome !</h1>
             <br />
             <h2>Already a member ?</h2>
             <LinkToOtherAuthButton onClick={() => navigate("/login")}>
               {t("description.registerPart3")}
             </LinkToOtherAuthButton>
-          </LoginCard>
+          </LoginRedirection>
         </ImageWrapper>
         <FormWrapper>
           <Column>
             <h2>{t("description.registerPart1")}</h2>
-            <AuthentificationInput
-              type="text"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-              data-testid="emailInput"
-            />
-            <AuthentificationInput
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-              data-testid="passwordInput"
-            />
-            <AuthentificationInput
-              type="password"
-              placeholder="Confirm Password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              data-testid="passwordConfirmInput"
-            />
+            <WrapperInput>
+              <IconInput>
+                <MailOutlineIcon sx={{ color: "#BBBBBB" }} />
+              </IconInput>
+              <AuthentificationInput
+                type="text"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+                data-testid="emailInput"
+              />
+            </WrapperInput>
+            <WrapperInput>
+              <IconInput>
+                <LockIcon sx={{ color: "#BBBBBB" }} />
+              </IconInput>
+              <AuthentificationInput
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                data-testid="passwordInput"
+              />
+            </WrapperInput>
+            <WrapperInput>
+              <IconInput>
+                <LockIcon sx={{ color: "#BBBBBB" }} />
+              </IconInput>
+              <AuthentificationInput
+                type="password"
+                placeholder="Confirm Password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                data-testid="passwordConfirmInput"
+              />
+            </WrapperInput>
             <AuthentificationButton
               onClick={register}
               data-testid="submitRegister"
             >
               {t("description.registerPart4")}
             </AuthentificationButton>
-            <DividerText data-content={t("description.separator")} />
-            <OAuthButtonRow>
-              <OauthButton
-                service={OauthServices.google}
-                icon={<GoogleIcon style={{ width: 45, height: 45 }} />}
-              />
-              <OauthButton
-                service={OauthServices.facebook}
-                icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
-              />
-              <OauthButton
-                service={OauthServices.twitter}
-                icon={<TwitterIcon style={{ width: 45, height: 45 }} />}
-              />
-              <OauthButton
-                service={OauthServices.linkedin}
-                icon={<LinkedInIcon style={{ width: 45, height: 45 }} />}
-              />
-            </OAuthButtonRow>
           </Column>
+          <DividerText data-content={t("description.separator")} />
+          <OAuthButtonRow>
+            <OauthButton
+              service={OauthServices.google}
+              icon={<GoogleIcon style={{ width: 45, height: 45 }} />}
+            />
+            <OauthButton
+              service={OauthServices.facebook}
+              icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
+            />
+            <OauthButton
+              service={OauthServices.twitter}
+              icon={<TwitterIcon style={{ width: 45, height: 45 }} />}
+            />
+            <OauthButton
+              service={OauthServices.linkedin}
+              icon={<LinkedInIcon style={{ width: 45, height: 45 }} />}
+            />
+          </OAuthButtonRow>
         </FormWrapper>
       </RegisterWrapper>
     </>
@@ -123,17 +148,11 @@ const Register: FC = () => {
 const RegisterWrapper = styled.div`
   color: ${COLORS.text};
   font-family: ${FONT};
-  user-select: none;
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 100%;
   overflow-y: hidden;
-
-  @media screen and (max-width: 1024px) {
-    margin-top: 13%;
-    margin-left: 10%;
-  }
 
   @media screen and (max-width: 912px) {
     overflow-y: visible;
@@ -167,7 +186,7 @@ const RegisterImage = styled.img`
   }
 `;
 
-const LoginCard = styled.div`
+const LoginRedirection = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -181,20 +200,13 @@ const LoginCard = styled.div`
 `;
 
 const FormWrapper = styled.div`
-  position: relative;
+  flex: 1;
   height: 100%;
-  width: 50%;
-  padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  user-select: none;
-  z-index: 1;
-  background-color: ${COLORS.bg};
 
   @media screen and (max-width: 912px) {
-    margin-top: 150px;
     height: 100%;
     padding: 0;
   }

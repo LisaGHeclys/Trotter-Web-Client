@@ -19,11 +19,16 @@ import {
   Column,
   DividerText,
   LinkToOtherAuthButton,
-  OAuthButtonRow
+  OAuthButtonRow,
+  IconInput,
+  WrapperInput
 } from "../Authentification.style";
 
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
 const Login: FC = () => {
-  const [, /*loading*/ setLoading] = useState<boolean>(false);
+  const [, /* loading */ setLoading] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch<Dispatch<AnyAction>>();
@@ -54,18 +59,28 @@ const Login: FC = () => {
         <FormWrapper>
           <Column>
             <h2>{t("description.logInPart1")}</h2>
-            <AuthentificationInput
-              type="text"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-              data-testid="emailInput"
-            />
-            <AuthentificationInput
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-              data-testid="passwordInput"
-            />
+            <WrapperInput>
+              <IconInput>
+                <MailOutlineIcon sx={{ color: "#BBBBBB" }} />
+              </IconInput>
+              <AuthentificationInput
+                type="text"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+                data-testid="emailInput"
+              />
+            </WrapperInput>
+            <WrapperInput>
+              <IconInput>
+                <VisibilityOffIcon sx={{ color: "#BBBBBB" }} />
+              </IconInput>
+              <AuthentificationInput
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                data-testid="passwordInput"
+              />
+            </WrapperInput>
             <ForgotPasswordText>
               {t("description.forgotPassword")}
             </ForgotPasswordText>
@@ -73,36 +88,36 @@ const Login: FC = () => {
               {t("description.logInPart2")}
             </AuthentificationButton>
           </Column>
-          <DividerText data-content="Or sign with" />
+          <DividerText data-content={t("description.separator")} />
           <OAuthButtonRow>
             <OauthButton
               service={OauthServices.google}
-              icon={<GoogleIcon style={{ width: 40, height: 40 }} />}
+              icon={<GoogleIcon style={{ width: 45, height: 45 }} />}
             />
             <OauthButton
               service={OauthServices.facebook}
-              icon={<FacebookIcon style={{ width: 40, height: 40 }} />}
+              icon={<FacebookIcon style={{ width: 45, height: 45 }} />}
             />
             <OauthButton
               service={OauthServices.twitter}
-              icon={<TwitterIcon style={{ width: 40, height: 40 }} />}
+              icon={<TwitterIcon style={{ width: 45, height: 45 }} />}
             />
             <OauthButton
               service={OauthServices.linkedin}
-              icon={<LinkedInIcon style={{ width: 40, height: 40 }} />}
+              icon={<LinkedInIcon style={{ width: 45, height: 45 }} />}
             />
           </OAuthButtonRow>
         </FormWrapper>
         <ImageWrapper>
           <LoginImage src="/login.png" alt="loginImageMontain" />
-          <RegisterCard>
+          <RegisterRedirection>
             <h1>Welcome !</h1>
             <br />
             <h2>Do not have an account ?</h2>
             <LinkToOtherAuthButton onClick={() => navigate("/register")}>
               {t("description.registerPart4")}
             </LinkToOtherAuthButton>
-          </RegisterCard>
+          </RegisterRedirection>
         </ImageWrapper>
       </LoginWrapper>
     </>
@@ -155,7 +170,7 @@ const LoginImage = styled.img`
   }
 `;
 
-const RegisterCard = styled.div`
+const RegisterRedirection = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -185,7 +200,7 @@ const ForgotPasswordText = styled.p`
     margin-left: 160px;
   }
   &:hover {
-    color: ${COLORS.links};
+    color: ${COLORS.grey};
     transition-duration: 0.3s;
   }
 `;

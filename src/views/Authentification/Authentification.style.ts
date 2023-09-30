@@ -55,18 +55,34 @@ export const OAuthButtonRow = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1;
-  gap: 28px;
+  gap: 42px;
 
   @media screen and (max-width: 768px) {
-    gap: 32px;
+    gap: 28px;
   }
+`;
+
+export const WrapperInput = styled.div`
+  position: relative;
+`;
+
+export const IconInput = styled.div`
+  height: 1.5rem;
+  width: 1.5rem;
+  position: absolute;
+  box-sizing: border-box;
+  top: 50%;
+  left: 87%;
+  transform: translateY(-50%);
 `;
 
 export const AuthentificationInput = styled.input`
   background-color: ${COLORS.bg};
+  box-sizing: border-box;
   width: 400px;
   height: 60px;
   padding: 0 10px;
+
   border: 1px solid lightgray;
   border-radius: 10px;
   font-size: 16px;
@@ -84,7 +100,7 @@ export const AuthentificationButton = styled.button`
   height: 48px;
   border: none;
   border-radius: 10px;
-  background-color: ${COLORS.links};
+  background-color: ${COLORS.grey};
   color: ${COLORS.white};
   cursor: pointer;
   font-weight: bold;
@@ -92,7 +108,7 @@ export const AuthentificationButton = styled.button`
   transition: all ease-in-out 0.2s;
 
   &:hover {
-    background-color: ${COLORS.blueGreen};
+    background-color: ${COLORS.grey};
     scale: 1.06;
   }
   @media (max-width: 1024px) {
@@ -114,7 +130,7 @@ export const LinkToOtherAuthButton = styled.button`
   font-size: 20px;
 
   &:hover {
-    background-color: gray;
     transition-duration: 0.4s;
+    scale: 1.06;
   }
 `;
