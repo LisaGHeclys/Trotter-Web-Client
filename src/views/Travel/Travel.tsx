@@ -17,7 +17,7 @@ const TravelPage: FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [city, setCity] = useState<string>("");
-  const [period, setPeriod] = useState<string>("date");
+  const [, /*period*/ setPeriod] = useState<string>("date");
   const [isFav, setIsFav] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<AnyAction>>();
@@ -38,18 +38,7 @@ const TravelPage: FC = () => {
           rowGap={isMobile ? 5 : 0}
         >
           <ChoseDestination container item xs={isMobile ? 12 : 6}>
-            <Grid
-              item
-              p={0}
-              m={0}
-              xs={12}
-              mb={2}
-              style={{
-                textDecoration: "underline",
-                textUnderlineOffset: "6px",
-                marginBottom: "40px"
-              }}
-            >
+            <Grid item p={0} m={0} xs={12} mb={2}>
               {t("description.travelPart1")}
             </Grid>
             <GridInput
@@ -85,6 +74,9 @@ const TravelPage: FC = () => {
               </SearchButton>
             </Grid>
           </ChoseDestination>
+          <Grid item p={0} m={0} xs={isMobile ? 12 : 6}>
+            <CardContentPhoto src={Louvre} alt="louvre" />
+          </Grid>
         </DestinationComponentWrapper>
         <DestinationPossibilities container item p={0} m={0} xs={8}>
           <Grid item p={0} m={0} xs={12}>
@@ -154,7 +146,6 @@ const ChoseDestination = styled(Grid)`
   color: ${COLORS.black};
   justify-content: center;
   align-items: center;
-  text-align: center;
 
   @media (max-width: 768px) {
     font-size: 30px;
@@ -225,6 +216,8 @@ const SearchButton = styled.button`
 `;
 
 const DestinationPossibilities = styled(Grid)`
+  display: flex;
+  flex-direction: column;
   position: relative;
   height: 20vh;
   font-weight: 200;

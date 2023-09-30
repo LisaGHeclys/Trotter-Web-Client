@@ -17,11 +17,12 @@ const OauthButton: FC<Oauth2ButtonProps> = ({ service, icon }) => {
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const navigate = useNavigate();
 
-  const receiveMessage = (event: any) => {
+  const receiveMessage = (event: MessageEvent<unknown>) => {
     if (event.origin !== window.location.origin) {
       return;
     }
-
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const message = event.data.toString();
 
     if (message.slice(0, 5) === "?jwt=") {

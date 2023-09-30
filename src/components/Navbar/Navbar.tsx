@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { AppBar, useMediaQuery, useTheme, CssBaseline } from "@mui/material";
 import styled from "styled-components";
@@ -8,30 +8,30 @@ import { LanguageSwitch } from "../LanguageSwitch/LanguageSwitch";
 import DrawerComponent from "./DrawerComponent";
 import { COLORS, FONT } from "../../UI/Colors";
 
-interface RoutesListType {
-  name: string;
-  routes: string;
-}
+// interface RoutesListType {
+//   name: string;
+//   routes: string;
+// }
 
 const Navbar: FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
-  const routesList: RoutesListType[] = [
-    {
-      name: t("description.navbarPart1"),
-      routes: "/"
-    },
-    {
-      name: t("description.navbarPart2"),
-      routes: "/travel"
-    },
-    {
-      name: t("description.navbarPart4"),
-      routes: "/about"
-    }
-  ];
+  // const routesList: RoutesListType[] = [
+  //   {
+  //     name: t("description.navbarPart1"),
+  //     routes: "/"
+  //   },
+  //   {
+  //     name: t("description.navbarPart2"),
+  //     routes: "/travel"
+  //   },
+  //   {
+  //     name: t("description.navbarPart4"),
+  //     routes: "/about"
+  //   }
+  // ];
 
   return (
     <AppBar elevation={0} color="transparent">
