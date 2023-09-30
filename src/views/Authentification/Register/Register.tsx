@@ -35,7 +35,7 @@ const Register: FC = () => {
       url: `${process.env.REACT_APP_SERVER_URI}/auth/register`,
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": process.env.REACT_APP_SERVIER_URI,
+        "Access-Control-Allow-Origin": process.env.REACT_APP_SERVER_URI,
         "Access-Control-Allow-Credentials": true
       },
       data: {
