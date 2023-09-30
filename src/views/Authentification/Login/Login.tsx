@@ -28,7 +28,7 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Login: FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [, /* loading */ setLoading] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch<Dispatch<AnyAction>>();

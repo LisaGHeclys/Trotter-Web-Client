@@ -25,6 +25,7 @@ import Navbar from "../../../components/Navbar/Navbar";
 
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockIcon from "@mui/icons-material/Lock";
+import toast from "react-hot-toast";
 
 const Register: FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -35,6 +36,10 @@ const Register: FC = () => {
   const { t } = useTranslation();
 
   async function register() {
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
     const response = await axios({
       method: "post",
       url: `${process.env.REACT_APP_SERVER_URI}/auth/register`,
@@ -49,7 +54,7 @@ const Register: FC = () => {
       }
     });
     if (response.data.status !== 200 || !response.data.accessToken) {
-      //Alert user ("An error occured, please try again later")
+      toast.error("An error occured, please try again later");
     } else {
       localStorage.setItem("jwt", response.data.accessToken);
       dispatch({ type: "LOGIN", payload: response.data.accessToken });
