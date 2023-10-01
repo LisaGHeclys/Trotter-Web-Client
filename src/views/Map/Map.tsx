@@ -184,7 +184,8 @@ const BaseMap: FC = () => {
 
   useEffect(() => {
     setMarkers([]);
-    dropoffs[itineraryDay]?.features.forEach((element, i: number) => {
+    console.log(dropoffs);
+    dropoffs[itineraryDay]?.features?.forEach((element, i: number) => {
       setMarkers((old) => [
         ...old,
         <Marker
@@ -212,7 +213,109 @@ const BaseMap: FC = () => {
                 Math.floor(Math.random() * 100) + 200
               }/${Math.floor(Math.random() * 100) + 200}`}" />`
             )}
-        />
+        >
+          {element?.properties?.kinds.includes("religion") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"hotel"}
+              src={"https://static.thenounproject.com/png/158909-200.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("museums") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"hotel"}
+              src={"../../assets/markers/Museum.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("natural_springs") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"hotel"}
+              src={"../../assets/markers/Nature.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("shops") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"hotel"}
+              src={"../../assets/markers/Shop.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("architecture") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"hotel"}
+              src={"../../assets/markers/Architecture.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes(
+              "theatres_and_entertainments"
+            ) ? (
+            <img
+              width={36}
+              height={36}
+              alt={"theaters"}
+              src={"../../assets/markers/Theater.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("foods") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"Foods"}
+              src={"../../assets/markers/Food.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("banks") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"Banks"}
+              src={"../../assets/markers/Bank.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("transport") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"Transports"}
+              src={"../../assets/markers/Transport.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinsds.includes("beaches") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"Beaches"}
+              src={"../../assets/markers/Beach.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("bridges") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"Bridges"}
+              src={"../../assets/markers/Bridge.png"}
+              className="hotelMarker"
+            />
+          ) : (
+            <img
+              width={36}
+              height={36}
+              alt={"hotel"}
+              src={
+                "https://images-ext-2.discordapp.net/external/E1myNIG4k9PFEDvf0YyKxLwLvtz9uOkJCAkuCwojj6k/https/cdn-icons-png.flaticon.com/512/10175/10175378.png?width=1024&height=1024"
+              }
+              className="hotelMarker"
+            />
+          )}
+        </Marker>
       ]);
     });
   }, [dropoffs, itineraryDay]);
@@ -292,7 +395,7 @@ const BaseMap: FC = () => {
             <ChevronRight />
           </IconButton>
         </Row>
-        {dropoffs[itineraryDay]?.features.map((feature: FeatureDTO, i) => {
+        {dropoffs[itineraryDay]?.features?.map((feature: FeatureDTO, i) => {
           return (
             <InterestsPicture key={i}>
               <p>{feature.properties?.name}</p>
@@ -361,8 +464,9 @@ const BaseMap: FC = () => {
               "circle-stroke-color": "white"
             }}
           />
-          {markers.map((marker) => marker)}
-          {hotel.map((marker) => marker)}
+
+          {markers?.map((marker) => marker)}
+          {hotel?.map((marker) => marker)}
           <Routes
             routes={routes}
             colors={weekColors}
