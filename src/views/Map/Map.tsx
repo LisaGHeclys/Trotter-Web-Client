@@ -227,27 +227,81 @@ const BaseMap: FC = () => {
               width={36}
               height={36}
               alt={"hotel"}
-              src={
-                "https://cdn2.iconfinder.com/data/icons/location-map-simplicity/512/museum-512.png"
-              }
+              src={"../../assets/markers/Museum.png"}
               className="hotelMarker"
             />
-          ) : element?.properties?.kinds.includes("natural") ? (
+          ) : element?.properties?.kinds.includes("natural_springs") ? (
             <img
               width={36}
               height={36}
               alt={"hotel"}
-              src={"https://static.thenounproject.com/png/743150-200.png"}
+              src={"../../assets/markers/Nature.png"}
               className="hotelMarker"
             />
-          ) : element?.properties?.kinds.includes("tourist_facilities") ? (
+          ) : element?.properties?.kinds.includes("shops") ? (
             <img
               width={36}
               height={36}
               alt={"hotel"}
-              src={
-                "https://cdn4.iconfinder.com/data/icons/map-pins-7/64/map_pin_pointer_location_navigation_shopping_store_shop-512.png"
-              }
+              src={"../../assets/markers/Shop.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("architecture") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"hotel"}
+              src={"../../assets/markers/Architecture.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes(
+              "theatres_and_entertainments"
+            ) ? (
+            <img
+              width={36}
+              height={36}
+              alt={"theaters"}
+              src={"../../assets/markers/Theater.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("foods") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"Foods"}
+              src={"../../assets/markers/Food.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("banks") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"Banks"}
+              src={"../../assets/markers/Bank.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("transport") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"Transports"}
+              src={"../../assets/markers/Transport.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinsds.includes("beaches") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"Beaches"}
+              src={"../../assets/markers/Beach.png"}
+              className="hotelMarker"
+            />
+          ) : element?.properties?.kinds.includes("bridges") ? (
+            <img
+              width={36}
+              height={36}
+              alt={"Bridges"}
+              src={"../../assets/markers/Bridge.png"}
               className="hotelMarker"
             />
           ) : (
