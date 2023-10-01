@@ -12,7 +12,7 @@ import { COLORS, FONT } from "../../UI/Colors";
 import { GridProps } from "./Travel.type";
 import styled from "styled-components";
 
-import Joyride from "react-joyride";
+import Joyride, { CallBackProps, Step } from "react-joyride";
 
 const TravelPage: FC = () => {
   const theme = useTheme();
@@ -20,7 +20,7 @@ const TravelPage: FC = () => {
   const [city, setCity] = useState<string>("");
   const [, /*period*/ setPeriod] = useState<string>("date");
   const [isFav, setIsFav] = useState<boolean>(false);
-  const [steps, setSteps] = useState<any>([
+  const steps: Step[] = [
     {
       content: <h2>Welcome on Trotter Application !</h2>,
       locale: {
@@ -50,8 +50,8 @@ const TravelPage: FC = () => {
       content: <h2>Click on this button and voila ! Your trip is created</h2>,
       target: "#guided-tour-search-button"
     }
-  ]);
-  // const [run, setRun] = useState<boolean>(false);s
+  ];
+  const run = localStorage.getItem("GT_OVER") !== "true";
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const { t } = useTranslation();
@@ -75,6 +75,12 @@ const TravelPage: FC = () => {
               display: "none"
             }
           }}
+          callback={(data: CallBackProps) => {
+            if (data.status === "finished" || data.action === "skip") {
+              localStorage.setItem("GT_OVER", "true");
+            }
+          }}
+          run={run}
         />
         <Grid item p={0} m={0} xs={12}>
           <Navbar />
