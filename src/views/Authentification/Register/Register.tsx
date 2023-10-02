@@ -50,6 +50,7 @@ const Register: FC = () => {
       },
       data: {
         email: email,
+        username: email,
         password: password
       }
     });
