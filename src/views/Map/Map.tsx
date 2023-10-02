@@ -331,8 +331,8 @@ const BaseMap: FC = () => {
   }, [lat, lng, fetchCoordinates, cityName]);
 
   return (
-    <MapWrapper>
-      <MapSideMenu>
+    <div className="mapWrapper" id="mapWrapper">
+      <div className="mapSideMenu">
         <h1>{t("description.mapPart1")}</h1>
         <p>
           <b>
@@ -411,7 +411,7 @@ const BaseMap: FC = () => {
             </InterestsPicture>
           );
         })}
-      </MapSideMenu>
+      </div>
       <div
         id="mapContainer"
         className={
@@ -474,41 +474,9 @@ const BaseMap: FC = () => {
           />
         </Map>
       </div>
-    </MapWrapper>
+    </div>
   );
 };
-
-const MapWrapper = styled.div`
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
-`;
-
-const MapSideMenu = styled.div`
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 400px;
-  height: 100%;
-  background-color: #f3f4f8;
-  border-right: 1px solid lightgray;
-  border-radius: 4px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  overflow: auto;
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 24px;
-  overflow-x: hidden;
-
-  img {
-    border-radius: 10px;
-  }
-`;
 
 const DateRangeWrapper = styled(DateRange)`
   transform: scale(0.8);
