@@ -49,8 +49,8 @@ const Register: FC = () => {
         "Access-Control-Allow-Credentials": true
       },
       data: {
-        Email: email,
-        Password: password
+        email: email,
+        password: password
       }
     });
     if (response.data.status !== 200 || !response.data.accessToken) {
