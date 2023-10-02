@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { Grid, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -13,6 +13,11 @@ import { GridProps } from "./Travel.type";
 import styled from "styled-components";
 
 import Joyride, { CallBackProps, Step } from "react-joyride";
+import ChoiceModal from "../../components/ChoiceUserModal/ChoiceModal";
+import MuseumIcon from "@mui/icons-material/Museum";
+import BeachAccessIcon from "@mui/icons-material/BeachAccess";
+import ForestIcon from "@mui/icons-material/Forest";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const TravelPage: FC = () => {
   const theme = useTheme();
@@ -56,6 +61,34 @@ const TravelPage: FC = () => {
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const { t } = useTranslation();
 
+  // Modal User Interest
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedChoices, setSelectedChoices] = useState<Choice[]>([]);
+  const choices = [
+    { label: "Beach", icon: <BeachAccessIcon /> },
+    { label: "Museum", icon: <MuseumIcon /> },
+    { label: "Natural", icon: <ForestIcon /> },
+    { label: "Shop", icon: <ShoppingCartIcon /> }
+  ];
+
+  useEffect(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  interface Choice {
+    label: string;
+    icon: JSX.Element;
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleConfirm = (selectedChoices: Choice[]) => {
+    setSelectedChoices(selectedChoices);
+    closeModal();
+  };
+
   return (
     <div>
       <TravelWrapper container p={0} m={0} rowGap={10}>
@@ -85,6 +118,22 @@ const TravelPage: FC = () => {
         <Grid item p={0} m={0} xs={12}>
           <Navbar />
         </Grid>
+        <ChoiceModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          choices={choices}
+          onConfirm={handleConfirm}
+        />
+        <div>
+          <p>Selected Choices</p>
+          <ul>
+            {selectedChoices.map((choice, index) => (
+              <li key={index}>
+                {choice.icon} {choice.label}
+              </li>
+            ))}
+          </ul>
+        </div>
         <DestinationComponentWrapper
           container
           item
