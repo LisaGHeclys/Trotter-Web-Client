@@ -19,7 +19,7 @@ import { FeatureCollection } from "geojson";
 import { Popup, MapLayerMouseEvent } from "mapbox-gl";
 import Routes from "./Routes";
 import { RootState } from "../../store";
-import { Button, IconButton } from "@mui/material";
+import { Alert, Button, IconButton, Snackbar, Tooltip } from "@mui/material";
 import { format, addDays } from "date-fns";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { SearchState } from "../../reducers/search.reducers";
@@ -28,6 +28,7 @@ import { FeatureDTO, GeoJsonRes, UnderLineProps } from "./Maps.type";
 import styled from "styled-components";
 import { Geometry } from "@turf/helpers";
 import { useTranslation } from "react-i18next";
+import BedroomParentRoundedIcon from "@mui/icons-material/BedroomParentRounded";
 
 const BaseMap: FC = () => {
   const { t } = useTranslation();
@@ -62,6 +63,7 @@ const BaseMap: FC = () => {
   const [isHotelSelectionActivated, setIsHotelSelectionActivated] =
     useState<boolean>(false);
   const token = useSelector((state: RootState) => state.auth.token);
+  const [hasKayakClosed, setHasKayakBeenClosed] = useState<boolean>(false);
 
   const decrementItineraryDay = useCallback((old: number) => {
     if (old - 1 >= 0) setItineraryDay(old - 1);
@@ -393,13 +395,64 @@ const BaseMap: FC = () => {
           weekStartsOn={1}
           showDateDisplay={false}
         />
-        <Button
-          variant="contained"
-          onClick={() => setIsHotelSelectionActivated((prev) => !prev)}
-          className={isHotelSelectionActivated ? "hotelSelectionActivated" : ""}
+        <Snackbar
+          open={hasKayakClosed}
+          autoHideDuration={25000}
+          onClose={() => {
+            setHasKayakBeenClosed(false);
+          }}
         >
-          {t("description.mapPart4")}
-        </Button>
+          <Alert severity="success" variant="filled" sx={{ fontSize: 18 }}>
+            Thank you for booking your hotel with Kayak!
+          </Alert>
+        </Snackbar>
+        <Row>
+          <Button
+            variant="contained"
+            onClick={() => setIsHotelSelectionActivated((prev) => !prev)}
+            className={
+              isHotelSelectionActivated ? "hotelSelectionActivated" : ""
+            }
+          >
+            {t("description.mapPart4")}
+          </Button>
+          <Tooltip
+            title={"No hotel yet? Click to book one on KAYAK"}
+            placement={"top"}
+          >
+            <IconButton
+              onClick={(e) => {
+                e.preventDefault();
+                const popup = window.open(
+                  `https://kayak.fr/in?a=kan_273866_584460&lc=fr&url=%2Fhotels%2F${cityName}%2F${
+                    range[0].startDate?.getFullYear() || 2023
+                  }-${(range[0].startDate?.getMonth() || 9) + 1}-${
+                    range[0].startDate?.getDate() || 11
+                  }%2F${range[0].endDate?.getFullYear() || 2023}-${
+                    (range[0].endDate?.getMonth() || 9) + 1
+                  }-${range[0].endDate?.getDate() || 12}%2F1rooms%2F1adults`,
+                  "targetWindow",
+                  `toolbar=no,
+                                    location=no,
+                                    status=no,
+                                    menubar=no,
+                                    scrollbars=yes,
+                                    resizable=yes,
+                                    width=1000,
+                                    height=800`
+                );
+                if (popup) {
+                  popup.onunload = function () {
+                    setHasKayakBeenClosed(true);
+                  };
+                }
+                return false;
+              }}
+            >
+              <BedroomParentRoundedIcon />
+            </IconButton>
+          </Tooltip>
+        </Row>
         <label style={{ fontSize: 11, marginTop: 6 }}>
           {t("description.mapPart5")}
         </label>
@@ -527,6 +580,7 @@ const Row = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 12px;
 `;
 
 const UnderLine = styled.h3<UnderLineProps>`
