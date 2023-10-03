@@ -11,7 +11,8 @@ export type BaseMapProps = {
 
 export type FeatureDTO = {
   properties: {
-    [name: string]: string;
+    name: string;
+    images: string[];
   } | null;
 };
 
@@ -23,6 +24,7 @@ export type GeoJsonRes = {
       };
       properties: {
         name: string;
+        images: string[];
       };
     }[];
   }[];
