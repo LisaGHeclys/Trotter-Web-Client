@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { DateRange } from "react-date-range";
 import "./Map.scss";
@@ -24,7 +25,7 @@ import { format, addDays } from "date-fns";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { SearchState } from "../../reducers/search.reducers";
 import { BaseMapPropsDefault, getCoordinates, weekColors } from "./Maps.utils";
-import { FeatureDTO, GeoJsonRes, UnderLineProps } from "./Maps.type";
+import { GeoJsonRes, UnderLineProps } from "./Maps.type";
 import styled from "styled-components";
 import { Geometry } from "@turf/helpers";
 import { useTranslation } from "react-i18next";
@@ -213,9 +214,10 @@ const BaseMap: FC = () => {
             .setHTML(
               `<h3>${
                 element?.properties?.name
-              }</h3><img width="200" height="100" src="${`https://picsum.photos/${
-                Math.floor(Math.random() * 100) + 200
-              }/${Math.floor(Math.random() * 100) + 200}`}" />`
+              }</h3><img width="200" height="100" src="${`${
+                (element as any).images[0] ||
+                "https://www.freeiconspng.com/thumbs/ghost-icon/ghost-icon-14.png"
+              }`}" />`
             )}
         >
           {element?.properties?.kinds.includes("religion") ? (
@@ -470,19 +472,24 @@ const BaseMap: FC = () => {
             <ChevronRight />
           </IconButton>
         </Row>
-        {dropoffs[itineraryDay]?.features?.map((feature: FeatureDTO, i) => {
+        {dropoffs[itineraryDay]?.features?.map((feature: any, i) => {
           return (
             <InterestsPicture key={i}>
-              <p>{feature.properties?.name}</p>
-              <img
-                src={`https://picsum.photos/${
-                  Math.floor(Math.random() * 100) + 200
-                }/${Math.floor(Math.random() * 100) + 200}`}
-                alt="dropoff"
-                title={feature.properties?.name}
-                width={200}
-                height={100}
-              />
+              <p>
+                <b>{feature.properties?.name}</b>
+              </p>
+              <div className="photoWrapper">
+                {feature.images.map((image: string) => (
+                  <img
+                    key={`${image}+${feature.properties.name}`}
+                    title={image}
+                    alt={image}
+                    src={image}
+                    width={300}
+                    height={200}
+                  />
+                ))}
+              </div>
             </InterestsPicture>
           );
         })}
