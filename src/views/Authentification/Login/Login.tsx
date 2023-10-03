@@ -44,7 +44,7 @@ const Login: FC = () => {
       if (!result?.ok) throw new Error(resToJSON?.Message);
       localStorage.setItem("jwt", resToJSON.accessToken);
       dispatch({ type: "LOGIN", payload: resToJSON.accessToken });
-      navigate("/travel");
+      navigate("/map");
     } catch (e) {
       console.error("An error occured while loging the user");
       //to put a toaster

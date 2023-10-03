@@ -59,7 +59,7 @@ const Register: FC = () => {
     } else {
       localStorage.setItem("jwt", response.data.accessToken);
       dispatch({ type: "LOGIN", payload: response.data.accessToken });
-      navigate("/travel");
+      navigate("/map");
     }
   }
 
