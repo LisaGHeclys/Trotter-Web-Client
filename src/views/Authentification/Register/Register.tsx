@@ -40,26 +40,30 @@ const Register: FC = () => {
       toast.error("Passwords do not match");
       return;
     }
-    const response = await axios({
-      method: "post",
-      url: `${process.env.REACT_APP_SERVER_URI}/auth/register`,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": process.env.REACT_APP_SERVER_URI,
-        "Access-Control-Allow-Credentials": true
-      },
-      data: {
-        email: email,
-        username: email,
-        password: password
+    try {
+      const response = await axios({
+        method: "post",
+        url: `${process.env.REACT_APP_SERVER_URI}/auth/register`,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": process.env.REACT_APP_SERVER_URI,
+          "Access-Control-Allow-Credentials": true
+        },
+        data: {
+          email: email,
+          username: email,
+          password: password
+        }
+      });
+      if (!response.data.accessToken) {
+        toast.error("An error occured, please try again later");
+      } else {
+        localStorage.setItem("jwt", response.data.accessToken);
+        dispatch({ type: "LOGIN", payload: response.data.accessToken });
+        navigate("/map");
       }
-    });
-    if (response.data.status !== 200 || !response.data.accessToken) {
+    } catch (e) {
       toast.error("An error occured, please try again later");
-    } else {
-      localStorage.setItem("jwt", response.data.accessToken);
-      dispatch({ type: "LOGIN", payload: response.data.accessToken });
-      navigate("/map");
     }
   }
 

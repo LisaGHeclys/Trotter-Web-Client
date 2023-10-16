@@ -26,6 +26,7 @@ import {
 
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import toast from "react-hot-toast";
 
 const Login: FC = () => {
   const [, /* loading */ setLoading] = useState<boolean>(false);
@@ -47,6 +48,7 @@ const Login: FC = () => {
       navigate("/");
     } catch (e) {
       console.error("An error occured while loging the user");
+      toast.error("An error occured while loging the user");
       //to put a toaster
     }
     setLoading(false);
