@@ -1,25 +1,20 @@
 import React, { FC, useState } from "react";
-import { Grid, IconButton, useMediaQuery, useTheme } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Grid } from "@mui/material";
 import Navbar from "../../components/Navbar/Navbar";
-import London from "../../assets/London.jpg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AnyAction, Dispatch } from "redux";
 import { useTranslation } from "react-i18next";
 import { COLORS, FONT } from "../../UI/Colors";
-import { GridProps } from "./Travel.type";
+// import { GridProps } from "./Travel.type";
 import styled from "styled-components";
 
 import Joyride, { CallBackProps, Step } from "react-joyride";
+import SearchIcon from "@mui/icons-material/Search";
 
 const TravelPage: FC = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [city, setCity] = useState<string>("");
   const [, /*period*/ setPeriod] = useState<string>("date");
-  const [isFav, setIsFav] = useState<boolean>(false);
   const steps: Step[] = [
     {
       content: <h2>Welcome on Trotter Application !</h2>,
@@ -34,10 +29,6 @@ const TravelPage: FC = () => {
       placement: "center",
       target: "body"
     },
-    // {
-    // content: <h2>You can have access to our profile directly</h2>,
-    // target:"#profile",
-    // },
     {
       content: <h2>Enter your future destination here</h2>,
       target: "#guided-tour-city"
@@ -51,6 +42,7 @@ const TravelPage: FC = () => {
       target: "#guided-tour-search-button"
     }
   ];
+
   const run = localStorage.getItem("GT_OVER") !== "true";
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<AnyAction>>();
@@ -85,83 +77,34 @@ const TravelPage: FC = () => {
         <Grid item p={0} m={0} xs={12}>
           <Navbar />
         </Grid>
-        <DestinationComponentWrapper
-          container
-          item
-          p={0}
-          m={0}
-          xs={8}
-          rowGap={isMobile ? 5 : 0}
-        >
-          <ChoseDestination container item xs={isMobile ? 12 : 6}>
-            <Grid item p={0} m={0} xs={12} mb={2}>
-              {t("description.travelPart1")}
-            </Grid>
-            <GridInput
-              container
-              item
-              xs={isMobile ? 6 : 12}
-              isMobile={isMobile}
-            >
-              {t("description.travelPart2")}
-              <input
-                id="guided-tour-city"
-                placeholder="City..."
-                onChange={(e) => setCity(e.target.value)}
-                data-testid="cityName"
-              />
-            </GridInput>
-            <GridInput container item xs={isMobile ? 6 : 12}>
-              {t("description.travelPart3")}
-              <input
-                id="guided-tour-dates"
-                type={"date"}
-                placeholder="From ... to ..."
-                onChange={(e) => setPeriod(e.target.value)}
-              />
-            </GridInput>
-            <Grid>
-              <SearchButton
-                id="guided-tour-search-button"
-                onClick={() => {
-                  dispatch({ type: "SEARCH", payload: { place: city } });
-                  navigate("/map");
-                }}
-                data-testid="goOnTrip"
-              >
-                {t("description.travelPart4")}
-              </SearchButton>
-            </Grid>
-          </ChoseDestination>
-        </DestinationComponentWrapper>
-        <DestinationPossibilities container item p={0} m={0} xs={8}>
-          <Grid item p={0} m={0} xs={12}>
-            {t("description.travelPart5")}
-          </Grid>
-          <FavoritePlaces item>
-            <Grid item>
-              <CardContentPhoto
-                style={{
-                  backgroundColor: "#95b0b4",
-                  width: isMobile ? "75px" : "150px",
-                  height: isMobile ? "75px" : "150px",
-                  borderRadius: "10px"
-                }}
-                src={London}
-                alt="London"
-                onClick={() => navigate("/map")}
-              />
-              <IconButton
-                onClick={() => {
-                  setIsFav(!isFav);
-                }}
-              >
-                {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              </IconButton>
-            </Grid>
-          </FavoritePlaces>
-        </DestinationPossibilities>
       </TravelWrapper>
+      <DestinationComponentWrapper>
+        <h1>{t("description.travelPart1")}</h1>
+        <ChooseDestination>
+          <input
+            id="guided-tour-city"
+            placeholder="City..."
+            onChange={(e) => setCity(e.target.value)}
+            data-testid="cityName"
+          />
+          <input
+            id="guided-tour-dates"
+            type={"date"}
+            placeholder="From ... to ..."
+            onChange={(e) => setPeriod(e.target.value)}
+          />
+          <SearchButton
+            id="guided-tour-search-button"
+            onClick={() => {
+              dispatch({ type: "SEARCH", payload: { place: city } });
+              navigate("/map");
+            }}
+            data-testid="goOnTrip"
+          >
+            <SearchIcon style={{ width: 45, height: 45 }} />
+          </SearchButton>
+        </ChooseDestination>
+      </DestinationComponentWrapper>
     </div>
   );
 };
@@ -172,71 +115,40 @@ const TravelWrapper = styled(Grid)`
   justify-content: center;
 `;
 
-const DestinationComponentWrapper = styled(Grid)`
+const DestinationComponentWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   position: relative;
-  height: 60vh;
+  height: 100%;
+  align-items: center;
   align-content: center;
-  align-items: center;
   justify-content: center;
+  margin-top: 150px;
 
   @media (max-width: 768px) {
-    height: 50vh;
-    text-align: center;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
   }
 `;
 
-const ChoseDestination = styled(Grid)`
-  padding: 0 15px;
+const ChooseDestination = styled.div`
   display: flex;
-  flex-direction: column;
-  position: relative;
-  font-weight: 700;
-  font-size: 35px;
-  text-decoration: none;
+  height: 100%;
+  width: 100%;
+  flex-direction: row;
+  font-weight: bold;
+  font-size: 30px;
   font-family: ${FONT};
-  color: ${COLORS.black};
+  color: ${COLORS.text};
   justify-content: center;
   align-items: center;
-
-  @media (max-width: 768px) {
-    font-size: 30px;
-  }
-  @media (max-width: 425px) {
-    font-size: 25px;
-  }
-`;
-
-const GridInput = styled(Grid)<GridProps>`
-  display: flex;
-  flex-direction: column;
-  font-weight: 200;
-  font-size: 20px;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: ${(props) => (props.isMobile ? "0px" : "35px")};
-
-  @media (max-width: 768px) {
-    font-size: 18px;
-    justify-content: space-between;
-    align-content: center;
-  }
-  @media (max-width: 425px) {
-    font-size: 15px;
-    justify-content: space-between;
-    align-content: center;
-  }
 
   input {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 10px;
+    margin-right: 10px;
     background-color: ${COLORS.bg};
-    height: 5vh;
-    width: 25vw;
+    height: 5.4vh;
+    width: 20%;
     border-style: solid;
     border-color: ${COLORS.border};
     border-radius: 10px;
@@ -246,11 +158,10 @@ const GridInput = styled(Grid)<GridProps>`
 
 const SearchButton = styled.button`
   width: 180px;
-  height: 52px;
+  height: 5.2vh;
   z-index: 1;
   position: relative;
-  margin-top: 20px;
-  background-color: ${COLORS.grey};
+  background-color: ${COLORS.blue};
   border: none !important;
   border-radius: 10px;
   color: ${COLORS.white};
@@ -268,37 +179,6 @@ const SearchButton = styled.button`
     width: 150px;
     height: 40px;
     font-size: 15px;
-  }
-`;
-
-const DestinationPossibilities = styled(Grid)`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  height: 20vh;
-  font-weight: 200;
-  font-size: 20px;
-  row-gap: 0px !important;
-`;
-
-const FavoritePlaces = styled(Grid)`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const CardContentPhoto = styled.img`
-  width: 100%;
-  object-fit: cover;
-  background-color: #95b0b4;
-  height: 40vh;
-  border-radius: 20px;
-
-  @media (max-width: 768px) {
-    height: 30vh;
-  }
-  @media (max-width: 320px) {
-    height: 20vh;
   }
 `;
 
