@@ -161,6 +161,14 @@ const BaseMap: FC = () => {
         const resJson: GeoJsonRes =
           ress.status === 500 ? downApi : await ress.json();
 
+        mapRef.current?.flyTo({
+          center: resJson.features[0].features[0].geometry as unknown as [
+            number,
+            number
+          ],
+          zoom: 12
+        });
+
         // here check status 500 and add alert / snackbar
 
         if (resJson.features) {
