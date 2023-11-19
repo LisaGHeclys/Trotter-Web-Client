@@ -30,6 +30,7 @@ import styled from "styled-components";
 import { Geometry } from "@turf/helpers";
 import { useTranslation } from "react-i18next";
 import BedroomParentRoundedIcon from "@mui/icons-material/BedroomParentRounded";
+import downApi from "./downApi.json";
 
 const BaseMap: FC = () => {
   const { t } = useTranslation();
@@ -156,8 +157,11 @@ const BaseMap: FC = () => {
         setMarkers([]);
         setDropoffs({});
         setRoutes({});
-        if (ress.status !== 201) throw new Error();
-        const resJson: GeoJsonRes = await ress.json();
+        if (ress.status !== 201 && ress.status !== 500) throw new Error();
+        const resJson: GeoJsonRes =
+          ress.status === 500 ? downApi : await ress.json();
+
+        // here check status 500 and add alert / snackbar
 
         if (resJson.features) {
           for (const features of resJson.features) {
