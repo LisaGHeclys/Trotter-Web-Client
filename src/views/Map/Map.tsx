@@ -162,9 +162,11 @@ const BaseMap: FC = () => {
           ress.status === 500 ? downApi : await ress.json();
 
         mapRef.current?.flyTo({
-          center: resJson.features[0].features[0].geometry as unknown as [
-            number,
-            number
+          center: [
+            resJson.features[0].features[0].geometry
+              .coordinates[0] as unknown as number,
+            resJson.features[0].features[0].geometry
+              .coordinates[1] as unknown as number
           ],
           zoom: 12
         });
