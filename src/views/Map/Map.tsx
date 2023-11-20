@@ -66,6 +66,8 @@ const BaseMap: FC = () => {
     useState<boolean>(false);
   const token = useSelector((state: RootState) => state.auth.token);
   const [hasKayakClosed, setHasKayakBeenClosed] = useState<boolean>(false);
+  const [hasAlertAPIDownClosed, setHasAlertAPIDownClosed] =
+    useState<boolean>(false);
 
   const decrementItineraryDay = useCallback((old: number) => {
     if (old - 1 >= 0) setItineraryDay(old - 1);
@@ -171,7 +173,20 @@ const BaseMap: FC = () => {
           zoom: 12
         });
 
-        // here check status 500 and add alert / snackbar
+        <Snackbar
+          open={hasAlertAPIDownClosed}
+          autoHideDuration={25000}
+          onClose={() => {
+            setHasAlertAPIDownClosed(false);
+          }}
+        >
+          <Alert severity="info" variant="filled" sx={{ fontSize: 18 }}>
+            Our partner&aposs services are currently unvailable, please try
+            again later.
+            <br />
+            Thank you for your understanding.
+          </Alert>
+        </Snackbar>;
 
         if (resJson.features) {
           for (const features of resJson.features) {
