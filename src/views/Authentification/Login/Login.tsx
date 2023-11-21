@@ -65,7 +65,7 @@ const Login: FC = () => {
       <LoginWrapper>
         <FormWrapper>
           <Column>
-            <h2>{t("description.logInPart1")}</h2>
+            <h2>{t("login.logInAccount")}</h2>
             <WrapperInput>
               <IconInput>
                 <MailOutlineIcon sx={{ color: "#BBBBBB" }} />
@@ -88,11 +88,9 @@ const Login: FC = () => {
                 data-testid="passwordInput"
               />
             </WrapperInput>
-            <ForgotPasswordText>
-              {t("description.forgotPassword")}
-            </ForgotPasswordText>
+            <ForgotPasswordText>{t("login.forgotPassword")}</ForgotPasswordText>
             <AuthentificationButton onClick={login} data-testid="submitLogin">
-              {t("description.logInPart2")}
+              {t("general.logIn")}
             </AuthentificationButton>
           </Column>
           <DividerText data-content={t("description.separator")} />
@@ -118,11 +116,11 @@ const Login: FC = () => {
         <ImageWrapper>
           <LoginImage src="/login.png" alt="loginImageMontain" />
           <RegisterRedirection>
-            <h1>Welcome !</h1>
+            <h1>{t("login.welcome")}</h1>
             <br />
-            <h2>Do not have an account ?</h2>
+            <h2>{t("login.noAccount")}</h2>
             <LinkToOtherAuthButton onClick={() => navigate("/register")}>
-              {t("description.registerPart4")}
+              {t("general.register")}
             </LinkToOtherAuthButton>
           </RegisterRedirection>
         </ImageWrapper>

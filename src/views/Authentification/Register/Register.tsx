@@ -79,17 +79,17 @@ const Register: FC = () => {
         <ImageWrapper>
           <RegisterImage src="/login.png" />
           <LoginRedirection>
-            <h1>Welcome !</h1>
+            <h1>{t("register.welcome")}</h1>
             <br />
-            <h2>Already a member ?</h2>
+            <h2>{t("register.member")}</h2>
             <LinkToOtherAuthButton onClick={() => navigate("/login")}>
-              {t("description.registerPart3")}
+              {t("general.logIn")}
             </LinkToOtherAuthButton>
           </LoginRedirection>
         </ImageWrapper>
         <FormWrapper>
           <Column>
-            <h2>{t("description.registerPart1")}</h2>
+            <h2>{t("register.createAccount")}</h2>
             <WrapperInput>
               <IconInput>
                 <MailOutlineIcon sx={{ color: "#BBBBBB" }} />
@@ -127,7 +127,7 @@ const Register: FC = () => {
               onClick={register}
               data-testid="submitRegister"
             >
-              {t("description.registerPart4")}
+              {t("general.register")}
             </AuthentificationButton>
           </Column>
           <DividerText data-content={t("description.separator")} />

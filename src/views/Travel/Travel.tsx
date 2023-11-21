@@ -10,7 +10,6 @@ import { COLORS, FONT } from "../../UI/Colors";
 import styled from "styled-components";
 
 import Joyride, { CallBackProps, Step } from "react-joyride";
-import SearchIcon from "@mui/icons-material/Search";
 
 const TravelPage: FC = () => {
   const [city, setCity] = useState<string>("");
@@ -79,7 +78,7 @@ const TravelPage: FC = () => {
         </Grid>
       </TravelWrapper>
       <DestinationComponentWrapper>
-        <h1>{t("description.travelPart1")}</h1>
+        <h1>{t("travel.title")}</h1>
         <ChooseDestination>
           <input
             id="guided-tour-city"
@@ -101,7 +100,7 @@ const TravelPage: FC = () => {
             }}
             data-testid="goOnTrip"
           >
-            <SearchIcon style={{ width: 45, height: 45 }} />
+            <div>{t("travel.searchButton")}</div>
           </SearchButton>
         </ChooseDestination>
       </DestinationComponentWrapper>
@@ -135,7 +134,7 @@ const ChooseDestination = styled.div`
   display: flex;
   height: 100%;
   width: 100%;
-  flex-direction: row;
+  flex-direction: column;
   font-weight: bold;
   font-size: 30px;
   font-family: ${FONT};
@@ -146,9 +145,10 @@ const ChooseDestination = styled.div`
   input {
     margin-left: 10px;
     margin-right: 10px;
-    background-color: ${COLORS.bg};
     height: 5.4vh;
-    width: 20%;
+    width: 22.5%;
+
+    background-color: ${COLORS.bg};
     border-style: solid;
     border-color: ${COLORS.border};
     border-radius: 10px;
@@ -161,6 +161,8 @@ const SearchButton = styled.button`
   height: 5.2vh;
   z-index: 1;
   position: relative;
+  margin-top: 36px;
+
   background-color: ${COLORS.blue};
   border: none !important;
   border-radius: 10px;

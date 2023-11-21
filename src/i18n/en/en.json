@@ -1,49 +1,19 @@
 {
   "description": {
-    "navbarPart1": "Home",
-    "navbarPart2": "Travel",
-    "navbarPart3": "Destination",
-    "navbarPart4": "About us",
-    "aboutPart1": "Our project",
-    "aboutPart2": "Trotter is the mobile application that automates the travel planning process for solo travellers.",
-    "aboutPart3": "Take advantage of itineraries adapted to your desires and your trip, live close to the locals and meet other international travellers.",
-    "aboutPart4": "Trotter is the perfect tool to make your trip unforgettable.",
-    "aboutPart5": "Our members",
-    "dashboardPart1": "calendar",
-    "dashboardPart2": "travel",
-    "dashboardPart3": "exemple post-it",
-    "landingPart1": "Travelling alone never has been so easy",
-    "landingPart2": "Plan your solo trip with us and discover the activities we can offer you",
-    "forgotPassword": "Forgot your password ?",
     "separator": "or sign with",
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "logInPart1": "Login to your account",
-    "logInPart2": "Submit",
-    "registerPart1": "Create a new account",
-    "registerPart2": "Already a member ?",
-    "registerPart3": "Log in",
-    "registerPart4": "Register",
-    "alternateLogins1": "Or sign with",
-    "travelPart1": "Plan your travel",
     "travelPart2": "Location",
     "travelPart3": "Date",
     "travelPart5": "Recommended Tours",
-    "travelPart6": "City",
     "destinationPart1": "All of your past and futures destinations here",
     "destinationPart2": "Futures destinations",
     "destinationPart3": "See more",
     "destinationPart4": "Past destinations",
-    "profilePart1": "Email",
-    "profilePart2": "Password",
     "profilePart3": "Your preferences",
     "profilePart4": "My destinations",
     "profilePart5": "Saved places",
     "profilePrefrencePart1": "Choose your preferences",
     "profilePrefrencePart2": "Your current preferences",
     "profilePrefrencePart3": "All preferences available",
-    "profilePrefrencePart4": "Cancel",
-    "profilePrefrencePart5": "Save",
     "profileDeletePart1": "Delete the account",
     "profileDeletePart2": "Are you sure you want to delete the account?",
     "profileDeletePart3": "Once you decide to delete it, it cannot be recovered and all your data will be deleted as well.",
@@ -54,5 +24,47 @@
     "mapPart3": "in",
     "mapPart4": "Add my hotel",
     "mapPart5": "Double click on the map when the add an hotel option is on to register your hotel"
+  },
+  "header": {
+    "home": "Home",
+    "travel": "Travel",
+    "discover": "Discover",
+    "trending": "Trending"
+  },
+
+  "register": {
+    "createAccount": "Create a new account",
+    "welcome": "Welcome !",
+    "member": "Already a member ?"
+  },
+
+  "login": {
+    "logInAccount": "Login to your account",
+    "welcome": "Welcome !",
+    "noAccount": "Do not have an account ?",
+    "forgotPassword": "Forgot your password ?"
+  },
+
+  "general": {
+    "logIn": "Log in",
+    "register": "Sign up",
+    "delete": "Delete",
+    "password": "Password",
+    "email": "Email",
+    "skip": "Skip",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+
+  "travel": {
+    "title": "Plan your next travel",
+    "searchButton": "Start planning"
+  },
+
+  "choiceModal": {
+    "title": "Welcome on Trotter !",
+    "contentText": "Set up your preferences right away for yout next trip",
+    "contentTextPrecision": "Don’t worry, they are not definitive, you can change them at any time on your profile"
   }
 }

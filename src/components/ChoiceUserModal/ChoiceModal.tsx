@@ -1,5 +1,6 @@
 // ChoiceModal.tsx
 import React, { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
@@ -27,6 +28,7 @@ const ChoiceModal: FC<ChoiceModalProps> = ({
   onConfirm
 }) => {
   const [selectedChoices, setSelectedChoices] = useState<Choice[]>([]);
+  const { t } = useTranslation();
 
   const handleChoiceToggle = (choice: Choice) => {
     const isSelected = selectedChoices.some(
@@ -51,19 +53,16 @@ const ChoiceModal: FC<ChoiceModalProps> = ({
       <DialogContent>
         <ModalContent>
           <TitleContainer>
-            <TitleText>Welcome on Trotter !</TitleText>
+            <TitleText>{t("choiceModal.title")}</TitleText>
             <CloseButton onClick={onClose}>
               <CloseIcon />
             </CloseButton>
           </TitleContainer>
           <Separator />
           <ContentContainer>
-            <ContentText>
-              Set up your preferences right away for your next trip
-            </ContentText>
+            <ContentText>{t("choiceModal.contentText")}</ContentText>
             <ContentTextPrecision>
-              Don’t worry, they are not definitive, you can change them at any
-              time on your profile
+              {t("choiceModal.contentTextPrecision")}
             </ContentTextPrecision>
           </ContentContainer>
           <ChoiceContainer>
@@ -81,7 +80,7 @@ const ChoiceModal: FC<ChoiceModalProps> = ({
           </ChoiceContainer>
           <ButtonContainer>
             <ButtonStyle variant="outlined" onClick={onClose}>
-              Skip
+              {t("general.skip")}
             </ButtonStyle>
             <SpacingBetweenButtons />
             <ButtonStyle
@@ -89,7 +88,7 @@ const ChoiceModal: FC<ChoiceModalProps> = ({
               onClick={handleConfirm}
               disabled={selectedChoices.length === 0}
             >
-              Confirm
+              {t("general.confirm")}
             </ButtonStyle>
           </ButtonContainer>
         </ModalContent>

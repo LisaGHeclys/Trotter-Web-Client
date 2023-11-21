@@ -62,8 +62,8 @@ const Profile = () => {
                 </button>
               </div>
               <div className="UserInfo">
-                <h3>{t("description.profilePart1")}</h3>
-                <h3>{t("description.profilePart2")}</h3>
+                <h3>{t("general.email")}</h3>
+                <h3>{t("general.password")}</h3>
               </div>
             </Grid>
           </Grid>
