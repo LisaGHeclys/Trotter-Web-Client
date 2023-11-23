@@ -30,6 +30,10 @@ import styled from "styled-components";
 import { Geometry } from "@turf/helpers";
 import { useTranslation } from "react-i18next";
 import BedroomParentRoundedIcon from "@mui/icons-material/BedroomParentRounded";
+import ShareIcon from "@mui/icons-material/Share";
+import PrintIcon from "@mui/icons-material/Print";
+import ShareModal from "../../components/Modal/ShareModal";
+import handleError from "../../utils/ToastUtils";
 
 const BaseMap: FC = () => {
   const { t } = useTranslation();
@@ -65,6 +69,18 @@ const BaseMap: FC = () => {
     useState<boolean>(false);
   const token = useSelector((state: RootState) => state.auth.token);
   const [hasKayakClosed, setHasKayakBeenClosed] = useState<boolean>(false);
+
+  const isLoggedIn = useSelector<RootState, boolean>(
+    (state) => state.auth.isLoggedIn
+  );
+  const [isShareModalOpen, setIsShareModalOpen] = useState(isLoggedIn);
+
+  const closeShareModal = () => {
+    setIsShareModalOpen(false);
+  };
+  const handleClick = () => {
+    setIsShareModalOpen(true);
+  };
 
   const decrementItineraryDay = useCallback((old: number) => {
     if (old - 1 >= 0) setItineraryDay(old - 1);
@@ -182,6 +198,7 @@ const BaseMap: FC = () => {
         }
       } catch (e) {
         console.log(e);
+        handleError(e);
       }
     },
     [length, token]
@@ -358,6 +375,7 @@ const BaseMap: FC = () => {
 
   return (
     <div className="mapWrapper" id="mapWrapper">
+      <ShareModal isOpen={isShareModalOpen} onClose={closeShareModal} />
       <div className="mapSideMenu">
         <h1>{t("description.mapPart1")}</h1>
         <p>
@@ -435,13 +453,13 @@ const BaseMap: FC = () => {
                   }-${range[0].endDate?.getDate() || 12}%2F1rooms%2F1adults`,
                   "targetWindow",
                   `toolbar=no,
-                                    location=no,
-                                    status=no,
-                                    menubar=no,
-                                    scrollbars=yes,
-                                    resizable=yes,
-                                    width=1000,
-                                    height=800`
+                                  location=no,
+                                  status=no,
+                                  menubar=no,
+                                  scrollbars=yes,
+                                  resizable=yes,
+                                  width=1000,
+                                  height=800`
                 );
                 if (popup) {
                   popup.onunload = function () {
@@ -452,6 +470,15 @@ const BaseMap: FC = () => {
               }}
             >
               <BedroomParentRoundedIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={"Share your travel!"} placement={"top"}>
+            <IconButton
+              onClick={() => {
+                handleClick();
+              }}
+            >
+              <ShareIcon />
             </IconButton>
           </Tooltip>
         </Row>
@@ -472,6 +499,11 @@ const BaseMap: FC = () => {
             <ChevronRight />
           </IconButton>
         </Row>
+        <Tooltip title={"Print View"} placement={"top"}>
+          <IconButton>
+            <PrintIcon />
+          </IconButton>
+        </Tooltip>
         {dropoffs[itineraryDay]?.features?.map((feature: any, i) => {
           return (
             <InterestsPicture key={i}>
