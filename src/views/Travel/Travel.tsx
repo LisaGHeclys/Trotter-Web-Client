@@ -1,4 +1,7 @@
 import React, { FC, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+
 import { Grid, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -12,6 +15,7 @@ import { COLORS, FONT } from "../../UI/Colors";
 import { GridProps } from "./Travel.type";
 import styled from "styled-components";
 
+import LoginModal from "../../components/Modal/LoginModal";
 import Joyride, { CallBackProps, Step } from "react-joyride";
 import ChoiceModal from "../../components/ChoiceUserModal/ChoiceModal";
 import MuseumIcon from "@mui/icons-material/Museum";
@@ -89,6 +93,33 @@ const TravelPage: FC = () => {
     closeModal();
   };
 
+  const isLoggedIn = useSelector<RootState, boolean>(
+    (state) => state.auth.isLoggedIn
+  );
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(isLoggedIn);
+
+  const closeLoginModal = () => {
+    setIsLoginModalOpen(false);
+  };
+
+  const handleSignUp = () => {
+    closeLoginModal();
+    navigate("/register");
+  };
+  const handleLogin = () => {
+    closeLoginModal();
+    navigate("/login");
+  };
+
+  const handleClick = () => {
+    if (isLoggedIn == true) {
+      dispatch({ type: "SEARCH", payload: { place: city } });
+      navigate("/map");
+    } else {
+      setIsLoginModalOpen(true);
+    }
+  };
+
   return (
     <div>
       <TravelWrapper container p={0} m={0} rowGap={10}>
@@ -118,6 +149,12 @@ const TravelPage: FC = () => {
         <Grid item p={0} m={0} xs={12}>
           <Navbar />
         </Grid>
+        <LoginModal
+          isOpen={isLoginModalOpen}
+          onClose={closeLoginModal}
+          onSignUp={handleSignUp}
+          onLogin={handleLogin}
+        />
         <ChoiceModal
           isOpen={isModalOpen}
           onClose={closeModal}
@@ -171,10 +208,9 @@ const TravelPage: FC = () => {
             </GridInput>
             <Grid>
               <SearchButton
-                id="guided-tour-search-button"
+                className="searchButton"
                 onClick={() => {
-                  dispatch({ type: "SEARCH", payload: { place: city } });
-                  navigate("/map");
+                  handleClick();
                 }}
                 data-testid="goOnTrip"
               >

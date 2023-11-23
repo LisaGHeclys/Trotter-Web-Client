@@ -4,6 +4,8 @@ import { AnyAction, Dispatch } from "redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { COLORS } from "../../UI/Colors";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export interface Oauth2ButtonProps {
   service: string;
@@ -41,7 +43,7 @@ const OauthButton: FC<Oauth2ButtonProps> = ({ service, icon }) => {
       "_blank",
       strWindowFeatures
     );
-    if (!popup) return console.error("Failed to open popup window");
+    if (!popup) return toast.error("Failed to open popup window");
 
     window.addEventListener("message", (event) => receiveMessage(event), false);
   };

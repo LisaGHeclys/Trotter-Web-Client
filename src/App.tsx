@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { clarity } from "react-microsoft-clarity";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
 import RegisterPage from "./views/Authentification/Register/Register";
 import BaseMap from "./views/Map/Map";
@@ -9,6 +11,7 @@ import TravelPage from "./views/Travel/Travel";
 import OauthCallback from "./views/Authentification/Oauth/OAuth";
 import Login from "./views/Authentification/Login/Login";
 import Profile from "./views/Profile/Profile";
+import Trending from "./views/Trending/Trending";
 import "./i18n/config";
 import "./App.css";
 
@@ -41,8 +44,10 @@ const App = () => {
           <Route path="/oauth/callback" element={<OauthCallback />} />
           <Route path="/map" element={<BaseMap />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/trending" element={<Trending />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </AppWrapper>
   );
 };

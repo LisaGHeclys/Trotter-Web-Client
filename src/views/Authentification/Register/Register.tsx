@@ -25,7 +25,7 @@ import Navbar from "../../../components/Navbar/Navbar";
 
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockIcon from "@mui/icons-material/Lock";
-import toast from "react-hot-toast";
+import handleError from "../../../utils/ToastUtils";
 
 const Register: FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -37,7 +37,7 @@ const Register: FC = () => {
 
   async function register() {
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      handleError(1);
       return;
     }
     try {
@@ -56,14 +56,14 @@ const Register: FC = () => {
         }
       });
       if (!response.data.accessToken) {
-        toast.error("An error occured, please try again later");
+        handleError(500);
       } else {
         localStorage.setItem("jwt", response.data.accessToken);
         dispatch({ type: "LOGIN", payload: response.data.accessToken });
         navigate("/map");
       }
     } catch (e) {
-      toast.error("An error occured, please try again later");
+      handleError(e);
     }
   }
 

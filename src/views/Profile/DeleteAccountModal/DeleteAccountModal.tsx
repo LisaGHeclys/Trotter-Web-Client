@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { deleteUser } from "./DeleteAccountModal.utils";
 import "./DeleteAccountModal.scss";
+import handleError from "../../../utils/ToastUtils";
 
 import alertIcon from "../../../assets/profile/alert.svg";
 import closeIcon from "../../../assets/profile/Close.svg";
@@ -27,6 +28,7 @@ const DeleteAccountModal = ({
       navigate("/");
     } catch (e) {
       console.log(e);
+      handleError(e);
     }
   };
 
