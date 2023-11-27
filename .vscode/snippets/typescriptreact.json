@@ -1,0 +1,23 @@
+{
+  "hook": {
+    "prefix": "hook",
+    "body": [
+      "export const $1 = () => {",
+      "const webClient = useWebClient();",
+      "const dispatch = useDispatch();",
+      "const navigate = useNavigate();",
+      "",
+      "return useTypedAsyncFn<{ $2 }>(",
+      "  async (payload) => {",
+      "    try {",
+      "      const rep: AxiosResponse<{}> = await webClient.post($3, payload);",
+      "    } catch (error) {",
+      "    }",
+      "  },",
+      "  []",
+      ");",
+      "};"
+    ],
+    "description": "Hooks for api call"
+  }
+}

@@ -66,7 +66,7 @@ const WithHeader: React.FC<WithHeaderProps> = ({ children }) => {
           </IconButton>
         </div>
       </head>
-      {children}
+      <div className="pageLayout">{children}</div>
     </>
   );
 };

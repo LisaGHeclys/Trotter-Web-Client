@@ -25,7 +25,7 @@ const Routes: FC<RoutesProps> = ({ routes, colors, itineraryDay }) => {
                   itineraryDay === key
                     ? ["interpolate", ["linear"], ["zoom"], 12, 3, 22, 12]
                     : ["interpolate", ["linear"], ["zoom"], 4, 1, 6, 4],
-                "line-opacity": itineraryDay === key ? 1 : 0.1,
+                "line-opacity": itineraryDay === key ? 1 : 0.3,
                 "line-width-transition": {
                   delay: 0,
                   duration: 300
