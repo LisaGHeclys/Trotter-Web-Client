@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { DateRange } from "react-date-range";
 import "./Map.scss";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -20,20 +19,27 @@ import { FeatureCollection } from "geojson";
 import { Popup, MapLayerMouseEvent } from "mapbox-gl";
 import Routes from "./Routes";
 import { RootState } from "../../store";
-import { Alert, Button, IconButton, Snackbar, Tooltip } from "@mui/material";
+import {
+  Autocomplete,
+  Card,
+  Divider,
+  TextField,
+  Typography
+} from "@mui/material";
 import { format, addDays } from "date-fns";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { SearchState } from "../../reducers/search.reducers";
 import { BaseMapPropsDefault, getCoordinates, weekColors } from "./Maps.utils";
-import { GeoJsonRes, UnderLineProps } from "./Maps.type";
+import { UnderLineProps } from "./Maps.type";
 import styled from "styled-components";
 import { Geometry } from "@turf/helpers";
-import { useTranslation } from "react-i18next";
-import BedroomParentRoundedIcon from "@mui/icons-material/BedroomParentRounded";
-import downApi from "./downApi.json";
+import WithHeader from "../../Layout/WithHeader";
+import MapSidebar from "./MapSidebar";
+import { StepProps, Steps, DatePicker } from "antd";
+import StepMarker from "./StepMarker";
+import { useGenerateItinerary } from "../../hooks/useGenerateItinerary";
+import dayjs from "dayjs";
 
 const BaseMap: FC = () => {
-  const { t } = useTranslation();
   const ref = React.useRef<number>(0);
   const mapRef = React.useRef<MapRef>(null);
   const [dropoffs, setDropoffs] = useState<{
@@ -65,35 +71,50 @@ const BaseMap: FC = () => {
   const [isHotelSelectionActivated, setIsHotelSelectionActivated] =
     useState<boolean>(false);
   const token = useSelector((state: RootState) => state.auth.token);
-  const [hasKayakClosed, setHasKayakBeenClosed] = useState<boolean>(false);
-  const [hasAlertAPIDownClosed, setHasAlertAPIDownClosed] =
-    useState<boolean>(false);
+  const [generateItineraryStatus, generateItinerary] = useGenerateItinerary();
+  const [steps, setSteps] = useState<StepProps[][]>([]);
+  const [jsonData, setJsonData] = useState<{
+    features: {
+      geometry: {
+        coordinates: number[];
+      };
+      properties: {
+        name: string;
+      };
+    }[];
+  } | null>(null);
 
-  const decrementItineraryDay = useCallback((old: number) => {
-    if (old - 1 >= 0) setItineraryDay(old - 1);
+  useEffect(() => {
+    const fetchData = async () => {
+      // Fetch the JSON file using the relative path
+      const response = await fetch("/data.geojson");
+      const data = await response.json();
+
+      setJsonData(data);
+    };
+
+    fetchData();
   }, []);
 
-  const incrementItineraryDay = useCallback(
-    (old: number) => {
-      if (old + 1 < length) setItineraryDay(old + 1);
-    },
-    [length]
-  );
-
   const handleMapClick = async (e: MapLayerMouseEvent) => {
-    if (!e.features || (e.features[0]?.layer?.id ?? "") !== "city-layer")
-      return;
-    setCityName(e.features[0].properties?.name || "");
-    setLng(e.features[0].properties?.longitude || 0);
-    setLat(e.features[0].properties?.latitude || 0);
-    mapRef.current?.flyTo({
-      center: [
-        e.features[0].properties?.longitude || 0,
-        e.features[0].properties?.latitude || 0
-      ],
-      zoom: 10,
-      duration: 1000
-    });
+    if (!e.features || !e.features[0]) return;
+    if (e.features[0].layer.id === "city-layer") {
+      setCityName(e.features[0].properties?.name || "");
+      setLng((e.features[0].geometry as any).coordinates[0] || 0);
+      setLat((e.features[0].geometry as any).coordinates[1] || 0);
+      mapRef.current?.flyTo({
+        center: [
+          (e.features[0].geometry as any).coordinates[0] || 0,
+          (e.features[0].geometry as any).coordinates[1] || 0
+        ],
+        zoom: 10,
+        duration: 1000
+      });
+    } else if (e.features[0].layer.id.includes("routeline-active")) {
+      setItineraryDay(
+        parseInt(e.features[0].layer.id.replace("routeline-active", ""))
+      );
+    }
   };
 
   const handleMapDblClick = async (e: MapLayerMouseEvent) => {
@@ -143,50 +164,28 @@ const BaseMap: FC = () => {
         });
       }
       try {
-        const ress = await fetch(process.env.REACT_APP_SERVER_URI + "/IA", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token || ""}`
-          },
-          body: JSON.stringify({
-            lon: lng,
-            lat: lat,
-            days: length
-          })
+        const resJsonWithStatus = await generateItinerary({
+          lon: lng ?? 0,
+          lat: lat ?? 0,
+          days: length
         });
 
         setMarkers([]);
         setDropoffs({});
         setRoutes({});
-        if (ress.status !== 201 && ress.status !== 500) throw new Error();
-        const resJson: GeoJsonRes =
-          ress.status === 500 ? downApi : await ress.json();
-
-        mapRef.current?.flyTo({
-          center: [
-            resJson.features[0].features[0].geometry
-              .coordinates[0] as unknown as number,
-            resJson.features[0].features[0].geometry
-              .coordinates[1] as unknown as number
-          ],
-          zoom: 12
-        });
-
-        <Snackbar
-          open={hasAlertAPIDownClosed}
-          autoHideDuration={25000}
-          onClose={() => {
-            setHasAlertAPIDownClosed(false);
-          }}
-        >
-          <Alert severity="info" variant="filled" sx={{ fontSize: 18 }}>
-            Our partner&aposs services are currently unvailable, please try
-            again later.
-            <br />
-            Thank you for your understanding.
-          </Alert>
-        </Snackbar>;
+        if (resJsonWithStatus[0] === false) {
+          mapRef.current?.flyTo({
+            center: [
+              resJsonWithStatus[1].features[0].features[0].geometry
+                .coordinates[0] as unknown as number,
+                resJsonWithStatus[1].features[0].features[0].geometry
+                .coordinates[1] as unknown as number
+            ],
+            zoom: 12
+          });
+        }
+        setSteps([]);
+        const resJson = resJsonWithStatus[1];
 
         if (resJson.features) {
           for (const features of resJson.features) {
@@ -196,6 +195,64 @@ const BaseMap: FC = () => {
               ...old,
               [i]: features as unknown as FeatureCollection
             }));
+            setSteps((old) => {
+              old.push(
+                features.features.map((feature, featureIndex) => {
+                  return {
+                    title: <b>{feature.properties.name}</b>,
+                    description: (
+                      <>
+                        <Card
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            maxWidth: 500,
+                            padding: "12px",
+                            gap: 12,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: "gr"
+                          }}
+                        >
+                          <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit. Suspendisse eu venenatis odio. Pellentesque
+                            ultrices vel leo sed sollicitudin.
+                          </p>
+                          <img
+                            src={feature.images[0] ?? ""}
+                            height={132}
+                            width={200}
+                          />
+                        </Card>
+                      </>
+                    ),
+                    status: "finish",
+                    icon: (
+                      <StepMarker
+                        dayIndex={i}
+                        featureIndex={featureIndex}
+                        onClick={() => {
+                          mapRef.current?.flyTo({
+                            center: [
+                              feature.geometry
+                                .coordinates[0] as unknown as number,
+                              feature.geometry
+                                .coordinates[1] as unknown as number
+                            ],
+                            zoom: 16,
+                            duration: 1000
+                          });
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                          setItineraryDay(i);
+                        }}
+                      />
+                    )
+                  };
+                })
+              );
+              return old;
+            });
           }
         }
 
@@ -218,7 +275,6 @@ const BaseMap: FC = () => {
 
   useEffect(() => {
     setMarkers([]);
-    console.log(dropoffs);
     dropoffs[itineraryDay]?.features?.forEach((element, i: number) => {
       setMarkers((old) => [
         ...old,
@@ -249,127 +305,8 @@ const BaseMap: FC = () => {
               }`}" />`
             )}
         >
-          {element?.properties?.kinds.includes("religion") ? (
-            <img
-              width={36}
-              height={36}
-              alt={"hotel"}
-              src={"https://static.thenounproject.com/png/158909-200.png"}
-              className="hotelMarker"
-            />
-          ) : element?.properties?.kinds.includes("museums") ? (
-            <img
-              width={36}
-              height={36}
-              alt={"hotel"}
-              src={
-                "https://media.discordapp.net/attachments/1039155840592121946/1158613357532827798/Museum.png?ex=651ce246&is=651b90c6&hm=2f0b03bfd459aa366835e82261f0ed9af2ab12399c68e735302194ceee3b7432&=&width=150&height=195"
-              }
-              className="hotelMarker"
-            />
-          ) : element?.properties?.kinds.includes("natural_springs") ? (
-            <img
-              width={36}
-              height={36}
-              alt={"hotel"}
-              src={
-                "https://media.discordapp.net/attachments/1039155840592121946/1158613220337127445/Nature.png?ex=651ce225&is=651b90a5&hm=11c5f55f8202ee8c2f5589283f85ecf8b0832855326225c10742c77d0ebd7f8b&=&width=150&height=195"
-              }
-              className="hotelMarker"
-            />
-          ) : element?.properties?.kinds.includes("shops") ? (
-            <img
-              width={36}
-              height={36}
-              alt={"hotel"}
-              src={
-                "https://cdn.discordapp.com/attachments/1039155840592121946/1158614181822615632/Shop.png?ex=651ce30a&is=651b918a&hm=6ad772a120b4f452cc3f6812049e47075f10fff43b1cebdf8beff7f918da4404&"
-              }
-              className="hotelMarker"
-            />
-          ) : element?.properties?.kinds.includes("architecture") ? (
-            <img
-              width={36}
-              height={36}
-              alt={"hotel"}
-              src={
-                "https://media.discordapp.net/attachments/1039155840592121946/1158613357037883453/Architecture.png?ex=651ce246&is=651b90c6&hm=786a8607a1aa5ae9195df4f13f6ab77f720549a95dfbbcb198de36e14da3baf0&=&width=150&height=195"
-              }
-              className="hotelMarker"
-            />
-          ) : element?.properties?.kinds.includes(
-              "theatres_and_entertainments"
-            ) ? (
-            <img
-              width={36}
-              height={36}
-              alt={"theaters"}
-              src={
-                "https://media.discordapp.net/attachments/1039155840592121946/1158613219867365456/Theater.png?ex=651ce225&is=651b90a5&hm=fcd02ea4d929a5af8da230359396254651636546894f7b57fd28fa81f89a681b&=&width=150&height=195"
-              }
-              className="hotelMarker"
-            />
-          ) : element?.properties?.kinds.includes("foods") ? (
-            <img
-              width={36}
-              height={36}
-              alt={"Foods"}
-              src={
-                "https://media.discordapp.net/attachments/1039155840592121946/1158613220081287260/Food.png?ex=651ce225&is=651b90a5&hm=3484b7d53c2813d435bcfa56deda80e67f745bbf958a2d6d756db6642182fd1e&=&width=150&height=195"
-              }
-              className="hotelMarker"
-            />
-          ) : element?.properties?.kinds.includes("banks") ? (
-            <img
-              width={36}
-              height={36}
-              alt={"Banks"}
-              src={
-                "https://media.discordapp.net/attachments/1039155840592121946/1158613357327302718/Bank.png?ex=651ce246&is=651b90c6&hm=71d121c537cbbca6a48ae85ab1fdc1692f68806e558b4bc81aaba26642c5fe42&=&width=150&height=195"
-              }
-              className="hotelMarker"
-            />
-          ) : element?.properties?.kinds.includes("transport") ? (
-            <img
-              width={36}
-              height={36}
-              alt={"Transports"}
-              src={
-                "https://media.discordapp.net/attachments/1039155840592121946/1158613357750915082/Transport.png?ex=651ce246&is=651b90c6&hm=a4d7565b7f0bbc66dc43fcb7443b735e5b1fd67707b4d2fe291f2d22dc3435f5&=&width=150&height=195"
-              }
-              className="hotelMarker"
-            />
-          ) : element?.properties?.kinds.includes("beaches") ? (
-            <img
-              width={36}
-              height={36}
-              alt={"Beaches"}
-              src={
-                "https://media.discordapp.net/attachments/1039155840592121946/1158613219104002088/Beach.png?ex=651ce225&is=651b90a5&hm=643dfb01781ed522e380dc79ee714b75cff1062b6b9fb215c01fdac8996d2d1b&=&width=150&height=195"
-              }
-              className="hotelMarker"
-            />
-          ) : element?.properties?.kinds.includes("bridges") ? (
-            <img
-              width={36}
-              height={36}
-              alt={"Bridges"}
-              src={
-                "https://media.discordapp.net/attachments/1039155840592121946/1158613219406004277/Bridge.png?ex=651ce225&is=651b90a5&hm=4552e24e745256c0e342d574cca4f168fc8913eafa29ea203caaf3e92f5b4c96&=&width=150&height=195"
-              }
-              className="hotelMarker"
-            />
-          ) : (
-            <img
-              width={36}
-              height={36}
-              alt={"hotel"}
-              src={
-                "https://images-ext-2.discordapp.net/external/E1myNIG4k9PFEDvf0YyKxLwLvtz9uOkJCAkuCwojj6k/https/cdn-icons-png.flaticon.com/512/10175/10175378.png?width=1024&height=1024"
-              }
-              className="hotelMarker"
-            />
-          )}
+          {/* <CustomMarker element={element as Feature} /> */}
+          <StepMarker dayIndex={itineraryDay} featureIndex={i} />
         </Marker>
       ]);
     });
@@ -386,237 +323,166 @@ const BaseMap: FC = () => {
   }, [lat, lng, fetchCoordinates, cityName]);
 
   return (
-    <div className="mapWrapper" id="mapWrapper">
-      <div className="mapSideMenu">
-        <h1>{t("description.mapPart1")}</h1>
-        <p>
-          <b>
-            {length} {t("description.mapPart2")}
-          </b>{" "}
-          {t("description.mapPart3")} {cityName}!
-        </p>
-        <DateRangeWrapper
-          editableDateInputs={true}
-          onChange={(item) => {
-            if (
-              item.selection.endDate &&
-              item.selection.startDate &&
-              Math.abs(
-                item.selection.endDate.getTime() -
-                  item.selection.startDate.getTime()
-              ) >=
-                7 * 24 * 60 * 60 * 1000
-            ) {
-              return;
-            } else
-              setRange([
-                {
-                  startDate: item.selection.startDate,
-                  endDate: item.selection.endDate,
-                  key: "selection"
-                }
-              ]);
-          }}
-          moveRangeOnFirstSelection={false}
-          ranges={range}
-          minDate={new Date()}
-          maxDate={
-            new Date(new Date().setFullYear(new Date().getFullYear() + 1))
-          }
-          weekStartsOn={1}
-          showDateDisplay={false}
+    <WithHeader>
+      <>
+        <MapSidebar
+          hotelMode={isHotelSelectionActivated}
+          toggleHotelMode={setIsHotelSelectionActivated}
         />
-        <Snackbar
-          open={hasKayakClosed}
-          autoHideDuration={25000}
-          onClose={() => {
-            setHasKayakBeenClosed(false);
-          }}
-        >
-          <Alert severity="success" variant="filled" sx={{ fontSize: 18 }}>
-            Thank you for booking your hotel with Kayak!
-          </Alert>
-        </Snackbar>
-        <Row>
-          <Button
-            variant="contained"
-            onClick={() => setIsHotelSelectionActivated((prev) => !prev)}
+        <div className="searchBar">
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={jsonData?.features ?? []}
+            getOptionLabel={(option) => option.properties.name}
+            sx={{ width: 300 }}
+            isOptionEqualToValue={(option, value) =>
+              option.properties.name === value.properties.name
+            }
+            onChange={(event, newValue) => {
+              if (newValue) {
+                setCityName(newValue.properties.name);
+                setLat(newValue.geometry.coordinates[1]);
+                setLng(newValue.geometry.coordinates[0]);
+                mapRef.current?.flyTo({
+                  center: [
+                    newValue.geometry.coordinates[0],
+                    newValue.geometry.coordinates[1]
+                  ],
+                  zoom: 12
+                });
+              }
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="City" key={params.id} />
+            )}
+          />
+          <DatePicker.RangePicker
+            size={"middle"}
+            placement="bottomLeft"
+            onChange={(rv) => {
+              if (!rv || !rv[0] || !rv[1]) return;
+              if (!rv[0]?.isBefore(rv[1]?.add(-7, "day"))) {
+                setRange([
+                  {
+                    startDate: rv[0].toDate(),
+                    endDate: rv[1].toDate(),
+                    key: "selection"
+                  }
+                ]);
+              }
+            }}
+            disabledDate={(date) => date.toDate() < new Date()}
+            value={[dayjs(range[0].startDate), dayjs(range[0].endDate)]}
+          />
+        </div>
+        <div className="mapWrapper" id="mapWrapper">
+          <div
+            id="mapContainer"
             className={
-              isHotelSelectionActivated ? "hotelSelectionActivated" : ""
+              "map" +
+              (isHotelSelectionActivated ? " mapContainerHotelSelectionOn" : "")
             }
           >
-            {t("description.mapPart4")}
-          </Button>
-          <Tooltip
-            title={"No hotel yet? Click to book one on KAYAK"}
-            placement={"top"}
-          >
-            <IconButton
-              onClick={(e) => {
-                e.preventDefault();
-                const popup = window.open(
-                  `https://kayak.fr/in?a=kan_273866_584460&lc=fr&url=%2Fhotels%2F${cityName}%2F${
-                    range[0].startDate?.getFullYear() || 2023
-                  }-${(range[0].startDate?.getMonth() || 9) + 1}-${
-                    range[0].startDate?.getDate() || 11
-                  }%2F${range[0].endDate?.getFullYear() || 2023}-${
-                    (range[0].endDate?.getMonth() || 9) + 1
-                  }-${range[0].endDate?.getDate() || 12}%2F1rooms%2F1adults`,
-                  "targetWindow",
-                  `toolbar=no,
-                                    location=no,
-                                    status=no,
-                                    menubar=no,
-                                    scrollbars=yes,
-                                    resizable=yes,
-                                    width=1000,
-                                    height=800`
-                );
-                if (popup) {
-                  popup.onunload = function () {
-                    setHasKayakBeenClosed(true);
-                  };
-                }
-                return false;
-              }}
-            >
-              <BedroomParentRoundedIcon />
-            </IconButton>
-          </Tooltip>
-        </Row>
-        <label style={{ fontSize: 11, marginTop: 6 }}>
-          {t("description.mapPart5")}
-        </label>
-        <Row>
-          <IconButton onClick={() => decrementItineraryDay(itineraryDay)}>
-            <ChevronLeft />
-          </IconButton>
-          <UnderLine itineraryDay={itineraryDay}>
-            {format(
-              addDays(range[0]?.startDate || new Date(), itineraryDay),
-              "dd/MM/yyyy"
-            )}{" "}
-          </UnderLine>
-          <IconButton onClick={() => incrementItineraryDay(itineraryDay)}>
-            <ChevronRight />
-          </IconButton>
-        </Row>
-        {dropoffs[itineraryDay]?.features?.map((feature: any, i) => {
-          return (
-            <InterestsPicture key={i}>
-              <p>
-                <b>{feature.properties?.name}</b>
-              </p>
-              <div className="photoWrapper">
-                {feature.images.map((image: string) => (
-                  <img
-                    key={`${image}+${feature.properties.name}`}
-                    title={image}
-                    alt={image}
-                    src={image}
-                    width={300}
-                    height={200}
-                  />
-                ))}
+            {generateItineraryStatus.loading ? (
+              <div className="itineraryLoading">
+                {" "}
+                <p>
+                  <b>
+                    YOUR TRIP TO {cityName.toUpperCase()} IS BEING GENERATED
+                  </b>
+                </p>
+                <span className="loader"></span>
               </div>
-            </InterestsPicture>
-          );
-        })}
-      </div>
-      <div
-        id="mapContainer"
-        className={
-          "map" +
-          (isHotelSelectionActivated ? " mapContainerHotelSelectionOn" : "")
-        }
-      >
-        <Map
-          mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-          initialViewState={{
-            latitude: lat,
-            longitude: lng,
-            zoom: 2
-          }}
-          ref={mapRef}
-          cursor={cursor}
-          mapStyle="mapbox://styles/mapbox/streets-v11"
-          projection={"globe"}
-          fog={{
-            color: "rgb(156, 180, 205)",
-            "horizon-blend": 0.16,
-            range: [0.4, 0.9]
-          }}
-          interactiveLayerIds={["city-layer"]}
-          onMouseEnter={() => setCursor("pointer")}
-          onMouseLeave={() => setCursor("grab")}
-          onClick={handleMapClick}
-          onDblClick={handleMapDblClick}
-        >
-          <GeolocateControl
-            positionOptions={{ enableHighAccuracy: true }}
-            trackUserLocation={true}
-          />
-          <NavigationControl />
-          <ScaleControl maxWidth={100} unit="metric" />
+            ) : null}
+            <Map
+              mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+              initialViewState={{
+                latitude: lat,
+                longitude: lng,
+                zoom: 2
+              }}
+              ref={mapRef}
+              cursor={cursor}
+              mapStyle="mapbox://styles/mapbox/streets-v12"
+              projection={"globe"}
+              interactiveLayerIds={[
+                "city-layer",
+                ...Object.keys(routes)
+                  .map((key) => parseInt(key))
+                  .map((key) => `routeline-active${key}`)
+              ]}
+              onMouseEnter={() => setCursor("pointer")}
+              onMouseLeave={() => setCursor("grab")}
+              onClick={handleMapClick}
+              onDblClick={handleMapDblClick}
+              minZoom={1}
+            >
+              <GeolocateControl
+                positionOptions={{ enableHighAccuracy: true }}
+                trackUserLocation={true}
+              />
+              <NavigationControl />
+              <ScaleControl maxWidth={100} unit="metric" />
 
-          <Source
-            id="cities"
-            type="geojson"
-            data={`${process.env.REACT_APP_URI}/data.geojson`}
-          />
-          <Layer
-            id="city-layer"
-            type="circle"
-            source="cities"
-            paint={{
-              "circle-radius": 6,
-              "circle-stroke-width": 2,
-              "circle-color": "red",
-              "circle-stroke-color": "white"
-            }}
-          />
+              <Source
+                id="cities"
+                type="geojson"
+                data={`${process.env.REACT_APP_URI}/data.geojson`}
+              />
+              <Layer
+                id="city-layer"
+                type="circle"
+                source="cities"
+                paint={{
+                  "circle-radius": 4,
+                  "circle-stroke-width": 1,
+                  "circle-color": "red",
+                  "circle-stroke-color": "white"
+                }}
+              />
 
-          {markers?.map((marker) => marker)}
-          {hotel?.map((marker) => marker)}
-          <Routes
-            routes={routes}
-            colors={weekColors}
-            itineraryDay={itineraryDay}
-          />
-        </Map>
-      </div>
-    </div>
+              {markers?.map((marker) => marker)}
+              {hotel?.map((marker) => marker)}
+              <Routes
+                routes={routes}
+                colors={weekColors}
+                itineraryDay={itineraryDay}
+              />
+            </Map>
+          </div>
+          <div className="mapSideMenu">
+            <Typography variant="h5" fontWeight={"bolder"}>
+              ITINERARY
+            </Typography>
+            {generateItineraryStatus.loading
+              ? null
+              : Array.from(Array(length).keys()).map((day) => (
+                  <>
+                    <UnderLine itineraryDay={day}>
+                      {format(
+                        addDays(range[0]?.startDate || new Date(), day),
+                        "EEEE, do MMMM"
+                      )}{" "}
+                    </UnderLine>
+                    <Steps
+                      items={steps.length ? steps[day] : []}
+                      direction="vertical"
+                      current={10000}
+                    />
+                    <Divider />
+                  </>
+                ))}
+          </div>
+        </div>
+      </>
+    </WithHeader>
   );
 };
-
-const DateRangeWrapper = styled(DateRange)`
-  transform: scale(0.8);
-
-  & > div > div > span > input {
-    height: 24px;
-    margin: 0;
-  }
-`;
 
 const HotelMarker = styled.img`
   z-index: 999;
   position: relative;
-`;
-
-const InterestsPicture = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 24px;
-`;
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
 `;
 
 const UnderLine = styled.h3<UnderLineProps>`
