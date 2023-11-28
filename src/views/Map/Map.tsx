@@ -38,6 +38,7 @@ import { StepProps, Steps, DatePicker } from "antd";
 import StepMarker from "./StepMarker";
 import { useGenerateItinerary } from "../../hooks/useGenerateItinerary";
 import dayjs from "dayjs";
+import { Toaster } from "react-hot-toast";
 
 const BaseMap: FC = () => {
   const ref = React.useRef<number>(0);
@@ -178,7 +179,7 @@ const BaseMap: FC = () => {
             center: [
               resJsonWithStatus[1].features[0].features[0].geometry
                 .coordinates[0] as unknown as number,
-                resJsonWithStatus[1].features[0].features[0].geometry
+              resJsonWithStatus[1].features[0].features[0].geometry
                 .coordinates[1] as unknown as number
             ],
             zoom: 12
@@ -475,6 +476,7 @@ const BaseMap: FC = () => {
                 ))}
           </div>
         </div>
+        <Toaster />
       </>
     </WithHeader>
   );
