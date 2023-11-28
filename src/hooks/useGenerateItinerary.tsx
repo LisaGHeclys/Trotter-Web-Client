@@ -29,7 +29,9 @@ export const useGenerateItinerary: useGenerateItineraryType = () => {
         console.log(rep.data);
         return [true, rep.data];
       } catch (error) {
-        toast.error("Itinerary call failed");
+        toast.error(
+          "Something wrong happened, here is a default itinerary in Berlin"
+        );
         return [false, downApi];
       }
     },
