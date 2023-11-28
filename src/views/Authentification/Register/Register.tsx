@@ -60,7 +60,12 @@ const Register: FC = () => {
       } else {
         localStorage.setItem("jwt", response.data.accessToken);
         dispatch({ type: "LOGIN", payload: response.data.accessToken });
-        navigate("/map");
+        const preferences = localStorage.getItem("preferences");
+        if (preferences) {
+          navigate("/");
+        } else {
+          navigate("/welcome");
+        }
       }
     } catch (e) {
       toast.error("An error occured, please try again later");
