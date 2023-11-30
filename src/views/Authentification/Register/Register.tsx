@@ -96,7 +96,7 @@ const Register: FC = () => {
               </IconInput>
               <AuthentificationInput
                 type="text"
-                placeholder="Email"
+                placeholder={t("general.email") as string}
                 onChange={(e) => setEmail(e.target.value)}
                 data-testid="emailInput"
               />
@@ -107,7 +107,7 @@ const Register: FC = () => {
               </IconInput>
               <AuthentificationInput
                 type="password"
-                placeholder="Password"
+                placeholder={t("general.password") as string}
                 onChange={(e) => setPassword(e.target.value)}
                 data-testid="passwordInput"
               />

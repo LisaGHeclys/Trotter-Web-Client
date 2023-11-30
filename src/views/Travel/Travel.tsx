@@ -6,10 +6,38 @@ import { useDispatch } from "react-redux";
 import { AnyAction, Dispatch } from "redux";
 import { useTranslation } from "react-i18next";
 import { COLORS, FONT } from "../../UI/Colors";
-// import { GridProps } from "./Travel.type";
 import styled from "styled-components";
 
 import Joyride, { CallBackProps, Step } from "react-joyride";
+
+// This part will be removed when the component will be connected to the backend server.
+import { Card, CardContent, CardMedia, CardActionArea } from "@mui/material";
+const cardData = [
+  {
+    id: 1,
+    title: "Card 1",
+    content: "This is a simple card.",
+    imageUrl: "/"
+  },
+  {
+    id: 2,
+    title: "Card 2",
+    content: "This is another card.",
+    imageUrl: "/"
+  },
+  {
+    id: 3,
+    title: "Card 3",
+    content: "And one more card.",
+    imageUrl: "/login.png"
+  },
+  {
+    id: 4,
+    title: "Card 4",
+    content: "And one more card.",
+    imageUrl: "/login.png"
+  }
+];
 
 const TravelPage: FC = () => {
   const [city, setCity] = useState<string>("");
@@ -103,6 +131,25 @@ const TravelPage: FC = () => {
             <div>{t("travel.searchButton")}</div>
           </SearchButton>
         </ChooseDestination>
+        <TitleRecommended>Recommended tours</TitleRecommended>
+        <RecommendedWrapper>
+          {cardData.map((card) => (
+            <StyledCard key={card.id}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  sx={{ height: 250 }}
+                  image={card.imageUrl}
+                  alt={`${card.title} Image`}
+                />
+                <CardContent>
+                  <h2>{card.title}</h2>
+                  <p>{card.content}</p>
+                </CardContent>
+              </CardActionArea>
+            </StyledCard>
+          ))}
+        </RecommendedWrapper>
       </DestinationComponentWrapper>
     </div>
   );
@@ -122,7 +169,7 @@ const DestinationComponentWrapper = styled.div`
   align-items: center;
   align-content: center;
   justify-content: center;
-  margin-top: 150px;
+  margin-top: 100px;
 
   @media (max-width: 768px) {
     display: flex;
@@ -182,6 +229,26 @@ const SearchButton = styled.button`
     height: 40px;
     font-size: 15px;
   }
+`;
+
+const TitleRecommended = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 40px;
+`;
+
+const RecommendedWrapper = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: 20px;
+`;
+
+const StyledCard = styled(Card)`
+  flex: 0 0 calc(25% - 80px);
 `;
 
 export default TravelPage;
