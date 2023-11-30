@@ -29,13 +29,20 @@ export type GeoJsonRes = {
     }[];
   }[];
   routes: {
-    features: {
-      geometry: {
-        coordinates: Position[];
-      };
-      properties: {
-        name: string;
-      };
+    route: {
+      features: {
+        geometry: {
+          coordinates: Position[];
+        };
+        properties: {
+          name: string;
+        };
+      }[];
+    };
+
+    tripLegData: {
+      durations: number;
+      distances: number;
     }[];
   }[];
 };

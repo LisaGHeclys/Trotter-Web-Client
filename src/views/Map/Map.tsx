@@ -196,6 +196,7 @@ const BaseMap: FC = () => {
               ...old,
               [i]: features as unknown as FeatureCollection
             }));
+            const tripLegData = resJson.routes[i].tripLegData;
             setSteps((old) => {
               old.push(
                 features.features.map((feature, featureIndex) => {
@@ -206,25 +207,32 @@ const BaseMap: FC = () => {
                         <Card
                           sx={{
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: "column",
                             maxWidth: 500,
                             padding: "12px",
-                            gap: 12,
-                            alignItems: "center",
+                            alignItems: "end",
                             justifyContent: "center",
                             backgroundColor: "gr"
                           }}
                         >
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Suspendisse eu venenatis odio. Pellentesque
-                            ultrices vel leo sed sollicitudin.
-                          </p>
-                          <img
-                            src={feature.images[0] ?? ""}
-                            height={132}
-                            width={200}
-                          />
+                          {featureIndex !== 0 || hotel.length > 0 ? (
+                            <b>
+                              {tripLegData[featureIndex].distances}m |{" "}
+                              {tripLegData[featureIndex].durations} min
+                            </b>
+                          ) : null}
+                          <div className="flexRow">
+                            <p>
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Suspendisse eu venenatis odio. Pellentesque
+                              ultrices vel leo sed sollicitudin.
+                            </p>
+                            <img
+                              src={feature.images[0] ?? ""}
+                              height={132}
+                              width={200}
+                            />
+                          </div>
                         </Card>
                       </>
                     ),
@@ -263,7 +271,7 @@ const BaseMap: FC = () => {
             if (!routes1) continue;
             setRoutes((old) => ({
               ...old,
-              [i]: routes1
+              [i]: routes1.route
             }));
           }
         }
