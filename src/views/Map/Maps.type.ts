@@ -29,13 +29,20 @@ export type GeoJsonRes = {
     }[];
   }[];
   routes: {
-    features: {
-      geometry: {
-        coordinates: Position[];
-      };
-      properties: {
-        name: string;
-      };
+    route: {
+      features: {
+        geometry: {
+          coordinates: Position[];
+        };
+        properties: {
+          name: string;
+        };
+      }[];
+    };
+
+    tripLegData: {
+      durations: number;
+      distances: number;
     }[];
   }[];
 };
@@ -49,3 +56,9 @@ export type RoutesProps = {
   colors: { primary: string; secondary: string }[];
   itineraryDay: number;
 };
+
+export enum TransportType {
+  WALKING = "walking",
+  DRIVING = "driving",
+  CYCLING = "cycling"
+}

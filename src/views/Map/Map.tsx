@@ -27,9 +27,9 @@ import {
   Typography
 } from "@mui/material";
 import { format, addDays } from "date-fns";
-import { SearchState } from "../../reducers/search.reducers";
-import { BaseMapPropsDefault, getCoordinates, weekColors } from "./Maps.utils";
-import { UnderLineProps } from "./Maps.type";
+// import { SearchState } from "../../reducers/search.reducers";
+import { BaseMapPropsDefault, weekColors } from "./Maps.utils";
+import { TransportType, UnderLineProps } from "./Maps.type";
 import styled from "styled-components";
 import { Geometry } from "@turf/helpers";
 import WithHeader from "../../Layout/WithHeader";
@@ -39,6 +39,11 @@ import StepMarker from "./StepMarker";
 import { useGenerateItinerary } from "../../hooks/useGenerateItinerary";
 import dayjs from "dayjs";
 import { Toaster } from "react-hot-toast";
+import {
+  DirectionsBike,
+  DirectionsCar,
+  DirectionsWalk
+} from "@mui/icons-material";
 
 const BaseMap: FC = () => {
   const ref = React.useRef<number>(0);
@@ -49,16 +54,20 @@ const BaseMap: FC = () => {
   const [routes, setRoutes] = useState<{
     [id: string]: FeatureCollection;
   }>({});
-  const searchState = useSelector<RootState, SearchState>(
-    (state) => state.search
-  );
-  const [cityName, setCityName] = useState<string>(
-    searchState.place === "" ? BaseMapPropsDefault.cityName : searchState.place
-  );
+  // const searchState = useSelector<RootState, SearchState>(
+  //   (state) => state.search
+  // );
   const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
   const [itineraryDay, setItineraryDay] = useState<number>(0);
-  const [lng, setLng] = useState<number>(BaseMapPropsDefault.lng);
-  const [lat, setLat] = useState<number>(BaseMapPropsDefault.lat);
+  const [tripData, setTripData] = useState<{
+    lat: number;
+    lon: number;
+    cityName: string;
+  }>({
+    lat: BaseMapPropsDefault.lat,
+    lon: BaseMapPropsDefault.lng,
+    cityName: BaseMapPropsDefault.cityName
+  });
   const [range, setRange] = useState<Range[]>([
     {
       startDate: new Date(),
@@ -71,6 +80,9 @@ const BaseMap: FC = () => {
   const [cursor, setCursor] = useState<string>("grab");
   const [isHotelSelectionActivated, setIsHotelSelectionActivated] =
     useState<boolean>(false);
+  const [transportMode, setTransportMode] = useState<TransportType>(
+    TransportType.WALKING
+  );
   const token = useSelector((state: RootState) => state.auth.token);
   const [generateItineraryStatus, generateItinerary] = useGenerateItinerary();
   const [steps, setSteps] = useState<StepProps[][]>([]);
@@ -100,9 +112,11 @@ const BaseMap: FC = () => {
   const handleMapClick = async (e: MapLayerMouseEvent) => {
     if (!e.features || !e.features[0]) return;
     if (e.features[0].layer.id === "city-layer") {
-      setCityName(e.features[0].properties?.name || "");
-      setLng((e.features[0].geometry as any).coordinates[0] || 0);
-      setLat((e.features[0].geometry as any).coordinates[1] || 0);
+      setTripData({
+        cityName: e.features[0].properties?.name || "",
+        lat: (e.features[0].geometry as any).coordinates[1] || 0,
+        lon: (e.features[0].geometry as any).coordinates[0] || 0
+      });
       mapRef.current?.flyTo({
         center: [
           (e.features[0].geometry as any).coordinates[0] || 0,
@@ -137,8 +151,11 @@ const BaseMap: FC = () => {
         </Marker>
       );
       setHotel([newMarker]);
-      setLng(e.lngLat.lng);
-      setLat(e.lngLat.lat);
+      setTripData((prev) => ({
+        cityName: prev.cityName,
+        lat: e.lngLat.lat,
+        lon: e.lngLat.lng
+      }));
       setIsHotelSelectionActivated(false);
     }
   };
@@ -153,22 +170,14 @@ const BaseMap: FC = () => {
   }, [range]);
 
   const fetchCoordinates = useCallback(
-    async (cityName?: string, lng?: number, lat?: number) => {
-      if (!cityName && !lng && !lat) return;
-      if (cityName) {
-        const res = await getCoordinates(cityName);
-        setLng(res.lon);
-        setLat(res.lat);
-        mapRef.current?.flyTo({
-          center: [res.lon, res.lat],
-          zoom: 12
-        });
-      }
+    async (lng: number, lat: number, transportMode: TransportType) => {
+      if (!lng && !lat) return;
       try {
         const resJsonWithStatus = await generateItinerary({
           lon: lng ?? 0,
           lat: lat ?? 0,
-          days: length
+          days: length,
+          transportMean: transportMode
         });
 
         setMarkers([]);
@@ -196,6 +205,7 @@ const BaseMap: FC = () => {
               ...old,
               [i]: features as unknown as FeatureCollection
             }));
+            const tripLegData = resJson.routes[i].tripLegData;
             setSteps((old) => {
               old.push(
                 features.features.map((feature, featureIndex) => {
@@ -206,25 +216,47 @@ const BaseMap: FC = () => {
                         <Card
                           sx={{
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: "column",
                             maxWidth: 500,
                             padding: "12px",
-                            gap: 12,
-                            alignItems: "center",
+                            alignItems: "end",
                             justifyContent: "center",
                             backgroundColor: "gr"
                           }}
                         >
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Suspendisse eu venenatis odio. Pellentesque
-                            ultrices vel leo sed sollicitudin.
-                          </p>
-                          <img
-                            src={feature.images[0] ?? ""}
-                            height={132}
-                            width={200}
-                          />
+                          {featureIndex !== 0 || hotel.length > 0 ? (
+                            <div className="transportInfo">
+                              {transportMode === TransportType.DRIVING ? (
+                                <DirectionsCar sx={{ height: 16, width: 16 }} />
+                              ) : null}
+                              {transportMode === TransportType.CYCLING ? (
+                                <DirectionsBike
+                                  sx={{ height: 16, width: 16 }}
+                                />
+                              ) : null}
+                              {transportMode === TransportType.WALKING ? (
+                                <DirectionsWalk
+                                  sx={{ height: 16, width: 16 }}
+                                />
+                              ) : null}
+                              <b>
+                                {tripLegData[featureIndex].distances}m |{" "}
+                                {tripLegData[featureIndex].durations} min
+                              </b>
+                            </div>
+                          ) : null}
+                          <div className="flexRow">
+                            <p>
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Suspendisse eu venenatis odio. Pellentesque
+                              ultrices vel leo sed sollicitudin.
+                            </p>
+                            <img
+                              src={feature.images[0] ?? ""}
+                              height={132}
+                              width={200}
+                            />
+                          </div>
                         </Card>
                       </>
                     ),
@@ -263,7 +295,7 @@ const BaseMap: FC = () => {
             if (!routes1) continue;
             setRoutes((old) => ({
               ...old,
-              [i]: routes1
+              [i]: routes1.route
             }));
           }
         }
@@ -271,7 +303,7 @@ const BaseMap: FC = () => {
         console.log(e);
       }
     },
-    [length, token]
+    [length, token, hotel]
   );
 
   useEffect(() => {
@@ -314,14 +346,16 @@ const BaseMap: FC = () => {
   }, [dropoffs, itineraryDay]);
 
   useEffect(() => {
-    if (!ref.current) {
-      fetchCoordinates(cityName, lng, lat).catch((err) => console.log(err));
+    if (!ref.current || generateItineraryStatus.loading) {
+      // fetchCoordinates(cityName, lng, lat).catch((err) => console.log(err));
       ref.current = 1;
     } else {
-      fetchCoordinates(undefined, lng, lat).catch((err) => console.log(err));
+      fetchCoordinates(tripData.lon, tripData.lat, transportMode).catch((err) =>
+        console.log(err)
+      );
     }
     setItineraryDay(0);
-  }, [lat, lng, fetchCoordinates, cityName]);
+  }, [tripData, fetchCoordinates, transportMode]);
 
   return (
     <WithHeader>
@@ -329,6 +363,8 @@ const BaseMap: FC = () => {
         <MapSidebar
           hotelMode={isHotelSelectionActivated}
           toggleHotelMode={setIsHotelSelectionActivated}
+          setTransportMode={setTransportMode}
+          transportMode={transportMode}
         />
         <div className="searchBar">
           <Autocomplete
@@ -342,9 +378,11 @@ const BaseMap: FC = () => {
             }
             onChange={(event, newValue) => {
               if (newValue) {
-                setCityName(newValue.properties.name);
-                setLat(newValue.geometry.coordinates[1]);
-                setLng(newValue.geometry.coordinates[0]);
+                setTripData({
+                  cityName: newValue.properties.name,
+                  lat: newValue.geometry.coordinates[1],
+                  lon: newValue.geometry.coordinates[0]
+                });
                 mapRef.current?.flyTo({
                   center: [
                     newValue.geometry.coordinates[0],
@@ -390,7 +428,8 @@ const BaseMap: FC = () => {
                 {" "}
                 <p>
                   <b>
-                    YOUR TRIP TO {cityName.toUpperCase()} IS BEING GENERATED
+                    YOUR TRIP TO {tripData.cityName.toUpperCase()} IS BEING
+                    GENERATED
                   </b>
                 </p>
                 <span className="loader"></span>
@@ -399,8 +438,8 @@ const BaseMap: FC = () => {
             <Map
               mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
               initialViewState={{
-                latitude: lat,
-                longitude: lng,
+                latitude: tripData.lat,
+                longitude: tripData.lon,
                 zoom: 2
               }}
               ref={mapRef}

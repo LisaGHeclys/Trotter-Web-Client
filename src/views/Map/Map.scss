@@ -178,3 +178,29 @@
   gap: 32px;
   overflow: hidden;
 }
+
+.transportSelection {
+  position: absolute;
+  top: 82px;
+  left: 49px;
+  display: flex;
+  flex-direction: row;
+  background-color: #f3f4f8;
+  width: 0px;
+  animation: width 1s ease 1s;
+  z-index: 10000;
+  overflow: hidden;
+  height: 43px;
+}
+
+.transportSelectionOpened {
+  width: fit-content;
+  animation: width 1s ease 1s;
+}
+
+.transportInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
