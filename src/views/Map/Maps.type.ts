@@ -56,3 +56,9 @@ export type RoutesProps = {
   colors: { primary: string; secondary: string }[];
   itineraryDay: number;
 };
+
+export enum TransportType {
+  WALKING = "walking",
+  DRIVING = "driving",
+  CYCLING = "cycling"
+}
