@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
-import { Grid } from "@mui/material";
+import React, { FC, useState, useEffect } from "react";
+import { Autocomplete, Grid, TextField } from "@mui/material";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -17,13 +17,13 @@ const cardData = [
     id: 1,
     title: "Card 1",
     content: "This is a simple card.",
-    imageUrl: "/"
+    imageUrl: "/TrotterLogo.png"
   },
   {
     id: 2,
     title: "Card 2",
     content: "This is another card.",
-    imageUrl: "/"
+    imageUrl: "/TrotterLogo.png"
   },
   {
     id: 3,
@@ -75,6 +75,29 @@ const TravelPage: FC = () => {
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const { t } = useTranslation();
 
+  const [jsonData, setJsonData] = useState<{
+    features: {
+      geometry: {
+        coordinates: number[];
+      };
+      properties: {
+        name: string;
+      };
+    }[];
+  } | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Fetch the JSON file using the relative path
+      const response = await fetch("/data.geojson");
+      const data = await response.json();
+
+      setJsonData(data);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div>
       <TravelWrapper container p={0} m={0} rowGap={10}>
@@ -108,11 +131,30 @@ const TravelPage: FC = () => {
       <DestinationComponentWrapper>
         <h1>{t("travel.title")}</h1>
         <ChooseDestination>
-          <input
+          {/* <input
             id="guided-tour-city"
             placeholder="City..."
             onChange={(e) => setCity(e.target.value)}
             data-testid="cityName"
+          /> */}
+          <Autocomplete
+            data-testid="cityName"
+            id="guided-tour-city"
+            disablePortal
+            options={jsonData?.features ?? []}
+            getOptionLabel={(option) => option.properties.name}
+            sx={{ width: 300 }}
+            isOptionEqualToValue={(option, value) =>
+              option.properties.name === value.properties.name
+            }
+            onChange={(event, newValue) => {
+              if (newValue) {
+                setCity(newValue.properties.name);
+              }
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="City" key={params.id} />
+            )}
           />
           <input
             id="guided-tour-dates"
@@ -189,18 +231,18 @@ const ChooseDestination = styled.div`
   justify-content: center;
   align-items: center;
 
-  input {
-    margin-left: 10px;
-    margin-right: 10px;
-    height: 5.4vh;
-    width: 22.5%;
+  // input {
+  //   margin-left: 10px;
+  //   margin-right: 10px;
+  //   height: 5.4vh;
+  //   width: 22.5%;
 
-    background-color: ${COLORS.bg};
-    border-style: solid;
-    border-color: ${COLORS.border};
-    border-radius: 10px;
-    border-width: 1px;
-  }
+  //   background-color: ${COLORS.bg};
+  //   border-style: solid;
+  //   border-color: ${COLORS.border};
+  //   border-radius: 10px;
+  //   border-width: 1px;
+  // }
 `;
 
 const SearchButton = styled.button`
