@@ -1,50 +1,19 @@
 {
   "description": {
-    "navbarPart1": "Accueil",
-    "navbarPart2": "Voyage",
-    "navbarPart3": "Destination",
-    "navbarPart4": "À propos de nous",
-    "aboutPart1": "Notre projet",
-    "aboutPart2": "Trotter est l'application mobile qui automatise le processus de planification de voyage pour les voyageurs en solo.",
-    "aboutPart3": "Profitez d'itinéraires adaptés à vos envies et à votre voyage, vivez près des locaux et rencontrez d'autres voyageurs internationaux.",
-    "aboutPart4": "Trotter est l'outil parfait pour rendre votre voyage inoubliable.",
-    "aboutPart5": "Nos membres",
-    "travelPart1": "Planifiez votre voyage",
     "travelPart2": "Localisation",
     "travelPart3": "Date",
-    "travelPart4": "Soumettre",
-    "travelPart5": "Endroits populaires",
-    "travelPart6": "Ville",
-    "dashboardPart1": "calendrier",
-    "dashboardPart2": "voyage",
-    "dashboardPart3": "exemple post-it",
-    "landingPart1": "Voyager seul n'a jamais été aussi facile",
-    "landingPart2": "Planifiez votre voyage en solo avec nous et découvrez les activités que nous pouvons vous proposer",
-    "signIn": "Se connecter",
-    "signUp": "S'inscrire",
-    "logInPart1": "Connectez-vous à votre compte",
-    "logInPart2": "Connexion",
-    "forgotPassword": "Mot de passe oublié ?",
+    "travelPart5": "Itinéraires recommandés",
     "separator": "ou connectez vous avec",
-    "registerPart1": "Créer un nouveau compte",
-    "registerPart2": "Déjà membre ?",
-    "registerPart3": "Se connecter",
-    "registerPart4": "S'inscrire",
-    "alternateLogins1": "Ou connectez-vous avec",
     "destinationPart1": "Toutes vos destinations passées et futures ici",
     "destinationPart2": "Destinations futures",
     "destinationPart3": "Voir plus",
     "destinationPart4": "Destinations passées",
-    "profilePart1": "E-mail",
-    "profilePart2": "Mot de passe",
     "profilePart3": "Vos préférences",
     "profilePart4": "Mes destinations",
     "profilePart5": "Adresses enregistrées",
     "profilePrefrencePart1": "Choisissez vos préférences",
     "profilePrefrencePart2": "Vos préférences actuelles",
     "profilePrefrencePart3": "Toutes les préférences disponibles",
-    "profilePrefrencePart4": "Annuler",
-    "profilePrefrencePart5": "Sauvegarder",
     "profileDeletePart1": "Supprimer le compte",
     "profileDeletePart2": "Voulez-vous vraiment supprimer le compte ?",
     "profileDeletePart3": "Une fois que vous décidez de le supprimer, il ne peut pas être récupéré et toutes vos données seront également supprimées.",
@@ -58,5 +27,47 @@
     "mapPart6": "Un monument",
     "mapPart7": "Seulement pour",
     "mapPart8": "Sauvegarder l'itinéraire"
+  },
+  "header": {
+    "home": "Accueil",
+    "travel": "Voyage",
+    "discover": "Découvrir",
+    "trending": "Tendance"
+  },
+
+  "register": {
+    "createAccount": "Créer un nouveau compte",
+    "welcome": "Bienvenue !",
+    "member": "Déjà membre ?"
+  },
+
+  "login": {
+    "logInAccount": "Connectez-vous à votre compte",
+    "welcome": "Bienvenue !",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "forgotPassword": "Mot de passe oublié ?"
+  },
+
+  "general": {
+    "logIn": "Connexion",
+    "register": "S'inscrire",
+    "delete": "Supprimer",
+    "password": "Mot de passe",
+    "email": "E-mail",
+    "skip": "Fermer",
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
+    "save": "Enregistrer"
+  },
+
+  "travel": {
+    "title": "Planifiez votre prochain voyage",
+    "searchButton": "Commencer 🌍"
+  },
+
+  "choiceModal": {
+    "title": "Bienvenue sur Trotter !",
+    "contentText": "Configurez vos préférences pour votre prochain voyage",
+    "contentTextPrecision": "Ne vous inquiétez pas, ils ne sont pas définitifs, vous pouvez les modifier à tout moment sur votre profil."
   }
 }

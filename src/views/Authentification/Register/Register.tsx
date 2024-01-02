@@ -79,24 +79,24 @@ const Register: FC = () => {
         <ImageWrapper>
           <RegisterImage src="/login.png" />
           <LoginRedirection>
-            <h1>Welcome !</h1>
+            <h1>{t("register.welcome")}</h1>
             <br />
-            <h2>Already a member ?</h2>
+            <h2>{t("register.member")}</h2>
             <LinkToOtherAuthButton onClick={() => navigate("/login")}>
-              {t("description.registerPart3")}
+              {t("general.logIn")}
             </LinkToOtherAuthButton>
           </LoginRedirection>
         </ImageWrapper>
         <FormWrapper>
           <Column>
-            <h2>{t("description.registerPart1")}</h2>
+            <h2>{t("register.createAccount")}</h2>
             <WrapperInput>
               <IconInput>
                 <MailOutlineIcon sx={{ color: "#BBBBBB" }} />
               </IconInput>
               <AuthentificationInput
                 type="text"
-                placeholder="Email"
+                placeholder={t("general.email") as string}
                 onChange={(e) => setEmail(e.target.value)}
                 data-testid="emailInput"
               />
@@ -107,7 +107,7 @@ const Register: FC = () => {
               </IconInput>
               <AuthentificationInput
                 type="password"
-                placeholder="Password"
+                placeholder={t("general.password") as string}
                 onChange={(e) => setPassword(e.target.value)}
                 data-testid="passwordInput"
               />
@@ -127,7 +127,7 @@ const Register: FC = () => {
               onClick={register}
               data-testid="submitRegister"
             >
-              {t("description.registerPart4")}
+              {t("general.register")}
             </AuthentificationButton>
           </Column>
           <DividerText data-content={t("description.separator")} />

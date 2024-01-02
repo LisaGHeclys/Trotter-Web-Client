@@ -1,25 +1,67 @@
-import React, { FC, useState } from "react";
-import { Grid, IconButton, useMediaQuery, useTheme } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import React, { FC, useState, useEffect } from "react";
+import { Autocomplete, Grid, TextField } from "@mui/material";
 import Navbar from "../../components/Navbar/Navbar";
-import London from "../../assets/London.jpg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AnyAction, Dispatch } from "redux";
 import { useTranslation } from "react-i18next";
 import { COLORS, FONT } from "../../UI/Colors";
-import { GridProps } from "./Travel.type";
 import styled from "styled-components";
 
+import { DatePicker } from "antd";
+import dayjs from "dayjs";
+import { Range } from "react-date-range";
+import { BaseMapPropsDefault } from "../Map/Maps.utils";
 import Joyride, { CallBackProps, Step } from "react-joyride";
 
+// This part will be removed when the component will be connected to the backend server.
+import { Card, CardContent, CardMedia, CardActionArea } from "@mui/material";
+const cardData = [
+  {
+    id: 1,
+    title: "Seoul, South Korea",
+    content:
+      "South Korea's capital, seamlessly blends ancient charm with modern vibrancy, offering a dynamic cityscape where tradition meets innovation.",
+    imageUrl: "/seoul.jpg",
+    city: "Seoul"
+  },
+  {
+    id: 2,
+    title: "Barcelona, Spain",
+    content:
+      "Spain's vibrant city, harmonizes history with modernity, creating a dynamic blend of iconic architecture and contemporary energy.",
+    imageUrl: "/Barcelone.jpg",
+    city: "Barcelona"
+  },
+  {
+    id: 3,
+    title: "Gyeongju, South Korea",
+    content:
+      "South Korea's historic gem, echoes the past with ancient temples and palaces, embodying the legacy of the Silla Dynasty.",
+    imageUrl: "/gyeongju.jpg",
+    city: "Gyeongju"
+  },
+  {
+    id: 4,
+    title: "Aix-en-Provence, France",
+    content:
+      "In the heart of Provence, France, exudes charm with its elegant streets and artistic flair, blending a relaxed Mediterranean vibe with old-world sophistication.",
+    imageUrl: "/aix.jpg",
+    city: "aix-en-provence"
+  }
+];
+
 const TravelPage: FC = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
+  const [range, setRange] = useState<Range[]>([
+    {
+      startDate: new Date(),
+      endDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+      key: "selection"
+    }
+  ]);
   const [city, setCity] = useState<string>("");
   const [, /*period*/ setPeriod] = useState<string>("date");
-  const [isFav, setIsFav] = useState<boolean>(false);
   const steps: Step[] = [
     {
       content: <h2>Welcome on Trotter Application !</h2>,
@@ -34,10 +76,6 @@ const TravelPage: FC = () => {
       placement: "center",
       target: "body"
     },
-    // {
-    // content: <h2>You can have access to our profile directly</h2>,
-    // target:"#profile",
-    // },
     {
       content: <h2>Enter your future destination here</h2>,
       target: "#guided-tour-city"
@@ -51,10 +89,43 @@ const TravelPage: FC = () => {
       target: "#guided-tour-search-button"
     }
   ];
+
   const run = localStorage.getItem("GT_OVER") !== "true";
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const { t } = useTranslation();
+
+  const [jsonData, setJsonData] = useState<{
+    features: {
+      geometry: {
+        coordinates: number[];
+      };
+      properties: {
+        name: string;
+      };
+    }[];
+  } | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Fetch the JSON file using the relative path
+      const response = await fetch("/data.geojson");
+      const data = await response.json();
+
+      setJsonData(data);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (range.length === 0 || !range[0].endDate || !range[0].startDate) return;
+    const diffTime = Math.abs(
+      range[0]?.endDate?.getTime() - range[0]?.startDate?.getTime()
+    );
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    setLength(diffDays);
+  }, [range]);
 
   return (
     <div>
@@ -85,83 +156,96 @@ const TravelPage: FC = () => {
         <Grid item p={0} m={0} xs={12}>
           <Navbar />
         </Grid>
-        <DestinationComponentWrapper
-          container
-          item
-          p={0}
-          m={0}
-          xs={8}
-          rowGap={isMobile ? 5 : 0}
-        >
-          <ChoseDestination container item xs={isMobile ? 12 : 6}>
-            <Grid item p={0} m={0} xs={12} mb={2}>
-              {t("description.travelPart1")}
-            </Grid>
-            <GridInput
-              container
-              item
-              xs={isMobile ? 6 : 12}
-              isMobile={isMobile}
-            >
-              {t("description.travelPart2")}
-              <input
-                id="guided-tour-city"
-                placeholder="City..."
-                onChange={(e) => setCity(e.target.value)}
-                data-testid="cityName"
-              />
-            </GridInput>
-            <GridInput container item xs={isMobile ? 6 : 12}>
-              {t("description.travelPart3")}
-              <input
-                id="guided-tour-dates"
-                type={"date"}
-                placeholder="From ... to ..."
-                onChange={(e) => setPeriod(e.target.value)}
-              />
-            </GridInput>
-            <Grid>
-              <SearchButton
-                id="guided-tour-search-button"
-                onClick={() => {
-                  dispatch({ type: "SEARCH", payload: { place: city } });
-                  navigate("/map");
-                }}
-                data-testid="goOnTrip"
-              >
-                {t("description.travelPart4")}
-              </SearchButton>
-            </Grid>
-          </ChoseDestination>
-        </DestinationComponentWrapper>
-        <DestinationPossibilities container item p={0} m={0} xs={8}>
-          <Grid item p={0} m={0} xs={12}>
-            {t("description.travelPart5")}
-          </Grid>
-          <FavoritePlaces item>
-            <Grid item>
-              <CardContentPhoto
-                style={{
-                  backgroundColor: "#95b0b4",
-                  width: isMobile ? "75px" : "150px",
-                  height: isMobile ? "75px" : "150px",
-                  borderRadius: "10px"
-                }}
-                src={London}
-                alt="London"
-                onClick={() => navigate("/map")}
-              />
-              <IconButton
-                onClick={() => {
-                  setIsFav(!isFav);
-                }}
-              >
-                {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              </IconButton>
-            </Grid>
-          </FavoritePlaces>
-        </DestinationPossibilities>
       </TravelWrapper>
+      <DestinationComponentWrapper>
+        <h1>{t("travel.title")}</h1>
+        <ChooseDestination>
+          {/* <input
+            id="guided-tour-city"
+            placeholder="City..."
+            onChange={(e) => setCity(e.target.value)}
+            data-testid="cityName"
+          /> */}
+          <Autocomplete
+            data-testid="cityName"
+            id="guided-tour-city"
+            disablePortal
+            options={jsonData?.features ?? []}
+            getOptionLabel={(option) => option.properties.name}
+            sx={{ width: 350 }}
+            isOptionEqualToValue={(option, value) =>
+              option.properties.name === value.properties.name
+            }
+            onChange={(event, newValue) => {
+              if (newValue) {
+                setCity(newValue.properties.name);
+              }
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="City" key={params.id} />
+            )}
+          />
+          <SpaceDate />
+          <DatePicker.RangePicker
+            size={"middle"}
+            placement="bottomLeft"
+            id="guided-tour-dates"
+            onChange={(rv) => {
+              if (!rv || !rv[0] || !rv[1]) return;
+              if (!rv[0]?.isBefore(rv[1]?.add(-7, "day"))) {
+                setRange([
+                  {
+                    startDate: rv[0].toDate(),
+                    endDate: rv[1].toDate(),
+                    key: "selection"
+                  }
+                ]);
+              }
+            }}
+            disabledDate={(date) => date.toDate() < new Date()}
+            value={[dayjs(range[0].startDate), dayjs(range[0].endDate)]}
+          />
+          {/* <input
+            id="guided-tour-dates"
+            type={"date"}
+            placeholder="From ... to ..."
+            onChange={(e) => setPeriod(e.target.value)}
+          /> */}
+          <SearchButton
+            id="guided-tour-search-button"
+            onClick={() => {
+              dispatch({ type: "SEARCH", payload: { place: city } });
+              navigate("/map");
+            }}
+            data-testid="goOnTrip"
+          >
+            <div>{t("travel.searchButton")}</div>
+          </SearchButton>
+        </ChooseDestination>
+        <TitleRecommended>Recommended tours</TitleRecommended>
+        <RecommendedWrapper>
+          {cardData.map((card) => (
+            <StyledCard key={card.id}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  sx={{ height: 250 }}
+                  image={card.imageUrl}
+                  alt={`${card.title} Image`}
+                  onClick={() => {
+                    dispatch({ type: "SEARCH", payload: { place: card.city } });
+                    navigate("/map");
+                  }}
+                />
+                <CardContent>
+                  <h2>{card.title}</h2>
+                  <p>{card.content}</p>
+                </CardContent>
+              </CardActionArea>
+            </StyledCard>
+          ))}
+        </RecommendedWrapper>
+      </DestinationComponentWrapper>
     </div>
   );
 };
@@ -172,85 +256,61 @@ const TravelWrapper = styled(Grid)`
   justify-content: center;
 `;
 
-const DestinationComponentWrapper = styled(Grid)`
+const DestinationComponentWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   position: relative;
-  height: 60vh;
+  height: 100%;
+  align-items: center;
   align-content: center;
-  align-items: center;
   justify-content: center;
+  margin-top: 100px;
 
   @media (max-width: 768px) {
-    height: 50vh;
-    text-align: center;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
   }
 `;
 
-const ChoseDestination = styled(Grid)`
-  padding: 0 15px;
+const SpaceDate = styled.div`
+  height: 15px;
+  width: 100%;
+`;
+
+const ChooseDestination = styled.div`
   display: flex;
+  height: 100%;
+  width: 100%;
   flex-direction: column;
-  position: relative;
-  font-weight: 700;
-  font-size: 35px;
-  text-decoration: none;
+  font-weight: bold;
+  font-size: 30px;
   font-family: ${FONT};
-  color: ${COLORS.black};
+  color: ${COLORS.text};
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 768px) {
-    font-size: 30px;
-  }
-  @media (max-width: 425px) {
-    font-size: 25px;
-  }
-`;
+  // input {
+  //   margin-left: 10px;
+  //   margin-right: 10px;
+  //   height: 5.4vh;
+  //   width: 22.5%;
 
-const GridInput = styled(Grid)<GridProps>`
-  display: flex;
-  flex-direction: column;
-  font-weight: 200;
-  font-size: 20px;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: ${(props) => (props.isMobile ? "0px" : "35px")};
-
-  @media (max-width: 768px) {
-    font-size: 18px;
-    justify-content: space-between;
-    align-content: center;
-  }
-  @media (max-width: 425px) {
-    font-size: 15px;
-    justify-content: space-between;
-    align-content: center;
-  }
-
-  input {
-    margin-left: 0;
-    margin-right: 0;
-    background-color: ${COLORS.bg};
-    height: 5vh;
-    width: 25vw;
-    border-style: solid;
-    border-color: ${COLORS.border};
-    border-radius: 10px;
-    border-width: 1px;
-  }
+  //   background-color: ${COLORS.bg};
+  //   border-style: solid;
+  //   border-color: ${COLORS.border};
+  //   border-radius: 10px;
+  //   border-width: 1px;
+  // }
 `;
 
 const SearchButton = styled.button`
   width: 180px;
-  height: 52px;
+  height: 5.2vh;
   z-index: 1;
   position: relative;
-  margin-top: 20px;
-  background-color: ${COLORS.grey};
+  margin-top: 36px;
+
+  background-color: ${COLORS.blue};
   border: none !important;
   border-radius: 10px;
   color: ${COLORS.white};
@@ -271,35 +331,24 @@ const SearchButton = styled.button`
   }
 `;
 
-const DestinationPossibilities = styled(Grid)`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  height: 20vh;
-  font-weight: 200;
-  font-size: 20px;
-  row-gap: 0px !important;
+const TitleRecommended = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 40px;
 `;
 
-const FavoritePlaces = styled(Grid)`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const CardContentPhoto = styled.img`
+const RecommendedWrapper = styled.div`
+  height: 100%;
   width: 100%;
-  object-fit: cover;
-  background-color: #95b0b4;
-  height: 40vh;
-  border-radius: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: 20px;
+`;
 
-  @media (max-width: 768px) {
-    height: 30vh;
-  }
-  @media (max-width: 320px) {
-    height: 20vh;
-  }
+const StyledCard = styled(Card)`
+  flex: 0 0 calc(25% - 80px);
 `;
 
 export default TravelPage;
