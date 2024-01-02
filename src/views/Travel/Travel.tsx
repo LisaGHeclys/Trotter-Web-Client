@@ -52,7 +52,7 @@ const cardData = [
 ];
 
 const TravelPage: FC = () => {
-  const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
+  const [, /*length*/ setLength] = useState<number>(BaseMapPropsDefault.length);
   const [range, setRange] = useState<Range[]>([
     {
       startDate: new Date(),
@@ -61,7 +61,7 @@ const TravelPage: FC = () => {
     }
   ]);
   const [city, setCity] = useState<string>("");
-  const [, /*period*/ setPeriod] = useState<string>("date");
+  // const [, /*period*/ setPeriod] = useState<string>("date");
   const steps: Step[] = [
     {
       content: <h2>Welcome on Trotter Application !</h2>,
