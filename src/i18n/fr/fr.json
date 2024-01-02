@@ -69,5 +69,17 @@
     "title": "Bienvenue sur Trotter !",
     "contentText": "Configurez vos préférences pour votre prochain voyage",
     "contentTextPrecision": "Ne vous inquiétez pas, ils ne sont pas définitifs, vous pouvez les modifier à tout moment sur votre profil."
+  },
+
+  "suggest": {
+    "title": "Remplissez ce formulaire nous suggérer une destination",
+    "name": "Nom",
+    "description": "Description",
+    "coordinates": "Coordonnées au format: latitude, longitude",
+    "submit": "Valider",
+    "fieldsError": "Tout les champs doivent être remplis",
+    "coordinatesError": "Les coordonnées doivent être au format: latitude, longitude (ex: 45.767624, 4.834840)",
+    "success": "Votre suggestion a bien été prise en compte !",
+    "error": "Une erreur s'est produite, veuillez réessayer plus tard"
   }
 }

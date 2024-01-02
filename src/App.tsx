@@ -12,6 +12,7 @@ import Profile from "./views/Profile/Profile";
 import "./i18n/config";
 import "./App.css";
 import Onboarding from "./views/Onboarding/Onboarding";
+import SuggestPage from "./views/Suggest/Suggest";
 
 const InitClarity = () => {
   clarity.consent();
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/map" element={<BaseMap />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/welcome" element={<Onboarding />} />
+          <Route path="/suggest" element={<SuggestPage />} />
         </Routes>
       </BrowserRouter>
     </AppWrapper>
