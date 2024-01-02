@@ -204,3 +204,11 @@
   align-items: center;
   justify-content: center;
 }
+
+.tabsContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 36px;
+  align-items: flex-start;
+  justify-content: flex-start;
+}

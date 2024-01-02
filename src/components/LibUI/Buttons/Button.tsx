@@ -28,10 +28,13 @@ export const Button: FC<ButtonProps> = ({
   textPadding,
   onClick
 }) => {
+  //eslint-disable-next-line
   const rippleRef: any = React.useRef<any>(null);
+  //eslint-disable-next-line
   const onRippleStart = (e: any) => {
     if (rippleRef.current != null) rippleRef.current.start(e);
   };
+  //eslint-disable-next-line
   const onRippleStop = (e: any) => {
     if (rippleRef.current != null) rippleRef.current.stop(e);
   };

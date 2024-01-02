@@ -22,6 +22,7 @@ import { RootState } from "../../store";
 import {
   Autocomplete,
   Card,
+  CircularProgress,
   Divider,
   TextField,
   Typography
@@ -45,6 +46,13 @@ import {
   DirectionsWalk
 } from "@mui/icons-material";
 import BudgetComponent from "./Budget";
+import { useFetchCityInfo } from "../../hooks/useFetchCityInfo";
+
+enum TAB {
+  ITINERARY,
+  INFO,
+  BUDGET
+}
 
 const BaseMap: FC = () => {
   const ref = React.useRef<number>(0);
@@ -81,11 +89,14 @@ const BaseMap: FC = () => {
   const [cursor, setCursor] = useState<string>("grab");
   const [isHotelSelectionActivated, setIsHotelSelectionActivated] =
     useState<boolean>(false);
+  const [tab, setTab] = useState<TAB>(TAB.ITINERARY);
+  const [cityInfo, setCityInfo] = useState<any[] | null>(null);
   const [transportMode, setTransportMode] = useState<TransportType>(
     TransportType.WALKING
   );
   const token = useSelector((state: RootState) => state.auth.token);
   const [generateItineraryStatus, generateItinerary] = useGenerateItinerary();
+  const [fetchCityInfoStatus, fetchCityInfo] = useFetchCityInfo();
   const [steps, setSteps] = useState<StepProps[][]>([]);
   const [jsonData, setJsonData] = useState<{
     features: {
@@ -94,6 +105,7 @@ const BaseMap: FC = () => {
       };
       properties: {
         name: string;
+        href: string;
       };
     }[];
   } | null>(null);
@@ -184,6 +196,8 @@ const BaseMap: FC = () => {
         setMarkers([]);
         setDropoffs({});
         setRoutes({});
+        setCityInfo(null);
+        setTab(TAB.ITINERARY);
         if (resJsonWithStatus[0] === false) {
           mapRef.current?.flyTo({
             center: [
@@ -493,28 +507,139 @@ const BaseMap: FC = () => {
             </Map>
           </div>
           <div className="mapSideMenu">
-            <Typography variant="h5" fontWeight={"bolder"}>
-              ITINERARY
-            </Typography>
-            {generateItineraryStatus.loading
-              ? null
-              : Array.from(Array(length).keys()).map((day) => (
+            <div className="tabsContainer">
+              <div onClick={() => setTab(TAB.ITINERARY)}>
+                <Typography
+                  variant="h5"
+                  fontWeight={"bolder"}
+                  color={tab === TAB.ITINERARY ? "black" : "darkgray"}
+                >
+                  ITINERARY
+                </Typography>
+              </div>
+              <div
+                onClick={async () => {
+                  setTab(TAB.INFO);
+                  const citySlug = jsonData?.features.find(
+                    (feature) => feature.properties.name === tripData.cityName
+                  )?.properties.href;
+                  if (!cityInfo && citySlug)
+                    setCityInfo(await fetchCityInfo({ slug: citySlug }));
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  fontWeight={"bolder"}
+                  color={tab === TAB.INFO ? "black" : "darkgray"}
+                >
+                  INFO
+                </Typography>
+              </div>
+              <div onClick={() => setTab(TAB.BUDGET)}>
+                <Typography
+                  variant="h5"
+                  fontWeight={"bolder"}
+                  color={tab === TAB.BUDGET ? "black" : "darkgray"}
+                >
+                  BUDGET
+                </Typography>
+              </div>
+            </div>
+            {tab === TAB.ITINERARY
+              ? generateItineraryStatus.loading
+                ? null
+                : Array.from(Array(length).keys()).map((day) => (
+                    <>
+                      <UnderLine itineraryDay={day}>
+                        {format(
+                          addDays(range[0]?.startDate || new Date(), day),
+                          "EEEE, do MMMM"
+                        )}{" "}
+                      </UnderLine>
+                      <Steps
+                        items={steps.length ? steps[day] : []}
+                        direction="vertical"
+                        current={10000}
+                      />
+                      <Divider />
+                    </>
+                  ))
+              : null}
+
+            {tab === TAB.INFO ? (
+              <div className="infoContainer">
+                {fetchCityInfoStatus.loading ? (
+                  <CircularProgress />
+                ) : cityInfo ? (
                   <>
-                    <UnderLine itineraryDay={day}>
-                      {format(
-                        addDays(range[0]?.startDate || new Date(), day),
-                        "EEEE, do MMMM"
-                      )}{" "}
-                    </UnderLine>
-                    <Steps
-                      items={steps.length ? steps[day] : []}
-                      direction="vertical"
-                      current={10000}
-                    />
-                    <Divider />
+                    <h3>City Size</h3>
+                    <p>
+                      <b>Population size:</b>{" "}
+                      {cityInfo[1].data[0].float_value.toFixed(1)}M
+                    </p>
+                    <p>
+                      <b>Spoken languages:</b>{" "}
+                      {cityInfo[11].data[2].string_value}
+                    </p>
+                    <p>
+                      <b>Currency used:</b> {cityInfo[5].data[0].string_value}
+                    </p>
+                    <p>
+                      <b>Median age:</b> {cityInfo[9].data[2].float_value} years
+                    </p>
+                    <h3>Climate</h3>
+                    <p>
+                      <b>Average day length:</b>{" "}
+                      {cityInfo[2].data[0].float_value.toFixed(1)} hours
+                    </p>
+                    <p>
+                      <b> Average day Temperature:</b>{" "}
+                      {cityInfo[2].data[3].string_value}°C -{" "}
+                      {cityInfo[2].data[2].string_value}°C
+                    </p>
+                    <p>
+                      <b> Average number of rainy days per year:</b>{" "}
+                      {cityInfo[2].data[1].float_value.toFixed(0)}
+                    </p>
+                    <p>
+                      <b>Weather type:</b> {cityInfo[2].data[5].string_value}
+                    </p>
+                    <h3>Cost of living</h3>
+                    <h5>in $</h5>
+                    <p>
+                      <b>Cost of a meal at a restaurant:</b>{" "}
+                      {cityInfo[3].data[8].currency_dollar_value.toFixed(2)}
+                    </p>
+                    <p>
+                      <b>Cost of a cappucino:</b>{" "}
+                      {cityInfo[3].data[3].currency_dollar_value.toFixed(2)}
+                    </p>
+                    <p>
+                      <b>Cost of a movie ticket:</b>{" "}
+                      {cityInfo[3].data[4].currency_dollar_value.toFixed(2)}
+                    </p>
+                    <p>
+                      <b>Cost of a beer:</b>{" "}
+                      {cityInfo[3].data[6].currency_dollar_value.toFixed(2)}
+                    </p>
+                    <p>
+                      <b>Cost of a fresh bread:</b>{" "}
+                      {cityInfo[3].data[2].currency_dollar_value.toFixed(2)}
+                    </p>
+                    <p>
+                      <b>Cost of a kilogram of apples:</b>{" "}
+                      {cityInfo[3].data[1].currency_dollar_value.toFixed(2)}
+                    </p>
                   </>
-                ))}
-            <BudgetComponent />
+                ) : null}
+              </div>
+            ) : null}
+
+            {
+              tab === TAB.BUDGET ? (
+                <BudgetComponent />
+              ) : null
+            }
           </div>
         </div>
         <Toaster />
