@@ -66,5 +66,17 @@
     "title": "Welcome on Trotter !",
     "contentText": "Set up your preferences right away for yout next trip",
     "contentTextPrecision": "Don’t worry, they are not definitive, you can change them at any time on your profile"
+  },
+
+  "suggest": {
+    "title": "Fill this form to submit a suggestion",
+    "name": "Name",
+    "description": "Description",
+    "coordinates": "Coordinates in the format : latitude, longitude",
+    "submit": "Submit",
+    "fieldsError": "All fields are required",
+    "coordinatesError": "Coordinates must be in the format : latitude, longitude (ex: 45.767624, 4.834840)",
+    "success": "Your suggestion has been submitted !",
+    "error": "An error occured, please try again later"
   }
 }
