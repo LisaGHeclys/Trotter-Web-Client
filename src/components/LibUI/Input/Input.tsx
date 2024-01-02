@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { ChangeEvent, FC } from "react";
 
 export interface InputProps {
   width?: string;
@@ -10,7 +10,7 @@ export interface InputProps {
   borderRadius?: string;
   limitChar: number;
   textAlign: string;
-  onChange?: () => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input: FC<InputProps> = ({
