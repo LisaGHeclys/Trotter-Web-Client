@@ -44,6 +44,7 @@ import {
   DirectionsCar,
   DirectionsWalk
 } from "@mui/icons-material";
+import BudgetComponent from "./Budget";
 
 const BaseMap: FC = () => {
   const ref = React.useRef<number>(0);
@@ -513,6 +514,7 @@ const BaseMap: FC = () => {
                     <Divider />
                   </>
                 ))}
+            <BudgetComponent />
           </div>
         </div>
         <Toaster />
