@@ -81,5 +81,25 @@
     "coordinatesError": "Les coordonnées doivent être au format: latitude, longitude (ex: 45.767624, 4.834840)",
     "success": "Votre suggestion a bien été prise en compte !",
     "error": "Une erreur s'est produite, veuillez réessayer plus tard"
+  },
+  "event": {
+    "title": "Créer votre événement",
+    "name": "Nom",
+    "description": "Description",
+    "coordinates": "Coordonnées au format (latitude, longitude)",
+    "maxParticipants": "Nombre maximum de participants",
+    "tags": "Tags (séparés par des virgules)",
+    "openingDate": "Date d'ouverture des inscriptions",
+    "closingDate": "Date de fermeture des inscriptions",
+    "startDate": "Date de début de l'événement",
+    "endDate": "Date de fin de l'événement",
+    "submit": "Valider",
+    "fieldsError": "Tout les champs doivent être remplis",
+    "coordinatesError": "Les coordonnées doivent être au format: latitude, longitude (ex: 45.767624, 4.834840)",
+    "maxParticipantsError": "Le nombre maximum de participants doit être un nombre entier supérieur à 0",
+    "dateError": "Les dates doivent être au format: AAAA-MM-JJ (ex: 2020-12-31)",
+    "dateLogicError": "La date de début doit être antérieure à la date de fin et la date de fermeture des inscriptions",
+    "success": "Votre suggestion a bien été prise en compte !",
+    "error": "Une erreur s'est produite, veuillez réessayer plus tard"
   }
 }
