@@ -8,6 +8,10 @@ import { useTranslation } from "react-i18next";
 import { COLORS, FONT } from "../../UI/Colors";
 import styled from "styled-components";
 
+import { DatePicker } from "antd";
+import dayjs from "dayjs";
+import { Range } from "react-date-range";
+import { BaseMapPropsDefault } from "../Map/Maps.utils";
 import Joyride, { CallBackProps, Step } from "react-joyride";
 
 // This part will be removed when the component will be connected to the backend server.
@@ -15,31 +19,47 @@ import { Card, CardContent, CardMedia, CardActionArea } from "@mui/material";
 const cardData = [
   {
     id: 1,
-    title: "Card 1",
-    content: "This is a simple card.",
-    imageUrl: "/TrotterLogo.png"
+    title: "Seoul, South Korea",
+    content:
+      "South Korea's capital, seamlessly blends ancient charm with modern vibrancy, offering a dynamic cityscape where tradition meets innovation.",
+    imageUrl: "/seoul.jpg",
+    city: "Seoul"
   },
   {
     id: 2,
-    title: "Card 2",
-    content: "This is another card.",
-    imageUrl: "/TrotterLogo.png"
+    title: "Barcelona, Spain",
+    content:
+      "Spain's vibrant city, harmonizes history with modernity, creating a dynamic blend of iconic architecture and contemporary energy.",
+    imageUrl: "/Barcelone.jpg",
+    city: "Barcelona"
   },
   {
     id: 3,
-    title: "Card 3",
-    content: "And one more card.",
-    imageUrl: "/login.png"
+    title: "Gyeongju, South Korea",
+    content:
+      "South Korea's historic gem, echoes the past with ancient temples and palaces, embodying the legacy of the Silla Dynasty.",
+    imageUrl: "/gyeongju.jpg",
+    city: "Gyeongju"
   },
   {
     id: 4,
-    title: "Card 4",
-    content: "And one more card.",
-    imageUrl: "/login.png"
+    title: "Aix-en-Provence, France",
+    content:
+      "In the heart of Provence, France, exudes charm with its elegant streets and artistic flair, blending a relaxed Mediterranean vibe with old-world sophistication.",
+    imageUrl: "/aix.jpg",
+    city: "aix-en-provence"
   }
 ];
 
 const TravelPage: FC = () => {
+  const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
+  const [range, setRange] = useState<Range[]>([
+    {
+      startDate: new Date(),
+      endDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+      key: "selection"
+    }
+  ]);
   const [city, setCity] = useState<string>("");
   const [, /*period*/ setPeriod] = useState<string>("date");
   const steps: Step[] = [
@@ -98,6 +118,15 @@ const TravelPage: FC = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (range.length === 0 || !range[0].endDate || !range[0].startDate) return;
+    const diffTime = Math.abs(
+      range[0]?.endDate?.getTime() - range[0]?.startDate?.getTime()
+    );
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    setLength(diffDays);
+  }, [range]);
+
   return (
     <div>
       <TravelWrapper container p={0} m={0} rowGap={10}>
@@ -143,7 +172,7 @@ const TravelPage: FC = () => {
             disablePortal
             options={jsonData?.features ?? []}
             getOptionLabel={(option) => option.properties.name}
-            sx={{ width: 300 }}
+            sx={{ width: 350 }}
             isOptionEqualToValue={(option, value) =>
               option.properties.name === value.properties.name
             }
@@ -156,12 +185,32 @@ const TravelPage: FC = () => {
               <TextField {...params} label="City" key={params.id} />
             )}
           />
-          <input
+          <SpaceDate />
+          <DatePicker.RangePicker
+            size={"middle"}
+            placement="bottomLeft"
+            id="guided-tour-dates"
+            onChange={(rv) => {
+              if (!rv || !rv[0] || !rv[1]) return;
+              if (!rv[0]?.isBefore(rv[1]?.add(-7, "day"))) {
+                setRange([
+                  {
+                    startDate: rv[0].toDate(),
+                    endDate: rv[1].toDate(),
+                    key: "selection"
+                  }
+                ]);
+              }
+            }}
+            disabledDate={(date) => date.toDate() < new Date()}
+            value={[dayjs(range[0].startDate), dayjs(range[0].endDate)]}
+          />
+          {/* <input
             id="guided-tour-dates"
             type={"date"}
             placeholder="From ... to ..."
             onChange={(e) => setPeriod(e.target.value)}
-          />
+          /> */}
           <SearchButton
             id="guided-tour-search-button"
             onClick={() => {
@@ -183,6 +232,10 @@ const TravelPage: FC = () => {
                   sx={{ height: 250 }}
                   image={card.imageUrl}
                   alt={`${card.title} Image`}
+                  onClick={() => {
+                    dispatch({ type: "SEARCH", payload: { place: card.city } });
+                    navigate("/map");
+                  }}
                 />
                 <CardContent>
                   <h2>{card.title}</h2>
@@ -217,6 +270,11 @@ const DestinationComponentWrapper = styled.div`
     display: flex;
     flex-direction: column;
   }
+`;
+
+const SpaceDate = styled.div`
+  height: 15px;
+  width: 100%;
 `;
 
 const ChooseDestination = styled.div`
