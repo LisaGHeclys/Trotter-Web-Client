@@ -21,7 +21,6 @@ export const Input: FC<InputProps> = ({
   textPlaceholder,
   fontSize = "16px",
   borderRadius = "10px",
-  limitChar,
   textAlign,
   onChange
 }) => {
@@ -40,7 +39,6 @@ export const Input: FC<InputProps> = ({
           background: `white url(${icon}) right no-repeat`
         }}
         className={""}
-        maxLength={limitChar}
       />
     </div>
   );
