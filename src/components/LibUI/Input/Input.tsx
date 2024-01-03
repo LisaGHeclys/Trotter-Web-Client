@@ -40,6 +40,7 @@ export const Input: FC<InputProps> = ({
           background: `white url(${icon}) right no-repeat`
         }}
         className={""}
+        maxLength={limitChar}
       />
     </div>
   );
