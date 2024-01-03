@@ -47,6 +47,7 @@ import {
 } from "@mui/icons-material";
 import BudgetComponent from "./Budget";
 import { useFetchCityInfo } from "../../hooks/useFetchCityInfo";
+import { useSaveTrip } from "../../hooks/useSaveTrip";
 
 enum TAB {
   ITINERARY,
@@ -89,6 +90,9 @@ const BaseMap: FC = () => {
   const [cursor, setCursor] = useState<string>("grab");
   const [isHotelSelectionActivated, setIsHotelSelectionActivated] =
     useState<boolean>(false);
+  const [isTripSaveModalOpen, toggleIsTripSaveModalOpen] =
+    useState<boolean>(false);
+
   const [tab, setTab] = useState<TAB>(TAB.ITINERARY);
   const [cityInfo, setCityInfo] = useState<any[] | null>(null);
   const [transportMode, setTransportMode] = useState<TransportType>(
@@ -97,6 +101,7 @@ const BaseMap: FC = () => {
   const token = useSelector((state: RootState) => state.auth.token);
   const [generateItineraryStatus, generateItinerary] = useGenerateItinerary();
   const [fetchCityInfoStatus, fetchCityInfo] = useFetchCityInfo();
+  const [saveTripStatus, saveTrip] = useSaveTrip();
   const [steps, setSteps] = useState<StepProps[][]>([]);
   const [jsonData, setJsonData] = useState<{
     features: {
@@ -380,6 +385,7 @@ const BaseMap: FC = () => {
           toggleHotelMode={setIsHotelSelectionActivated}
           setTransportMode={setTransportMode}
           transportMode={transportMode}
+          toggleIsTripSaveModalOpen={toggleIsTripSaveModalOpen}
         />
         <div className="searchBar">
           <Autocomplete
@@ -635,14 +641,56 @@ const BaseMap: FC = () => {
               </div>
             ) : null}
 
-            {
-              tab === TAB.BUDGET ? (
-                <BudgetComponent />
-              ) : null
-            }
+            {tab === TAB.BUDGET ? <BudgetComponent /> : null}
           </div>
         </div>
         <Toaster />
+
+        {isTripSaveModalOpen ? (
+          <div className="tripSaveModal">
+            <div className="tripSaveModalContent">
+              <h2>Do you want to save your trip?</h2>
+              <p>
+                On our free plan you can only save up to 3 trips. If you want to
+                save more, you can upgrade to our premium plan.
+              </p>
+              {saveTripStatus.loading ? <CircularProgress /> : null}
+              <div className="tripSaveModalButtons">
+                <button
+                  type="button"
+                  className="tripSaveModalButton"
+                  onClick={() => toggleIsTripSaveModalOpen(false)}
+                  disabled={saveTripStatus.loading}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  disabled={saveTripStatus.loading}
+                  className="tripSaveModalButton"
+                  onClick={async () => {
+                    await saveTrip({
+                      startDate: range[0]?.startDate?.getTime() || 0,
+                      endDate: range[0]?.endDate?.getTime() || 0,
+                      housingCoordinates: [
+                        hotel[0]?.props.longitude || 0,
+                        hotel[0]?.props.latitude || 0
+                      ],
+                      cityName: tripData.cityName,
+                      tripData: {
+                        dropoffs,
+                        routes
+                      }
+                    });
+                    toggleIsTripSaveModalOpen(false);
+                  }}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </>
     </WithHeader>
   );

@@ -18,13 +18,15 @@ type MapSidebarProps = {
   toggleHotelMode: React.Dispatch<React.SetStateAction<boolean>>;
   transportMode: TransportType;
   setTransportMode: React.Dispatch<React.SetStateAction<TransportType>>;
+  toggleIsTripSaveModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const MapSidebar: FC<MapSidebarProps> = ({
   hotelMode,
   toggleHotelMode,
   transportMode,
-  setTransportMode
+  setTransportMode,
+  toggleIsTripSaveModalOpen
 }) => {
   const [isTransportModeSelectionOpen, toggleIsTransportModeSelectionOpen] =
     React.useState<boolean>(false);
@@ -72,6 +74,7 @@ const MapSidebar: FC<MapSidebarProps> = ({
           transition: "color 1s ease 0s"
         }}
         type="button"
+        onClick={() => toggleIsTripSaveModalOpen((prev) => !prev)}
       >
         <SaveAlt />
       </IconButton>
