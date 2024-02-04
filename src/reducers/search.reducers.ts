@@ -1,11 +1,16 @@
 import { AnyAction } from "redux";
+import { RootState } from "../store";
 
 export interface SearchState {
-  place: string;
+  place: {
+    lat?: number;
+    lon?: number;
+    cityName?: string;
+  };
 }
 
 const initialState: SearchState = {
-  place: "Paris"
+  place: {}
 };
 
 export default function searchReducers(
@@ -14,7 +19,11 @@ export default function searchReducers(
 ): SearchState {
   switch (action.type) {
     case "SEARCH":
-      if (typeof action.payload.place === "string")
+      console.log(action.payload.place);
+      if (
+        typeof action.payload.place === "object" &&
+        action.payload.place !== null
+      )
         return {
           ...state,
           place: action.payload.place
@@ -22,10 +31,12 @@ export default function searchReducers(
       break;
     case "CLEAR_SEARCH":
       return {
-        place: ""
+        place: {}
       };
     default:
       return state;
   }
   return state;
 }
+
+export const getSearchInput = (store: RootState) => store.search.place;

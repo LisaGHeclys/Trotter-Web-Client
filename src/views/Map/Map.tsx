@@ -28,7 +28,7 @@ import {
   Typography
 } from "@mui/material";
 import { format, addDays } from "date-fns";
-// import { SearchState } from "../../reducers/search.reducers";
+import { getSearchInput } from "../../reducers/search.reducers";
 import { BaseMapPropsDefault, weekColors } from "./Maps.utils";
 import { TransportType, UnderLineProps } from "./Maps.type";
 import styled from "styled-components";
@@ -56,7 +56,6 @@ enum TAB {
 }
 
 const BaseMap: FC = () => {
-  const ref = React.useRef<number>(0);
   const mapRef = React.useRef<MapRef>(null);
   const [dropoffs, setDropoffs] = useState<{
     [id: string]: FeatureCollection;
@@ -64,20 +63,22 @@ const BaseMap: FC = () => {
   const [routes, setRoutes] = useState<{
     [id: string]: FeatureCollection;
   }>({});
-  // const searchState = useSelector<RootState, SearchState>(
-  //   (state) => state.search
-  // );
+  const searchState = useSelector(getSearchInput);
   const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
   const [itineraryDay, setItineraryDay] = useState<number>(0);
   const [tripData, setTripData] = useState<{
-    lat: number;
-    lon: number;
-    cityName: string;
-  }>({
-    lat: BaseMapPropsDefault.lat,
-    lon: BaseMapPropsDefault.lng,
-    cityName: BaseMapPropsDefault.cityName
-  });
+    lat: number | null;
+    lon: number | null;
+    cityName: string | null;
+  }>(
+    searchState.cityName
+      ? (searchState as { lat: number; lon: number; cityName: string })
+      : {
+          lat: BaseMapPropsDefault.lat,
+          lon: BaseMapPropsDefault.lng,
+          cityName: null
+        }
+  );
   const [range, setRange] = useState<Range[]>([
     {
       startDate: new Date(),
@@ -366,13 +367,12 @@ const BaseMap: FC = () => {
   }, [dropoffs, itineraryDay]);
 
   useEffect(() => {
-    if (!ref.current || generateItineraryStatus.loading) {
-      // fetchCoordinates(cityName, lng, lat).catch((err) => console.log(err));
-      ref.current = 1;
-    } else {
-      fetchCoordinates(tripData.lon, tripData.lat, transportMode).catch((err) =>
-        console.log(err)
-      );
+    if (!generateItineraryStatus.loading && !!tripData.cityName) {
+      fetchCoordinates(
+        tripData.lon as number,
+        tripData.lat as number,
+        transportMode
+      ).catch((err) => console.log(err));
     }
     setItineraryDay(0);
   }, [tripData, fetchCoordinates, transportMode]);
@@ -444,7 +444,7 @@ const BaseMap: FC = () => {
               (isHotelSelectionActivated ? " mapContainerHotelSelectionOn" : "")
             }
           >
-            {generateItineraryStatus.loading ? (
+            {generateItineraryStatus.loading && tripData.cityName ? (
               <div className="itineraryLoading">
                 {" "}
                 <p>
@@ -459,9 +459,9 @@ const BaseMap: FC = () => {
             <Map
               mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
               initialViewState={{
-                latitude: tripData.lat,
-                longitude: tripData.lon,
-                zoom: 2
+                latitude: tripData.lat as number,
+                longitude: tripData.lon as number,
+                zoom: 10
               }}
               ref={mapRef}
               cursor={cursor}
@@ -676,7 +676,7 @@ const BaseMap: FC = () => {
                         hotel[0]?.props.longitude || 0,
                         hotel[0]?.props.latitude || 0
                       ],
-                      cityName: tripData.cityName,
+                      cityName: tripData.cityName || "",
                       tripData: {
                         dropoffs,
                         routes

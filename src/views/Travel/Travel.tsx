@@ -60,7 +60,14 @@ const TravelPage: FC = () => {
       key: "selection"
     }
   ]);
-  const [city, setCity] = useState<string>("");
+  const [city, setCity] = useState<{
+    geometry: {
+      coordinates: number[];
+    };
+    properties: {
+      name: string;
+    };
+  } | null>(null);
   // const [, /*period*/ setPeriod] = useState<string>("date");
   const steps: Step[] = [
     {
@@ -178,7 +185,7 @@ const TravelPage: FC = () => {
             }
             onChange={(event, newValue) => {
               if (newValue) {
-                setCity(newValue.properties.name);
+                setCity(newValue);
               }
             }}
             renderInput={(params) => (
@@ -214,7 +221,17 @@ const TravelPage: FC = () => {
           <SearchButton
             id="guided-tour-search-button"
             onClick={() => {
-              dispatch({ type: "SEARCH", payload: { place: city } });
+              if (city)
+                dispatch({
+                  type: "SEARCH",
+                  payload: {
+                    place: {
+                      cityName: city.properties.name,
+                      lat: city.geometry.coordinates[1],
+                      lon: city.geometry.coordinates[0]
+                    }
+                  }
+                });
               navigate("/map");
             }}
             data-testid="goOnTrip"
