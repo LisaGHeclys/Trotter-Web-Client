@@ -167,12 +167,6 @@ const TravelPage: FC = () => {
       <DestinationComponentWrapper>
         <h1>{t("travel.title")}</h1>
         <ChooseDestination>
-          {/* <input
-            id="guided-tour-city"
-            placeholder="City..."
-            onChange={(e) => setCity(e.target.value)}
-            data-testid="cityName"
-          /> */}
           <Autocomplete
             data-testid="cityName"
             id="guided-tour-city"
@@ -212,12 +206,6 @@ const TravelPage: FC = () => {
             disabledDate={(date) => date.toDate() < new Date()}
             value={[dayjs(range[0].startDate), dayjs(range[0].endDate)]}
           />
-          {/* <input
-            id="guided-tour-dates"
-            type={"date"}
-            placeholder="From ... to ..."
-            onChange={(e) => setPeriod(e.target.value)}
-          /> */}
           <SearchButton
             id="guided-tour-search-button"
             onClick={() => {
@@ -255,7 +243,7 @@ const TravelPage: FC = () => {
                   }}
                 />
                 <CardContent>
-                  <h2>{card.title}</h2>
+                  <h3>{card.title}</h3>
                   <p>{card.content}</p>
                 </CardContent>
               </CardActionArea>
@@ -305,19 +293,6 @@ const ChooseDestination = styled.div`
   color: ${COLORS.text};
   justify-content: center;
   align-items: center;
-
-  // input {
-  //   margin-left: 10px;
-  //   margin-right: 10px;
-  //   height: 5.4vh;
-  //   width: 22.5%;
-
-  //   background-color: ${COLORS.bg};
-  //   border-style: solid;
-  //   border-color: ${COLORS.border};
-  //   border-radius: 10px;
-  //   border-width: 1px;
-  // }
 `;
 
 const SearchButton = styled.button`
@@ -362,10 +337,28 @@ const RecommendedWrapper = styled.div`
   justify-content: space-between;
   padding: 20px;
   margin-top: 20px;
+
+  @media screen and (max-width: 1200px) {
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const StyledCard = styled(Card)`
-  flex: 0 0 calc(25% - 80px);
+  flex: 0 0 calc(25% - 20px);
+
+  @media screen and (max-width: 1200px) {
+    flex: 0 0 calc(33.33% - 20px);
+  }
+
+  @media screen and (max-width: 768px) {
+    flex: 0 0 calc(100% - 20px);
+    margin-bottom: 20px;
+  }
 `;
 
 export default TravelPage;
