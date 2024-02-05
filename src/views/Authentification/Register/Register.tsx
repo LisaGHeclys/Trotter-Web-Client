@@ -24,13 +24,17 @@ import {
 import Navbar from "../../../components/Navbar/Navbar";
 
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import LockIcon from "@mui/icons-material/Lock";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import toast from "react-hot-toast";
 
 const Register: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -102,26 +106,42 @@ const Register: FC = () => {
               />
             </WrapperInput>
             <WrapperInput>
-              <IconInput>
-                <LockIcon sx={{ color: "#BBBBBB" }} />
-              </IconInput>
               <AuthentificationInput
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder={t("general.password") as string}
                 onChange={(e) => setPassword(e.target.value)}
                 data-testid="passwordInput"
               />
+              <IconInput>
+                <TogglePasswordButton
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <VisibilityOffIcon style={{ color: "#BBBBBB" }} />
+                  ) : (
+                    <VisibilityIcon style={{ color: "#BBBBBB" }} />
+                  )}
+                </TogglePasswordButton>
+              </IconInput>
             </WrapperInput>
             <WrapperInput>
-              <IconInput>
-                <LockIcon sx={{ color: "#BBBBBB" }} />
-              </IconInput>
               <AuthentificationInput
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 placeholder="Confirm Password"
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 data-testid="passwordConfirmInput"
               />
+              <IconInput>
+                <TogglePasswordButton
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? (
+                    <VisibilityOffIcon style={{ color: "#BBBBBB" }} />
+                  ) : (
+                    <VisibilityIcon style={{ color: "#BBBBBB" }} />
+                  )}
+                </TogglePasswordButton>
+              </IconInput>
             </WrapperInput>
             <AuthentificationButton
               onClick={register}
@@ -220,6 +240,14 @@ const FormWrapper = styled.div`
     height: 100%;
     padding: 0;
   }
+`;
+
+const TogglePasswordButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  position: absolute;
 `;
 
 export default Register;
