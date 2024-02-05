@@ -61,8 +61,11 @@ export const useWebClient = (): AxiosInstance => {
     (error: any) => {
       if (401 === error.response?.status) {
         console.log("Unauthorized, redirected to login page");
+
         navigate(PATHS.LOGIN);
+        throw error;
       } else {
+        console.log("Error", error);
         throw error;
       }
     }

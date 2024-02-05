@@ -34,6 +34,10 @@ export const useGenerateItinerary: useGenerateItineraryType = () => {
       console.log(rep.data);
       return [true, rep.data];
     } catch (error) {
+      // eslint-disable-next-line
+      if ((error as any).response?.status === 401) {
+        return [false, downApi];
+      }
       toast.error(
         "Something wrong happened, here is a default itinerary in Berlin"
       );

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import "./Map.scss";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -18,7 +18,6 @@ import {
 import { FeatureCollection } from "geojson";
 import { Popup, MapLayerMouseEvent } from "mapbox-gl";
 import Routes from "./Routes";
-import { RootState } from "../../store";
 import {
   Autocomplete,
   Card,
@@ -99,7 +98,6 @@ const BaseMap: FC = () => {
   const [transportMode, setTransportMode] = useState<TransportType>(
     TransportType.WALKING
   );
-  const token = useSelector((state: RootState) => state.auth.token);
   const [generateItineraryStatus, generateItinerary] = useGenerateItinerary();
   const [fetchCityInfoStatus, fetchCityInfo] = useFetchCityInfo();
   const [saveTripStatus, saveTrip] = useSaveTrip();
@@ -188,7 +186,8 @@ const BaseMap: FC = () => {
     setLength(diffDays);
   }, [range]);
 
-  const fetchCoordinates = useCallback(
+  const fetchCoordinates =
+    /* useCallback( */
     async (lng: number, lat: number, transportMode: TransportType) => {
       if (!lng && !lat) return;
       try {
@@ -323,9 +322,9 @@ const BaseMap: FC = () => {
       } catch (e) {
         console.log(e);
       }
-    },
+    }; /* ,
     [length, token, hotel]
-  );
+  ); */
 
   useEffect(() => {
     setMarkers([]);
@@ -372,10 +371,14 @@ const BaseMap: FC = () => {
         tripData.lon as number,
         tripData.lat as number,
         transportMode
-      ).catch((err) => console.log(err));
+      );
     }
     setItineraryDay(0);
-  }, [tripData, fetchCoordinates, transportMode]);
+  }, [tripData, transportMode]);
+
+  useEffect(() => {
+    console.log(generateItineraryStatus.error);
+  }, [generateItineraryStatus]);
 
   return (
     <WithHeader>
