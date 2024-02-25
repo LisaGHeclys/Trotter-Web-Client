@@ -13,6 +13,7 @@ type useGenerateItineraryType = () => AsyncFnReturn<
       lon: number;
       days: number;
       transportMean: string;
+      bbox: number[];
     }[]
   ) => Promise<[boolean, GeoJsonRes]>
 >;
@@ -25,6 +26,7 @@ export const useGenerateItinerary: useGenerateItineraryType = () => {
     lon: number;
     days: number;
     transportMean: string;
+    bbox: number[];
   }>(async (payload) => {
     try {
       const rep: AxiosResponse<GeoJsonRes> = await webClient.post(

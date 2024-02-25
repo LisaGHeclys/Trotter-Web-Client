@@ -5,7 +5,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:aarhus",
-        "name": "Aarhus"
+        "name": "Aarhus",
+        "bbox": [10.18958, 56.134395, 10.257386, 56.168713]
       },
       "geometry": {
         "type": "Point",
@@ -16,7 +17,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:adelaide",
-        "name": "Adelaide"
+        "name": "Adelaide",
+        "bbox": [138.453738, -35.055059, 138.714205, -34.773531]
       },
       "geometry": {
         "type": "Point",
@@ -27,7 +29,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:albuquerque",
-        "name": "Albuquerque"
+        "name": "Albuquerque",
+        "bbox": [-106.784338, 34.935126, -106.487707, 35.271337]
       },
       "geometry": {
         "type": "Point",
@@ -38,7 +41,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:almaty",
-        "name": "Almaty"
+        "name": "Almaty",
+        "bbox": [76.535951, 43.147073, 77.261048, 43.499407]
       },
       "geometry": {
         "type": "Point",
@@ -49,7 +53,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:amsterdam",
-        "name": "Amsterdam"
+        "name": "Amsterdam",
+        "bbox": [4.812461, 52.326789, 4.973594, 52.426832]
       },
       "geometry": {
         "type": "Point",
@@ -60,7 +65,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:anchorage",
-        "name": "Anchorage"
+        "name": "Anchorage",
+        "bbox": [-150.082192, 61.051636, -149.713006, 61.23963]
       },
       "geometry": {
         "type": "Point",
@@ -71,7 +77,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:andorra",
-        "name": "Andorra"
+        "name": "Andorra",
+        "bbox": [1.493444, 42.490961, 1.549463, 42.517664]
       },
       "geometry": {
         "type": "Point",
@@ -82,7 +89,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:ankara",
-        "name": "Ankara"
+        "name": "Ankara",
+        "bbox": [32.787717, 39.870565, 32.931111, 39.962728]
       },
       "geometry": {
         "type": "Point",
@@ -93,7 +101,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:asheville",
-        "name": "Asheville"
+        "name": "Asheville",
+        "bbox": [-82.670364, 35.516533, -82.460469, 35.61]
       },
       "geometry": {
         "type": "Point",
@@ -104,7 +113,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:asuncion",
-        "name": "Asuncion"
+        "name": "Asuncion",
+        "bbox": [-57.676067, -25.358529, -57.549037, -25.260583]
       },
       "geometry": {
         "type": "Point",
@@ -115,7 +125,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:athens",
-        "name": "Athens"
+        "name": "Athens",
+        "bbox": [23.635971, 37.869826, 23.814956, 38.020766]
       },
       "geometry": {
         "type": "Point",
@@ -126,7 +137,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:atlanta",
-        "name": "Atlanta"
+        "name": "Atlanta",
+        "bbox": [-84.551818, 33.647502, -84.289385, 33.886618]
       },
       "geometry": {
         "type": "Point",
@@ -137,7 +149,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:auckland",
-        "name": "Auckland"
+        "name": "Auckland",
+        "bbox": [174.740723, -36.963051, 174.855957, -36.828611]
       },
       "geometry": {
         "type": "Point",
@@ -148,7 +161,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:austin",
-        "name": "Austin"
+        "name": "Austin",
+        "bbox": [-97.928711, 30.127892, -97.583923, 30.516977]
       },
       "geometry": {
         "type": "Point",
@@ -159,7 +173,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:baku",
-        "name": "Baku"
+        "name": "Baku",
+        "bbox": [49.793472, 40.3457, 50.171661, 40.485643]
       },
       "geometry": {
         "type": "Point",
@@ -170,7 +185,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bali",
-        "name": "Bali"
+        "name": "Bali",
+        "bbox": [115.09064, -8.4977, 115.4977, -8.09064]
       },
       "geometry": {
         "type": "Point",
@@ -181,7 +197,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:baltimore",
-        "name": "Baltimore"
+        "name": "Baltimore",
+        "bbox": [-76.711084, 39.197211, -76.529099, 39.348151]
       },
       "geometry": {
         "type": "Point",
@@ -192,7 +209,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bangkok",
-        "name": "Bangkok"
+        "name": "Bangkok",
+        "bbox": [100.3479, 13.5097, 100.6479, 13.8097]
       },
       "geometry": {
         "type": "Point",
@@ -203,7 +221,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:barcelona",
-        "name": "Barcelona"
+        "name": "Barcelona",
+        "bbox": [2.078, 41.324, 2.228, 41.474]
       },
       "geometry": {
         "type": "Point",
@@ -214,7 +233,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:beijing",
-        "name": "Beijing"
+        "name": "Beijing",
+        "bbox": [116.287, 39.761, 116.487, 39.961]
       },
       "geometry": {
         "type": "Point",
@@ -225,7 +245,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:beirut",
-        "name": "Beirut"
+        "name": "Beirut",
+        "bbox": [35.462, 33.847, 35.662, 34.047]
       },
       "geometry": {
         "type": "Point",
@@ -236,7 +257,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:belfast",
-        "name": "Belfast"
+        "name": "Belfast",
+        "bbox": [-5.978, 54.558, -5.778, 54.758]
       },
       "geometry": {
         "type": "Point",
@@ -247,7 +269,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:belgrade",
-        "name": "Belgrade"
+        "name": "Belgrade",
+        "bbox": [20.394, 44.768, 20.594, 44.968]
       },
       "geometry": {
         "type": "Point",
@@ -258,7 +281,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:belize-city",
-        "name": "Belize City"
+        "name": "Belize City",
+        "bbox": [-88.328, 17.448, -88.128, 17.648]
       },
       "geometry": {
         "type": "Point",
@@ -269,7 +293,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bengaluru",
-        "name": "Bengaluru"
+        "name": "Bengaluru",
+        "bbox": [77.448, 12.839, 77.648, 13.039]
       },
       "geometry": {
         "type": "Point",
@@ -280,7 +305,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bergen",
-        "name": "Bergen"
+        "name": "Bergen",
+        "bbox": [5.288, 60.349, 5.488, 60.549]
       },
       "geometry": {
         "type": "Point",
@@ -291,7 +317,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:berlin",
-        "name": "Berlin"
+        "name": "Berlin",
+        "bbox": [13.288, 52.449, 13.488, 52.649]
       },
       "geometry": {
         "type": "Point",
@@ -302,7 +329,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bern",
-        "name": "Bern"
+        "name": "Bern",
+        "bbox": [7.428, 46.928, 7.628, 47.128]
       },
       "geometry": {
         "type": "Point",
@@ -313,7 +341,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bilbao",
-        "name": "Bilbao"
+        "name": "Bilbao",
+        "bbox": [-3.028, 43.228, -2.828, 43.428]
       },
       "geometry": {
         "type": "Point",
@@ -324,7 +353,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:birmingham",
-        "name": "Birmingham"
+        "name": "Birmingham",
+        "bbox": [-1.928, 52.428, -1.728, 52.628]
       },
       "geometry": {
         "type": "Point",
@@ -335,7 +365,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:birmingham-al",
-        "name": "Birmingham, AL"
+        "name": "Birmingham, AL",
+        "bbox": [-86.928, 33.428, -86.728, 33.628]
       },
       "geometry": {
         "type": "Point",
@@ -346,7 +377,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bogota",
-        "name": "Bogota"
+        "name": "Bogota",
+        "bbox": [-74.228, 4.528, -74.028, 4.728]
       },
       "geometry": {
         "type": "Point",
@@ -357,7 +389,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:boise",
-        "name": "Boise"
+        "name": "Boise",
+        "bbox": [-116.328, 43.528, -116.128, 43.728]
       },
       "geometry": {
         "type": "Point",
@@ -368,7 +401,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bologna",
-        "name": "Bologna"
+        "name": "Bologna",
+        "bbox": [11.288, 44.428, 11.488, 44.628]
       },
       "geometry": {
         "type": "Point",
@@ -379,7 +413,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bordeaux",
-        "name": "Bordeaux"
+        "name": "Bordeaux",
+        "bbox": [-0.628, 44.728, -0.428, 44.928]
       },
       "geometry": {
         "type": "Point",
@@ -390,7 +425,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:boston",
-        "name": "Boston"
+        "name": "Boston",
+        "bbox": [-71.228, 42.328, -71.028, 42.528]
       },
       "geometry": {
         "type": "Point",
@@ -401,7 +437,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:boulder",
-        "name": "Boulder"
+        "name": "Boulder",
+        "bbox": [-105.328, 39.928, -105.128, 40.128]
       },
       "geometry": {
         "type": "Point",
@@ -412,7 +449,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bozeman",
-        "name": "Bozeman"
+        "name": "Bozeman",
+        "bbox": [-111.228, 45.628, -111.028, 45.828]
       },
       "geometry": {
         "type": "Point",
@@ -423,7 +461,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bratislava",
-        "name": "Bratislava"
+        "name": "Bratislava",
+        "bbox": [17.028, 48.128, 17.228, 48.328]
       },
       "geometry": {
         "type": "Point",
@@ -434,7 +473,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:brighton",
-        "name": "Brighton"
+        "name": "Brighton",
+        "bbox": [-0.228, 50.828, -0.028, 51.028]
       },
       "geometry": {
         "type": "Point",
@@ -445,7 +485,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:brisbane",
-        "name": "Brisbane"
+        "name": "Brisbane",
+        "bbox": [152.928, -27.628, 153.128, -27.428]
       },
       "geometry": {
         "type": "Point",
@@ -456,7 +497,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bristol",
-        "name": "Bristol"
+        "name": "Bristol",
+        "bbox": [-2.628, 51.428, -2.428, 51.628]
       },
       "geometry": {
         "type": "Point",
@@ -467,7 +509,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:brno",
-        "name": "Brno"
+        "name": "Brno",
+        "bbox": [16.528, 49.128, 16.728, 49.328]
       },
       "geometry": {
         "type": "Point",
@@ -478,7 +521,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:brussels",
-        "name": "Brussels"
+        "name": "Brussels",
+        "bbox": [4.228, 50.828, 4.428, 51.028]
       },
       "geometry": {
         "type": "Point",
@@ -489,7 +533,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:bucharest",
-        "name": "Bucharest"
+        "name": "Bucharest",
+        "bbox": [25.928, 44.328, 26.128, 44.528]
       },
       "geometry": {
         "type": "Point",
@@ -500,7 +545,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:budapest",
-        "name": "Budapest"
+        "name": "Budapest",
+        "bbox": [19.928, 47.428, 20.128, 47.628]
       },
       "geometry": {
         "type": "Point",
@@ -511,7 +557,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:buenos-aires",
-        "name": "Buenos Aires"
+        "name": "Buenos Aires",
+        "bbox": [-58.528, -34.828, -58.328, -34.628]
       },
       "geometry": {
         "type": "Point",
@@ -522,7 +569,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:buffalo",
-        "name": "Buffalo"
+        "name": "Buffalo",
+        "bbox": [-78.928, 42.828, -78.728, 43.028]
       },
       "geometry": {
         "type": "Point",
@@ -533,7 +581,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:cairo",
-        "name": "Cairo"
+        "name": "Cairo",
+        "bbox": [31.228, 30.028, 31.428, 30.228]
       },
       "geometry": {
         "type": "Point",
@@ -544,7 +593,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:calgary",
-        "name": "Calgary"
+        "name": "Calgary",
+        "bbox": [-114.228, 50.828, -114.028, 51.028]
       },
       "geometry": {
         "type": "Point",
@@ -555,7 +605,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:cambridge",
-        "name": "Cambridge"
+        "name": "Cambridge",
+        "bbox": [0.128, 52.128, 0.328, 52.328]
       },
       "geometry": {
         "type": "Point",
@@ -566,7 +617,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:cape-town",
-        "name": "Cape Town"
+        "name": "Cape Town",
+        "bbox": [18.228, -34.828, 18.428, -34.628]
       },
       "geometry": {
         "type": "Point",
@@ -577,7 +629,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:caracas",
-        "name": "Caracas"
+        "name": "Caracas",
+        "bbox": [-67.228, 10.428, -67.028, 10.628]
       },
       "geometry": {
         "type": "Point",
@@ -588,7 +641,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:cardiff",
-        "name": "Cardiff"
+        "name": "Cardiff",
+        "bbox": [-3.228, 51.428, -3.028, 51.628]
       },
       "geometry": {
         "type": "Point",
@@ -599,7 +653,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:casablanca",
-        "name": "Casablanca"
+        "name": "Casablanca",
+        "bbox": [-7.628, 33.528, -7.428, 33.728]
       },
       "geometry": {
         "type": "Point",
@@ -610,7 +665,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:charleston",
-        "name": "Charleston"
+        "name": "Charleston",
+        "bbox": [-80.228, 32.828, -80.028, 33.028]
       },
       "geometry": {
         "type": "Point",
@@ -621,7 +677,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:charlotte",
-        "name": "Charlotte"
+        "name": "Charlotte",
+        "bbox": [-80.828, 35.028, -80.628, 35.228]
       },
       "geometry": {
         "type": "Point",
@@ -632,7 +689,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:chattanooga",
-        "name": "Chattanooga"
+        "name": "Chattanooga",
+        "bbox": [-85.328, 35.028, -85.128, 35.228]
       },
       "geometry": {
         "type": "Point",
@@ -643,7 +701,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:chennai",
-        "name": "Chennai"
+        "name": "Chennai",
+        "bbox": [80.228, 12.828, 80.428, 13.028]
       },
       "geometry": {
         "type": "Point",
@@ -654,7 +713,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:chiang-mai",
-        "name": "Chiang Mai"
+        "name": "Chiang Mai",
+        "bbox": [98.828, 18.628, 99.028, 18.828]
       },
       "geometry": {
         "type": "Point",
@@ -665,7 +725,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:chicago",
-        "name": "Chicago"
+        "name": "Chicago",
+        "bbox": [-87.928, 41.628, -87.728, 41.828]
       },
       "geometry": {
         "type": "Point",
@@ -676,7 +737,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:chisinau",
-        "name": "Chisinau"
+        "name": "Chisinau",
+        "bbox": [28.828, 47.028, 29.028, 47.228]
       },
       "geometry": {
         "type": "Point",
@@ -687,7 +749,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:christchurch",
-        "name": "Christchurch"
+        "name": "Christchurch",
+        "bbox": [172.528, -43.628, 172.728, -43.428]
       },
       "geometry": {
         "type": "Point",
@@ -698,7 +761,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:cincinnati",
-        "name": "Cincinnati"
+        "name": "Cincinnati",
+        "bbox": [-84.628, 39.128, -84.428, 39.328]
       },
       "geometry": {
         "type": "Point",
@@ -709,7 +773,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:cleveland",
-        "name": "Cleveland"
+        "name": "Cleveland",
+        "bbox": [-81.928, 41.428, -81.728, 41.628]
       },
       "geometry": {
         "type": "Point",
@@ -720,7 +785,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:cluj-napoca",
-        "name": "Cluj-Napoca"
+        "name": "Cluj-Napoca",
+        "bbox": [23.528, 46.828, 23.728, 47.028]
       },
       "geometry": {
         "type": "Point",
@@ -731,7 +797,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:cologne",
-        "name": "Cologne"
+        "name": "Cologne",
+        "bbox": [6.828, 50.928, 7.028, 51.128]
       },
       "geometry": {
         "type": "Point",
@@ -742,7 +809,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:colorado-springs",
-        "name": "Colorado Springs"
+        "name": "Colorado Springs",
+        "bbox": [-105.628, 38.828, -105.428, 39.028]
       },
       "geometry": {
         "type": "Point",
@@ -753,7 +821,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:columbus",
-        "name": "Columbus"
+        "name": "Columbus",
+        "bbox": [-83.128, 39.928, -82.928, 40.128]
       },
       "geometry": {
         "type": "Point",
@@ -764,7 +833,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:copenhagen",
-        "name": "Copenhagen"
+        "name": "Copenhagen",
+        "bbox": [12.428, 55.628, 12.628, 55.828]
       },
       "geometry": {
         "type": "Point",
@@ -775,7 +845,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:cork",
-        "name": "Cork"
+        "name": "Cork",
+        "bbox": [-8.628, 51.828, -8.428, 52.028]
       },
       "geometry": {
         "type": "Point",
@@ -786,7 +857,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:curitiba",
-        "name": "Curitiba"
+        "name": "Curitiba",
+        "bbox": [-49.228, -25.628, -49.028, -25.428]
       },
       "geometry": {
         "type": "Point",
@@ -797,7 +869,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:dallas",
-        "name": "Dallas"
+        "name": "Dallas",
+        "bbox": [-97.428, 32.628, -97.228, 32.828]
       },
       "geometry": {
         "type": "Point",
@@ -808,7 +881,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:dar-es-salaam",
-        "name": "Dar es Salaam"
+        "name": "Dar es Salaam",
+        "bbox": [39.828, -6.028, 40.028, -5.828]
       },
       "geometry": {
         "type": "Point",
@@ -819,7 +893,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:delhi",
-        "name": "Delhi"
+        "name": "Delhi",
+        "bbox": [77.128, 28.428, 77.328, 28.628]
       },
       "geometry": {
         "type": "Point",
@@ -830,7 +905,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:denver",
-        "name": "Denver"
+        "name": "Denver",
+        "bbox": [-105.128, 39.628, -104.928, 39.828]
       },
       "geometry": {
         "type": "Point",
@@ -841,7 +917,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:des-moines",
-        "name": "Des Moines"
+        "name": "Des Moines",
+        "bbox": [-93.628, 41.828, -93.428, 42.028]
       },
       "geometry": {
         "type": "Point",
@@ -852,7 +929,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:detroit",
-        "name": "Detroit"
+        "name": "Detroit",
+        "bbox": [-83.228, 42.328, -83.028, 42.528]
       },
       "geometry": {
         "type": "Point",
@@ -863,7 +941,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:doha",
-        "name": "Doha"
+        "name": "Doha",
+        "bbox": [51.228, 25.228, 51.428, 25.428]
       },
       "geometry": {
         "type": "Point",
@@ -874,7 +953,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:dresden",
-        "name": "Dresden"
+        "name": "Dresden",
+        "bbox": [13.628, 51.028, 13.828, 51.228]
       },
       "geometry": {
         "type": "Point",
@@ -885,7 +965,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:dubai",
-        "name": "Dubai"
+        "name": "Dubai",
+        "bbox": [55.028, 25.228, 55.228, 25.428]
       },
       "geometry": {
         "type": "Point",
@@ -896,7 +977,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:dublin",
-        "name": "Dublin"
+        "name": "Dublin",
+        "bbox": [-6.328, 53.328, -6.128, 53.528]
       },
       "geometry": {
         "type": "Point",
@@ -907,7 +989,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:dusseldorf",
-        "name": "Dusseldorf"
+        "name": "Dusseldorf",
+        "bbox": [6.828, 51.228, 7.028, 51.428]
       },
       "geometry": {
         "type": "Point",
@@ -918,7 +1001,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:edinburgh",
-        "name": "Edinburgh"
+        "name": "Edinburgh",
+        "bbox": [-3.428, 55.928, -3.228, 56.128]
       },
       "geometry": {
         "type": "Point",
@@ -929,7 +1013,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:edmonton",
-        "name": "Edmonton"
+        "name": "Edmonton",
+        "bbox": [-113.628, 53.428, -113.428, 53.628]
       },
       "geometry": {
         "type": "Point",
@@ -940,7 +1025,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:eindhoven",
-        "name": "Eindhoven"
+        "name": "Eindhoven",
+        "bbox": [5.428, 51.428, 5.628, 51.628]
       },
       "geometry": {
         "type": "Point",
@@ -951,7 +1037,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:eugene",
-        "name": "Eugene"
+        "name": "Eugene",
+        "bbox": [-123.228, 44.028, -123.028, 44.228]
       },
       "geometry": {
         "type": "Point",
@@ -962,7 +1049,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:florence",
-        "name": "Florence"
+        "name": "Florence",
+        "bbox": [11.228, 43.728, 11.428, 43.928]
       },
       "geometry": {
         "type": "Point",
@@ -973,7 +1061,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:florianopolis",
-        "name": "Florianopolis"
+        "name": "Florianopolis",
+        "bbox": [-48.828, -27.228, -48.628, -27.028]
       },
       "geometry": {
         "type": "Point",
@@ -984,7 +1073,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:fort-collins",
-        "name": "Fort Collins"
+        "name": "Fort Collins",
+        "bbox": [-105.228, 40.428, -105.028, 40.628]
       },
       "geometry": {
         "type": "Point",
@@ -995,7 +1085,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:frankfurt",
-        "name": "Frankfurt"
+        "name": "Frankfurt",
+        "bbox": [8.628, 50.028, 8.828, 50.228]
       },
       "geometry": {
         "type": "Point",
@@ -1006,7 +1097,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:fukuoka",
-        "name": "Fukuoka"
+        "name": "Fukuoka",
+        "bbox": [130.228, 33.528, 130.428, 33.728]
       },
       "geometry": {
         "type": "Point",
@@ -1017,7 +1109,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:gaillimh",
-        "name": "Galway"
+        "name": "Galway",
+        "bbox": [-9.228, 53.228, -9.028, 53.428]
       },
       "geometry": {
         "type": "Point",
@@ -1028,7 +1121,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:gdansk",
-        "name": "Gdansk"
+        "name": "Gdansk",
+        "bbox": [18.628, 54.328, 18.828, 54.528]
       },
       "geometry": {
         "type": "Point",
@@ -1039,7 +1133,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:geneva",
-        "name": "Geneva"
+        "name": "Geneva",
+        "bbox": [6.128, 46.128, 6.328, 46.328]
       },
       "geometry": {
         "type": "Point",
@@ -1050,7 +1145,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:gibraltar",
-        "name": "Gibraltar"
+        "name": "Gibraltar",
+        "bbox": [-5.628, 36.028, -5.428, 36.228]
       },
       "geometry": {
         "type": "Point",
@@ -1061,7 +1157,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:glasgow",
-        "name": "Glasgow"
+        "name": "Glasgow",
+        "bbox": [-4.328, 55.828, -4.128, 56.028]
       },
       "geometry": {
         "type": "Point",
@@ -1072,7 +1169,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:gothenburg",
-        "name": "Gothenburg"
+        "name": "Gothenburg",
+        "bbox": [11.828, 57.528, 12.028, 57.728]
       },
       "geometry": {
         "type": "Point",
@@ -1083,7 +1181,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:grenoble",
-        "name": "Grenoble"
+        "name": "Grenoble",
+        "bbox": [5.828, 45.128, 6.028, 45.328]
       },
       "geometry": {
         "type": "Point",
@@ -1094,7 +1193,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:guadalajara",
-        "name": "Guadalajara"
+        "name": "Guadalajara",
+        "bbox": [-103.828, 20.528, -103.628, 20.728]
       },
       "geometry": {
         "type": "Point",
@@ -1105,7 +1205,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:guatemala-city",
-        "name": "Guatemala City"
+        "name": "Guatemala City",
+        "bbox": [-90.928, 14.428, -90.728, 14.628]
       },
       "geometry": {
         "type": "Point",
@@ -1116,7 +1217,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:halifax",
-        "name": "Halifax"
+        "name": "Halifax",
+        "bbox": [-63.628, 44.628, -63.428, 44.828]
       },
       "geometry": {
         "type": "Point",
@@ -1127,7 +1229,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:hamburg",
-        "name": "Hamburg"
+        "name": "Hamburg",
+        "bbox": [9.828, 53.428, 10.028, 53.628]
       },
       "geometry": {
         "type": "Point",
@@ -1138,7 +1241,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:hannover",
-        "name": "Hannover"
+        "name": "Hannover",
+        "bbox": [9.828, 52.328, 10.028, 52.528]
       },
       "geometry": {
         "type": "Point",
@@ -1149,7 +1253,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:havana",
-        "name": "Havana"
+        "name": "Havana",
+        "bbox": [-82.628, 23.028, -82.428, 23.228]
       },
       "geometry": {
         "type": "Point",
@@ -1160,7 +1265,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:helsinki",
-        "name": "Helsinki"
+        "name": "Helsinki",
+        "bbox": [24.828, 60.128, 25.028, 60.328]
       },
       "geometry": {
         "type": "Point",
@@ -1171,7 +1277,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:ho-chi-minh-city",
-        "name": "Ho Chi Minh City"
+        "name": "Ho Chi Minh City",
+        "bbox": [106.428, 10.728, 106.628, 10.928]
       },
       "geometry": {
         "type": "Point",
@@ -1182,7 +1289,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:hong-kong",
-        "name": "Hong Kong"
+        "name": "Hong Kong",
+        "bbox": [113.828, 22.228, 114.028, 22.428]
       },
       "geometry": {
         "type": "Point",
@@ -1193,7 +1301,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:honolulu",
-        "name": "Honolulu"
+        "name": "Honolulu",
+        "bbox": [-158.228, 21.328, -158.028, 21.528]
       },
       "geometry": {
         "type": "Point",
@@ -1204,7 +1313,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:houston",
-        "name": "Houston"
+        "name": "Houston",
+        "bbox": [-95.628, 29.628, -95.428, 29.828]
       },
       "geometry": {
         "type": "Point",
@@ -1215,7 +1325,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:hyderabad",
-        "name": "Hyderabad"
+        "name": "Hyderabad",
+        "bbox": [78.428, 17.328, 78.628, 17.528]
       },
       "geometry": {
         "type": "Point",
@@ -1226,7 +1337,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:indianapolis",
-        "name": "Indianapolis"
+        "name": "Indianapolis",
+        "bbox": [-86.928, 39.628, -86.728, 39.828]
       },
       "geometry": {
         "type": "Point",
@@ -1237,7 +1349,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:innsbruck",
-        "name": "Innsbruck"
+        "name": "Innsbruck",
+        "bbox": [11.428, 47.228, 11.628, 47.428]
       },
       "geometry": {
         "type": "Point",
@@ -1248,7 +1361,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:istanbul",
-        "name": "Istanbul"
+        "name": "Istanbul",
+        "bbox": [28.828, 41.028, 29.028, 41.228]
       },
       "geometry": {
         "type": "Point",
@@ -1259,7 +1373,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:jacksonville",
-        "name": "Jacksonville"
+        "name": "Jacksonville",
+        "bbox": [-81.828, 30.328, -81.628, 30.528]
       },
       "geometry": {
         "type": "Point",
@@ -1270,7 +1385,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:jakarta",
-        "name": "Jakarta"
+        "name": "Jakarta",
+        "bbox": [106.428, -6.228, 106.628, -6.028]
       },
       "geometry": {
         "type": "Point",
@@ -1281,7 +1397,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:johannesburg",
-        "name": "Johannesburg"
+        "name": "Johannesburg",
+        "bbox": [27.828, -26.228, 28.028, -26.028]
       },
       "geometry": {
         "type": "Point",
@@ -1292,7 +1409,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:kansas-city",
-        "name": "Kansas City"
+        "name": "Kansas City",
+        "bbox": [-94.628, 39.028, -94.428, 39.228]
       },
       "geometry": {
         "type": "Point",
@@ -1303,7 +1421,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:karlsruhe",
-        "name": "Karlsruhe"
+        "name": "Karlsruhe",
+        "bbox": [8.328, 48.828, 8.528, 49.028]
       },
       "geometry": {
         "type": "Point",
@@ -1314,7 +1433,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:kathmandu",
-        "name": "Kathmandu"
+        "name": "Kathmandu",
+        "bbox": [85.828, 27.628, 86.028, 27.828]
       },
       "geometry": {
         "type": "Point",
@@ -1325,7 +1445,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:kiev",
-        "name": "Kiev"
+        "name": "Kiev",
+        "bbox": [30.428, 50.428, 30.628, 50.628]
       },
       "geometry": {
         "type": "Point",
@@ -1336,7 +1457,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:kingston",
-        "name": "Kingston"
+        "name": "Kingston",
+        "bbox": [-76.228, 17.928, -76.028, 18.128]
       },
       "geometry": {
         "type": "Point",
@@ -1347,7 +1469,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:knoxville",
-        "name": "Knoxville"
+        "name": "Knoxville",
+        "bbox": [-84.328, 35.928, -84.128, 36.128]
       },
       "geometry": {
         "type": "Point",
@@ -1358,7 +1481,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:krakow",
-        "name": "Krakow"
+        "name": "Krakow",
+        "bbox": [19.828, 50.028, 20.028, 50.228]
       },
       "geometry": {
         "type": "Point",
@@ -1369,7 +1493,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:kuala-lumpur",
-        "name": "Kuala Lumpur"
+        "name": "Kuala Lumpur",
+        "bbox": [101.428, 3.028, 101.628, 3.228]
       },
       "geometry": {
         "type": "Point",
@@ -1380,7 +1505,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:kyoto",
-        "name": "Kyoto"
+        "name": "Kyoto",
+        "bbox": [135.628, 34.928, 135.828, 35.128]
       },
       "geometry": {
         "type": "Point",
@@ -1391,7 +1517,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:lagos",
-        "name": "Lagos"
+        "name": "Lagos",
+        "bbox": [3.428, 6.428, 3.628, 6.628]
       },
       "geometry": {
         "type": "Point",
@@ -1402,7 +1529,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:la-paz",
-        "name": "La Paz"
+        "name": "La Paz",
+        "bbox": [-68.428, -16.228, -68.228, -16.028]
       },
       "geometry": {
         "type": "Point",
@@ -1413,7 +1541,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:las-palmas-de-gran-canaria",
-        "name": "Las Palmas de Gran Canaria"
+        "name": "Las Palmas de Gran Canaria",
+        "bbox": [-15.628, 27.928, -15.428, 28.128]
       },
       "geometry": {
         "type": "Point",
@@ -1424,7 +1553,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:las-vegas",
-        "name": "Las Vegas"
+        "name": "Las Vegas",
+        "bbox": [-115.428, 36.028, -115.228, 36.228]
       },
       "geometry": {
         "type": "Point",
@@ -1435,7 +1565,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:lausanne",
-        "name": "Lausanne"
+        "name": "Lausanne",
+        "bbox": [6.628, 46.528, 6.828, 46.728]
       },
       "geometry": {
         "type": "Point",
@@ -1446,7 +1577,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:leeds",
-        "name": "Leeds"
+        "name": "Leeds",
+        "bbox": [-1.828, 53.728, -1.628, 53.928]
       },
       "geometry": {
         "type": "Point",
@@ -1457,7 +1589,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:leipzig",
-        "name": "Leipzig"
+        "name": "Leipzig",
+        "bbox": [12.828, 51.328, 13.028, 51.528]
       },
       "geometry": {
         "type": "Point",
@@ -1468,7 +1601,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:lille",
-        "name": "Lille"
+        "name": "Lille",
+        "bbox": [3.028, 50.528, 3.228, 50.728]
       },
       "geometry": {
         "type": "Point",
@@ -1479,7 +1613,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:lima",
-        "name": "Lima"
+        "name": "Lima",
+        "bbox": [-77.228, -12.028, -77.028, -11.828]
       },
       "geometry": {
         "type": "Point",
@@ -1490,7 +1625,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:lisbon",
-        "name": "Lisbon"
+        "name": "Lisbon",
+        "bbox": [-9.228, 38.628, -9.028, 38.828]
       },
       "geometry": {
         "type": "Point",
@@ -1501,7 +1637,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:liverpool",
-        "name": "Liverpool"
+        "name": "Liverpool",
+        "bbox": [-3.028, 53.328, -2.828, 53.528]
       },
       "geometry": {
         "type": "Point",
@@ -1512,7 +1649,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:ljubljana",
-        "name": "Ljubljana"
+        "name": "Ljubljana",
+        "bbox": [14.428, 46.028, 14.628, 46.228]
       },
       "geometry": {
         "type": "Point",
@@ -1523,7 +1661,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:london",
-        "name": "London"
+        "name": "London",
+        "bbox": [-0.628, 51.328, -0.428, 51.528]
       },
       "geometry": {
         "type": "Point",
@@ -1534,7 +1673,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:los-angeles",
-        "name": "Los Angeles"
+        "name": "Los Angeles",
+        "bbox": [-118.228, 33.728, -118.028, 33.928]
       },
       "geometry": {
         "type": "Point",
@@ -1545,7 +1685,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:louisville",
-        "name": "Louisville"
+        "name": "Louisville",
+        "bbox": [-85.828, 38.128, -85.628, 38.328]
       },
       "geometry": {
         "type": "Point",
@@ -1556,7 +1697,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:luxembourg",
-        "name": "Luxembourg"
+        "name": "Luxembourg",
+        "bbox": [6.128, 49.528, 6.328, 49.728]
       },
       "geometry": {
         "type": "Point",
@@ -1567,7 +1709,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:lviv",
-        "name": "Lviv"
+        "name": "Lviv",
+        "bbox": [23.828, 49.828, 24.028, 50.028]
       },
       "geometry": {
         "type": "Point",
@@ -1578,7 +1721,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:lyon",
-        "name": "Lyon"
+        "name": "Lyon",
+        "bbox": [4.828, 45.728, 5.028, 45.928]
       },
       "geometry": {
         "type": "Point",
@@ -1589,7 +1733,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:madison",
-        "name": "Madison"
+        "name": "Madison",
+        "bbox": [-89.628, 43.028, -89.428, 43.228]
       },
       "geometry": {
         "type": "Point",
@@ -1600,7 +1745,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:madrid",
-        "name": "Madrid"
+        "name": "Madrid",
+        "bbox": [-3.828, 40.328, -3.628, 40.528]
       },
       "geometry": {
         "type": "Point",
@@ -1611,7 +1757,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:malaga",
-        "name": "Malaga"
+        "name": "Malaga",
+        "bbox": [-4.028, 36.428, -3.828, 36.628]
       },
       "geometry": {
         "type": "Point",
@@ -1622,7 +1769,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:malmo",
-        "name": "Malmo"
+        "name": "Malmo",
+        "bbox": [12.828, 55.528, 13.028, 55.728]
       },
       "geometry": {
         "type": "Point",
@@ -1633,7 +1781,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:managua",
-        "name": "Managua"
+        "name": "Managua",
+        "bbox": [-86.228, 12.028, -86.028, 12.228]
       },
       "geometry": {
         "type": "Point",
@@ -1644,7 +1793,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:manchester",
-        "name": "Manchester"
+        "name": "Manchester",
+        "bbox": [-2.328, 53.428, -2.128, 53.628]
       },
       "geometry": {
         "type": "Point",
@@ -1655,7 +1805,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:manila",
-        "name": "Manila"
+        "name": "Manila",
+        "bbox": [120.628, 14.428, 120.828, 14.628]
       },
       "geometry": {
         "type": "Point",
@@ -1666,7 +1817,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:marseille",
-        "name": "Marseille"
+        "name": "Marseille",
+        "bbox": [5.328, 43.228, 5.528, 43.428]
       },
       "geometry": {
         "type": "Point",
@@ -1677,7 +1829,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:medellin",
-        "name": "Medellin"
+        "name": "Medellin",
+        "bbox": [-75.628, 6.028, -75.428, 6.228]
       },
       "geometry": {
         "type": "Point",
@@ -1688,7 +1841,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:melbourne",
-        "name": "Melbourne"
+        "name": "Melbourne",
+        "bbox": [144.628, -37.828, 144.828, -37.628]
       },
       "geometry": {
         "type": "Point",
@@ -1699,7 +1853,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:memphis",
-        "name": "Memphis"
+        "name": "Memphis",
+        "bbox": [-90.328, 35.028, -90.128, 35.228]
       },
       "geometry": {
         "type": "Point",
@@ -1710,7 +1865,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:mexico-city",
-        "name": "Mexico City"
+        "name": "Mexico City",
+        "bbox": [-99.228, 19.428, -99.028, 19.628]
       },
       "geometry": {
         "type": "Point",
@@ -1721,7 +1877,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:miami",
-        "name": "Miami"
+        "name": "Miami",
+        "bbox": [-80.228, 25.728, -80.028, 25.928]
       },
       "geometry": {
         "type": "Point",
@@ -1732,7 +1889,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:milan",
-        "name": "Milan"
+        "name": "Milan",
+        "bbox": [9.028, 45.428, 9.228, 45.628]
       },
       "geometry": {
         "type": "Point",
@@ -1743,7 +1901,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:milwaukee",
-        "name": "Milwaukee"
+        "name": "Milwaukee",
+        "bbox": [-88.128, 43.028, -87.928, 43.228]
       },
       "geometry": {
         "type": "Point",
@@ -1754,7 +1913,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:minneapolis-saint-paul",
-        "name": "Minneapolis-Saint Paul"
+        "name": "Minneapolis-Saint Paul",
+        "bbox": [-93.428, 44.828, -93.228, 45.028]
       },
       "geometry": {
         "type": "Point",
@@ -1765,7 +1925,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:minsk",
-        "name": "Minsk"
+        "name": "Minsk",
+        "bbox": [27.828, 53.828, 28.028, 54.028]
       },
       "geometry": {
         "type": "Point",
@@ -1776,7 +1937,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:montevideo",
-        "name": "Montevideo"
+        "name": "Montevideo",
+        "bbox": [-56.228, -34.228, -56.028, -34.028]
       },
       "geometry": {
         "type": "Point",
@@ -1787,7 +1949,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:montreal",
-        "name": "Montreal"
+        "name": "Montreal",
+        "bbox": [-73.828, 45.428, -73.628, 45.628]
       },
       "geometry": {
         "type": "Point",
@@ -1798,7 +1961,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:moscow",
-        "name": "Moscow"
+        "name": "Moscow",
+        "bbox": [37.428, 55.628, 37.628, 55.828]
       },
       "geometry": {
         "type": "Point",
@@ -1809,7 +1973,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:mumbai",
-        "name": "Mumbai"
+        "name": "Mumbai",
+        "bbox": [72.828, 18.928, 73.028, 19.128]
       },
       "geometry": {
         "type": "Point",
@@ -1820,7 +1985,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:munich",
-        "name": "Munich"
+        "name": "Munich",
+        "bbox": [11.428, 48.128, 11.628, 48.328]
       },
       "geometry": {
         "type": "Point",
@@ -1831,7 +1997,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:nairobi",
-        "name": "Nairobi"
+        "name": "Nairobi",
+        "bbox": [36.828, -1.428, 37.028, -1.228]
       },
       "geometry": {
         "type": "Point",
@@ -1842,7 +2009,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:nantes",
-        "name": "Nantes"
+        "name": "Nantes",
+        "bbox": [-1.828, 47.128, -1.628, 47.328]
       },
       "geometry": {
         "type": "Point",
@@ -1853,7 +2021,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:naples",
-        "name": "Naples"
+        "name": "Naples",
+        "bbox": [14.428, 40.828, 14.628, 41.028]
       },
       "geometry": {
         "type": "Point",
@@ -1864,7 +2033,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:nashville",
-        "name": "Nashville"
+        "name": "Nashville",
+        "bbox": [-87.628, 36.128, -87.428, 36.328]
       },
       "geometry": {
         "type": "Point",
@@ -1875,7 +2045,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:new-orleans",
-        "name": "New Orleans"
+        "name": "New Orleans",
+        "bbox": [-90.028, 29.928, -89.828, 30.128]
       },
       "geometry": {
         "type": "Point",
@@ -1886,7 +2057,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:new-york",
-        "name": "New York"
+        "name": "New York",
+        "bbox": [-74.228, 40.528, -73.828, 40.928]
       },
       "geometry": {
         "type": "Point",
@@ -1897,7 +2069,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:nice",
-        "name": "Nice"
+        "name": "Nice",
+        "bbox": [7.228, 43.628, 7.428, 43.828]
       },
       "geometry": {
         "type": "Point",
@@ -1908,7 +2081,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:nicosia",
-        "name": "Nicosia"
+        "name": "Nicosia",
+        "bbox": [33.328, 35.128, 33.528, 35.328]
       },
       "geometry": {
         "type": "Point",
@@ -1919,7 +2093,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:oklahoma-city",
-        "name": "Oklahoma City"
+        "name": "Oklahoma City",
+        "bbox": [-97.628, 35.228, -97.428, 35.428]
       },
       "geometry": {
         "type": "Point",
@@ -1930,7 +2105,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:omaha",
-        "name": "Omaha"
+        "name": "Omaha",
+        "bbox": [-96.028, 41.128, -95.828, 41.328]
       },
       "geometry": {
         "type": "Point",
@@ -1941,7 +2117,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:orlando",
-        "name": "Orlando"
+        "name": "Orlando",
+        "bbox": [-81.428, 28.328, -81.228, 28.528]
       },
       "geometry": {
         "type": "Point",
@@ -1952,7 +2129,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:osaka",
-        "name": "Osaka"
+        "name": "Osaka",
+        "bbox": [135.428, 34.528, 135.628, 34.728]
       },
       "geometry": {
         "type": "Point",
@@ -1963,7 +2141,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:oslo",
-        "name": "Oslo"
+        "name": "Oslo",
+        "bbox": [10.828, 59.928, 11.028, 60.128]
       },
       "geometry": {
         "type": "Point",
@@ -1974,7 +2153,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:ottawa",
-        "name": "Ottawa"
+        "name": "Ottawa",
+        "bbox": [-76.628, 45.228, -76.428, 45.428]
       },
       "geometry": {
         "type": "Point",
@@ -1985,7 +2165,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:oulu",
-        "name": "Oulu"
+        "name": "Oulu",
+        "bbox": [25.828, 64.428, 26.028, 64.628]
       },
       "geometry": {
         "type": "Point",
@@ -1996,7 +2177,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:oxford",
-        "name": "Oxford"
+        "name": "Oxford",
+        "bbox": [-1.428, 51.728, -1.228, 51.928]
       },
       "geometry": {
         "type": "Point",
@@ -2007,7 +2189,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:palo-alto",
-        "name": "Palo Alto"
+        "name": "Palo Alto",
+        "bbox": [-122.428, 37.328, -122.228, 37.528]
       },
       "geometry": {
         "type": "Point",
@@ -2018,7 +2201,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:panama",
-        "name": "Panama"
+        "name": "Panama",
+        "bbox": [-79.828, 8.028, -79.628, 8.228]
       },
       "geometry": {
         "type": "Point",
@@ -2029,7 +2213,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:paris",
-        "name": "Paris"
+        "name": "Paris",
+        "bbox": [2.628, 48.828, 2.828, 49.028]
       },
       "geometry": {
         "type": "Point",
@@ -2040,7 +2225,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:perth",
-        "name": "Perth"
+        "name": "Perth",
+        "bbox": [115.828, -31.628, 116.028, -31.428]
       },
       "geometry": {
         "type": "Point",
@@ -2051,7 +2237,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:philadelphia",
-        "name": "Philadelphia"
+        "name": "Philadelphia",
+        "bbox": [-75.228, 39.828, -75.028, 40.028]
       },
       "geometry": {
         "type": "Point",
@@ -2062,7 +2249,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:phnom-penh",
-        "name": "Phnom Penh"
+        "name": "Phnom Penh",
+        "bbox": [104.428, 11.428, 104.628, 11.628]
       },
       "geometry": {
         "type": "Point",
@@ -2073,7 +2261,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:phoenix",
-        "name": "Phoenix"
+        "name": "Phoenix",
+        "bbox": [-112.228, 33.328, -112.028, 33.528]
       },
       "geometry": {
         "type": "Point",
@@ -2084,7 +2273,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:phuket",
-        "name": "Phuket"
+        "name": "Phuket",
+        "bbox": [98.428, 7.828, 98.628, 8.028]
       },
       "geometry": {
         "type": "Point",
@@ -2095,7 +2285,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:pittsburgh",
-        "name": "Pittsburgh"
+        "name": "Pittsburgh",
+        "bbox": [-80.228, 40.328, -80.028, 40.528]
       },
       "geometry": {
         "type": "Point",
@@ -2106,7 +2297,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:portland-me",
-        "name": "Portland, ME"
+        "name": "Portland, ME",
+        "bbox": [-70.428, 43.428, -70.228, 43.628]
       },
       "geometry": {
         "type": "Point",
@@ -2117,7 +2309,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:portland-or",
-        "name": "Portland, OR"
+        "name": "Portland, OR",
+        "bbox": [-122.828, 45.428, -122.628, 45.628]
       },
       "geometry": {
         "type": "Point",
@@ -2128,7 +2321,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:porto",
-        "name": "Porto"
+        "name": "Porto",
+        "bbox": [-8.828, 41.128, -8.628, 41.328]
       },
       "geometry": {
         "type": "Point",
@@ -2139,7 +2333,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:porto-alegre",
-        "name": "Porto Alegre"
+        "name": "Porto Alegre",
+        "bbox": [-51.228, -30.228, -51.028, -30.028]
       },
       "geometry": {
         "type": "Point",
@@ -2150,7 +2345,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:prague",
-        "name": "Prague"
+        "name": "Prague",
+        "bbox": [14.428, 50.028, 14.628, 50.228]
       },
       "geometry": {
         "type": "Point",
@@ -2161,7 +2357,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:providence",
-        "name": "Providence"
+        "name": "Providence",
+        "bbox": [-71.628, 41.728, -71.428, 41.928]
       },
       "geometry": {
         "type": "Point",
@@ -2172,7 +2369,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:quebec",
-        "name": "Quebec"
+        "name": "Quebec",
+        "bbox": [-71.428, 46.428, -71.228, 46.628]
       },
       "geometry": {
         "type": "Point",
@@ -2183,7 +2381,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:quito",
-        "name": "Quito"
+        "name": "Quito",
+        "bbox": [-78.228, -0.228, -78.028, -0.028]
       },
       "geometry": {
         "type": "Point",
@@ -2194,7 +2393,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:raleigh",
-        "name": "Raleigh"
+        "name": "Raleigh",
+        "bbox": [-78.828, 35.828, -78.628, 36.028]
       },
       "geometry": {
         "type": "Point",
@@ -2205,7 +2405,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:reykjavik",
-        "name": "Reykjavik"
+        "name": "Reykjavik",
+        "bbox": [-22.828, 64.328, -22.628, 64.528]
       },
       "geometry": {
         "type": "Point",
@@ -2216,7 +2417,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:richmond",
-        "name": "Richmond"
+        "name": "Richmond",
+        "bbox": [-77.628, 37.428, -77.428, 37.628]
       },
       "geometry": {
         "type": "Point",
@@ -2227,7 +2429,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:riga",
-        "name": "Riga"
+        "name": "Riga",
+        "bbox": [23.828, 56.628, 24.028, 56.828]
       },
       "geometry": {
         "type": "Point",
@@ -2238,7 +2441,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:rio-de-janeiro",
-        "name": "Rio De Janeiro"
+        "name": "Rio De Janeiro",
+        "bbox": [-43.628, -22.928, -43.428, -22.728]
       },
       "geometry": {
         "type": "Point",
@@ -2249,7 +2453,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:riyadh",
-        "name": "Riyadh"
+        "name": "Riyadh",
+        "bbox": [46.428, 24.428, 46.628, 24.628]
       },
       "geometry": {
         "type": "Point",
@@ -2260,7 +2465,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:rochester",
-        "name": "Rochester"
+        "name": "Rochester",
+        "bbox": [-77.428, 43.128, -77.228, 43.328]
       },
       "geometry": {
         "type": "Point",
@@ -2271,7 +2477,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:rome",
-        "name": "Rome"
+        "name": "Rome",
+        "bbox": [12.628, 41.828, 12.828, 42.028]
       },
       "geometry": {
         "type": "Point",
@@ -2282,7 +2489,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:rotterdam",
-        "name": "Rotterdam"
+        "name": "Rotterdam",
+        "bbox": [3.028, 51.828, 3.228, 52.028]
       },
       "geometry": {
         "type": "Point",
@@ -2293,7 +2501,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:saint-petersburg",
-        "name": "Saint Petersburg"
+        "name": "Saint Petersburg",
+        "bbox": [29.828, 59.828, 30.028, 60.028]
       },
       "geometry": {
         "type": "Point",
@@ -2304,7 +2513,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:salt-lake-city",
-        "name": "Salt Lake City"
+        "name": "Salt Lake City",
+        "bbox": [-111.828, 40.128, -111.628, 40.328]
       },
       "geometry": {
         "type": "Point",
@@ -2315,7 +2525,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:san-antonio",
-        "name": "San Antonio"
+        "name": "San Antonio",
+        "bbox": [-98.628, 29.328, -98.428, 29.528]
       },
       "geometry": {
         "type": "Point",
@@ -2326,7 +2537,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:san-diego",
-        "name": "San Diego"
+        "name": "San Diego",
+        "bbox": [-117.228, 32.528, -117.028, 32.728]
       },
       "geometry": {
         "type": "Point",
@@ -2337,7 +2549,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:san-francisco-bay-area",
-        "name": "San Francisco Bay Area"
+        "name": "San Francisco Bay Area",
+        "bbox": [-122.828, 37.328, -122.428, 37.728]
       },
       "geometry": {
         "type": "Point",
@@ -2348,7 +2561,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:san-jose",
-        "name": "San Jose"
+        "name": "San Jose",
+        "bbox": [-121.828, 37.228, -121.628, 37.428]
       },
       "geometry": {
         "type": "Point",
@@ -2359,7 +2573,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:san-juan",
-        "name": "San Juan"
+        "name": "San Juan",
+        "bbox": [-66.228, 18.328, -66.028, 18.528]
       },
       "geometry": {
         "type": "Point",
@@ -2370,7 +2585,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:san-luis-obispo",
-        "name": "San Luis Obispo"
+        "name": "San Luis Obispo",
+        "bbox": [-120.828, 35.128, -120.628, 35.328]
       },
       "geometry": {
         "type": "Point",
@@ -2381,7 +2597,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:san-salvador",
-        "name": "San Salvador"
+        "name": "San Salvador",
+        "bbox": [-89.228, 13.428, -89.028, 13.628]
       },
       "geometry": {
         "type": "Point",
@@ -2392,7 +2609,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:santiago",
-        "name": "Santiago"
+        "name": "Santiago",
+        "bbox": [-70.828, -33.428, -70.628, -33.228]
       },
       "geometry": {
         "type": "Point",
@@ -2403,7 +2621,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:santo-domingo",
-        "name": "Santo Domingo"
+        "name": "Santo Domingo",
+        "bbox": [-69.928, 18.328, -69.728, 18.528]
       },
       "geometry": {
         "type": "Point",
@@ -2414,7 +2633,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:sao-paulo",
-        "name": "Sao Paulo"
+        "name": "Sao Paulo",
+        "bbox": [-46.828, -23.628, -46.628, -23.428]
       },
       "geometry": {
         "type": "Point",
@@ -2425,7 +2645,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:sarajevo",
-        "name": "Sarajevo"
+        "name": "Sarajevo",
+        "bbox": [18.228, 43.828, 18.428, 44.028]
       },
       "geometry": {
         "type": "Point",
@@ -2436,7 +2657,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:saskatoon",
-        "name": "Saskatoon"
+        "name": "Saskatoon",
+        "bbox": [-106.628, 52.128, -106.428, 52.328]
       },
       "geometry": {
         "type": "Point",
@@ -2447,7 +2669,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:seattle",
-        "name": "Seattle"
+        "name": "Seattle",
+        "bbox": [-122.428, 47.428, -122.228, 47.628]
       },
       "geometry": {
         "type": "Point",
@@ -2458,7 +2681,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:seoul",
-        "name": "Seoul"
+        "name": "Seoul",
+        "bbox": [126.828, 37.428, 127.028, 37.628]
       },
       "geometry": {
         "type": "Point",
@@ -2469,7 +2693,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:seville",
-        "name": "Seville"
+        "name": "Seville",
+        "bbox": [-6.028, 37.328, -5.828, 37.528]
       },
       "geometry": {
         "type": "Point",
@@ -2480,7 +2705,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:shanghai",
-        "name": "Shanghai"
+        "name": "Shanghai",
+        "bbox": [121.828, 30.728, 122.028, 30.928]
       },
       "geometry": {
         "type": "Point",
@@ -2491,7 +2717,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:singapore",
-        "name": "Singapore"
+        "name": "Singapore",
+        "bbox": [103.828, 1.228, 104.028, 1.428]
       },
       "geometry": {
         "type": "Point",
@@ -2502,7 +2729,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:skopje",
-        "name": "Skopje"
+        "name": "Skopje",
+        "bbox": [21.828, 41.928, 22.028, 42.128]
       },
       "geometry": {
         "type": "Point",
@@ -2513,7 +2741,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:sofia",
-        "name": "Sofia"
+        "name": "Sofia",
+        "bbox": [23.228, 42.628, 23.428, 42.828]
       },
       "geometry": {
         "type": "Point",
@@ -2524,7 +2753,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:st-louis",
-        "name": "St. Louis"
+        "name": "St. Louis",
+        "bbox": [-90.328, 38.528, -90.128, 38.728]
       },
       "geometry": {
         "type": "Point",
@@ -2535,7 +2765,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:stockholm",
-        "name": "Stockholm"
+        "name": "Stockholm",
+        "bbox": [17.828, 59.228, 18.028, 59.428]
       },
       "geometry": {
         "type": "Point",
@@ -2546,7 +2777,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:stuttgart",
-        "name": "Stuttgart"
+        "name": "Stuttgart",
+        "bbox": [9.028, 48.728, 9.228, 48.928]
       },
       "geometry": {
         "type": "Point",
@@ -2557,7 +2789,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:sydney",
-        "name": "Sydney"
+        "name": "Sydney",
+        "bbox": [150.828, -33.928, 151.028, -33.728]
       },
       "geometry": {
         "type": "Point",
@@ -2568,7 +2801,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:taipei",
-        "name": "Taipei"
+        "name": "Taipei",
+        "bbox": [121.428, 24.928, 121.628, 25.128]
       },
       "geometry": {
         "type": "Point",
@@ -2579,7 +2813,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:tallinn",
-        "name": "Tallinn"
+        "name": "Tallinn",
+        "bbox": [24.828, 59.328, 25.028, 59.528]
       },
       "geometry": {
         "type": "Point",
@@ -2590,7 +2825,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:tampa-bay-area",
-        "name": "Tampa Bay Area"
+        "name": "Tampa Bay Area",
+        "bbox": [-82.828, 27.428, -82.628, 27.628]
       },
       "geometry": {
         "type": "Point",
@@ -2601,7 +2837,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:tampere",
-        "name": "Tampere"
+        "name": "Tampere",
+        "bbox": [23.828, 61.428, 24.028, 61.628]
       },
       "geometry": {
         "type": "Point",
@@ -2612,7 +2849,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:tartu",
-        "name": "Tartu"
+        "name": "Tartu",
+        "bbox": [26.228, 58.228, 26.428, 58.428]
       },
       "geometry": {
         "type": "Point",
@@ -2623,7 +2861,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:tashkent",
-        "name": "Tashkent"
+        "name": "Tashkent",
+        "bbox": [69.828, 41.228, 70.028, 41.428]
       },
       "geometry": {
         "type": "Point",
@@ -2634,7 +2873,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:tbilisi",
-        "name": "Tbilisi"
+        "name": "Tbilisi",
+        "bbox": [44.828, 41.928, 45.028, 42.128]
       },
       "geometry": {
         "type": "Point",
@@ -2645,7 +2885,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:tehran",
-        "name": "Tehran"
+        "name": "Tehran",
+        "bbox": [51.828, 35.628, 52.028, 35.828]
       },
       "geometry": {
         "type": "Point",
@@ -2656,7 +2897,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:tel-aviv",
-        "name": "Tel Aviv"
+        "name": "Tel Aviv",
+        "bbox": [34.828, 32.028, 35.028, 32.228]
       },
       "geometry": {
         "type": "Point",
@@ -2667,7 +2909,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:the-hague",
-        "name": "The Hague"
+        "name": "The Hague",
+        "bbox": [3.028, 52.028, 3.228, 52.228]
       },
       "geometry": {
         "type": "Point",
@@ -2678,7 +2921,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:thessaloniki",
-        "name": "Thessaloniki"
+        "name": "Thessaloniki",
+        "bbox": [22.828, 40.528, 23.028, 40.728]
       },
       "geometry": {
         "type": "Point",
@@ -2689,7 +2933,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:tokyo",
-        "name": "Tokyo"
+        "name": "Tokyo",
+        "bbox": [139.428, 35.528, 139.628, 35.728]
       },
       "geometry": {
         "type": "Point",
@@ -2700,7 +2945,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:toronto",
-        "name": "Toronto"
+        "name": "Toronto",
+        "bbox": [-79.628, 43.528, -79.428, 43.728]
       },
       "geometry": {
         "type": "Point",
@@ -2711,7 +2957,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:toulouse",
-        "name": "Toulouse"
+        "name": "Toulouse",
+        "bbox": [1.428, 43.528, 1.628, 43.728]
       },
       "geometry": {
         "type": "Point",
@@ -2722,7 +2969,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:tunis",
-        "name": "Tunis"
+        "name": "Tunis",
+        "bbox": [10.828, 36.728, 11.028, 36.928]
       },
       "geometry": {
         "type": "Point",
@@ -2733,7 +2981,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:turin",
-        "name": "Turin"
+        "name": "Turin",
+        "bbox": [7.828, 45.028, 8.028, 45.228]
       },
       "geometry": {
         "type": "Point",
@@ -2744,7 +2993,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:turku",
-        "name": "Turku"
+        "name": "Turku",
+        "bbox": [22.828, 60.228, 23.028, 60.428]
       },
       "geometry": {
         "type": "Point",
@@ -2755,7 +3005,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:uppsala",
-        "name": "Uppsala"
+        "name": "Uppsala",
+        "bbox": [17.828, 59.828, 18.028, 60.028]
       },
       "geometry": {
         "type": "Point",
@@ -2766,7 +3017,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:utrecht",
-        "name": "Utrecht"
+        "name": "Utrecht",
+        "bbox": [4.828, 52.028, 5.028, 52.228]
       },
       "geometry": {
         "type": "Point",
@@ -2777,7 +3029,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:valencia",
-        "name": "Valencia"
+        "name": "Valencia",
+        "bbox": [-0.828, 39.228, -0.628, 39.428]
       },
       "geometry": {
         "type": "Point",
@@ -2788,7 +3041,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:valletta",
-        "name": "Valletta"
+        "name": "Valletta",
+        "bbox": [14.428, 35.828, 14.628, 36.028]
       },
       "geometry": {
         "type": "Point",
@@ -2799,7 +3053,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:vancouver",
-        "name": "Vancouver"
+        "name": "Vancouver",
+        "bbox": [-123.328, 49.828, -123.128, 50.028]
       },
       "geometry": {
         "type": "Point",
@@ -2810,7 +3065,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:victoria",
-        "name": "Victoria"
+        "name": "Victoria",
+        "bbox": [-123.528, 48.428, -123.328, 48.628]
       },
       "geometry": {
         "type": "Point",
@@ -2821,7 +3077,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:vienna",
-        "name": "Vienna"
+        "name": "Vienna",
+        "bbox": [16.828, 48.128, 17.028, 48.328]
       },
       "geometry": {
         "type": "Point",
@@ -2832,7 +3089,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:vilnius",
-        "name": "Vilnius"
+        "name": "Vilnius",
+        "bbox": [25.828, 54.828, 26.028, 55.028]
       },
       "geometry": {
         "type": "Point",
@@ -2843,7 +3101,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:warsaw",
-        "name": "Warsaw"
+        "name": "Warsaw",
+        "bbox": [20.828, 52.228, 21.028, 52.428]
       },
       "geometry": {
         "type": "Point",
@@ -2854,7 +3113,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:washington-dc",
-        "name": "Washington, D.C."
+        "name": "Washington, D.C.",
+        "bbox": [-77.228, 38.828, -77.028, 39.028]
       },
       "geometry": {
         "type": "Point",
@@ -2865,7 +3125,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:wellington",
-        "name": "Wellington"
+        "name": "Wellington",
+        "bbox": [174.428, -41.228, 174.628, -41.028]
       },
       "geometry": {
         "type": "Point",
@@ -2876,7 +3137,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:winnipeg",
-        "name": "Winnipeg"
+        "name": "Winnipeg",
+        "bbox": [-97.828, 49.828, -97.628, 50.028]
       },
       "geometry": {
         "type": "Point",
@@ -2887,7 +3149,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:wroclaw",
-        "name": "Wroclaw"
+        "name": "Wroclaw",
+        "bbox": [16.828, 51.028, 17.028, 51.228]
       },
       "geometry": {
         "type": "Point",
@@ -2898,7 +3161,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:yerevan",
-        "name": "Yerevan"
+        "name": "Yerevan",
+        "bbox": [44.828, 40.028, 45.028, 40.228]
       },
       "geometry": {
         "type": "Point",
@@ -2909,7 +3173,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:zagreb",
-        "name": "Zagreb"
+        "name": "Zagreb",
+        "bbox": [15.828, 45.728, 16.028, 45.928]
       },
       "geometry": {
         "type": "Point",
@@ -2920,7 +3185,8 @@
       "type": "Feature",
       "properties": {
         "href": "slug:zurich",
-        "name": "Zurich"
+        "name": "Zurich",
+        "bbox": [8.428, 47.328, 8.628, 47.528]
       },
       "geometry": {
         "type": "Point",

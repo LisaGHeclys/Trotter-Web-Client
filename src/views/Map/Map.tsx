@@ -69,13 +69,20 @@ const BaseMap: FC = () => {
     lat: number | null;
     lon: number | null;
     cityName: string | null;
+    bbox: number[] | null;
   }>(
     searchState.cityName
-      ? (searchState as { lat: number; lon: number; cityName: string })
+      ? (searchState as {
+          lat: number;
+          lon: number;
+          cityName: string;
+          bbox: number[];
+        })
       : {
           lat: BaseMapPropsDefault.lat,
           lon: BaseMapPropsDefault.lng,
-          cityName: null
+          cityName: null,
+          bbox: null
         }
   );
   const [range, setRange] = useState<Range[]>([
@@ -110,6 +117,7 @@ const BaseMap: FC = () => {
       properties: {
         name: string;
         href: string;
+        bbox: number[];
       };
     }[];
   } | null>(null);
@@ -119,6 +127,8 @@ const BaseMap: FC = () => {
       // Fetch the JSON file using the relative path
       const response = await fetch("/data.geojson");
       const data = await response.json();
+
+      console.log(data);
 
       setJsonData(data);
     };
@@ -132,7 +142,8 @@ const BaseMap: FC = () => {
       setTripData({
         cityName: e.features[0].properties?.name || "",
         lat: (e.features[0].geometry as any).coordinates[1] || 0,
-        lon: (e.features[0].geometry as any).coordinates[0] || 0
+        lon: (e.features[0].geometry as any).coordinates[0] || 0,
+        bbox: e.features[0].properties?.bbox || []
       });
       mapRef.current?.flyTo({
         center: [
@@ -171,7 +182,13 @@ const BaseMap: FC = () => {
       setTripData((prev) => ({
         cityName: prev.cityName,
         lat: e.lngLat.lat,
-        lon: e.lngLat.lng
+        lon: e.lngLat.lng,
+        bbox: [
+          e.lngLat.lng - 0.12,
+          e.lngLat.lat - 0.12,
+          e.lngLat.lng + 0.12,
+          e.lngLat.lat + 0.12
+        ]
       }));
       setIsHotelSelectionActivated(false);
     }
@@ -188,14 +205,20 @@ const BaseMap: FC = () => {
 
   const fetchCoordinates =
     /* useCallback( */
-    async (lng: number, lat: number, transportMode: TransportType) => {
+    async (
+      lng: number,
+      lat: number,
+      transportMode: TransportType,
+      bbox: number[]
+    ) => {
       if (!lng && !lat) return;
       try {
         const resJsonWithStatus = await generateItinerary({
           lon: lng ?? 0,
           lat: lat ?? 0,
           days: length,
-          transportMean: transportMode
+          transportMean: transportMode,
+          bbox: [lng - 0.12, lat - 0.12, lng + 0.12, lat + 0.12]
         });
 
         setMarkers([]);
@@ -370,7 +393,8 @@ const BaseMap: FC = () => {
       fetchCoordinates(
         tripData.lon as number,
         tripData.lat as number,
-        transportMode
+        transportMode,
+        tripData.bbox || []
       );
     }
     setItineraryDay(0);
@@ -405,7 +429,8 @@ const BaseMap: FC = () => {
                 setTripData({
                   cityName: newValue.properties.name,
                   lat: newValue.geometry.coordinates[1],
-                  lon: newValue.geometry.coordinates[0]
+                  lon: newValue.geometry.coordinates[0],
+                  bbox: newValue.properties.bbox
                 });
                 mapRef.current?.flyTo({
                   center: [
