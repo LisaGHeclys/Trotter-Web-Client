@@ -209,6 +209,7 @@ const BaseMap: FC = () => {
       lng: number,
       lat: number,
       transportMode: TransportType,
+      //eslint-disable-next-line
       bbox: number[]
     ) => {
       if (!lng && !lat) return;
