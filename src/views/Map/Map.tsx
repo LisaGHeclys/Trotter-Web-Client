@@ -34,7 +34,7 @@ import styled from "styled-components";
 import { Geometry } from "@turf/helpers";
 import WithHeader from "../../Layout/WithHeader";
 import MapSidebar from "./MapSidebar";
-import { StepProps, Steps, DatePicker } from "antd";
+import { StepProps, Steps, DatePicker, QRCode, Alert, Tag } from "antd";
 import StepMarker from "./StepMarker";
 import { useGenerateItinerary } from "../../hooks/useGenerateItinerary";
 import dayjs from "dayjs";
@@ -42,7 +42,8 @@ import { Toaster } from "react-hot-toast";
 import {
   DirectionsBike,
   DirectionsCar,
-  DirectionsWalk
+  DirectionsWalk,
+  Grade
 } from "@mui/icons-material";
 import BudgetComponent from "./Budget";
 import { useFetchCityInfo } from "../../hooks/useFetchCityInfo";
@@ -261,11 +262,15 @@ const BaseMap: FC = () => {
                           sx={{
                             display: "flex",
                             flexDirection: "column",
-                            maxWidth: 500,
+                            maxWidth: 600,
                             padding: "12px",
                             alignItems: "end",
                             justifyContent: "center",
-                            backgroundColor: "gr"
+                            backgroundColor: "gr",
+                            boxShadow:
+                              "rgba(100, 100, 111, 0.2) 0px 7px 14px 0px",
+                            margin: "12px 12px 12px 24px",
+                            width: "100%"
                           }}
                         >
                           {featureIndex !== 0 || hotel.length > 0 ? (
@@ -289,17 +294,99 @@ const BaseMap: FC = () => {
                               </b>
                             </div>
                           ) : null}
-                          <div className="flexRow">
-                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Suspendisse eu venenatis odio. Pellentesque
-                              ultrices vel leo sed sollicitudin.
-                            </p>
-                            <img
-                              src={feature.images[0] ?? ""}
-                              height={132}
-                              width={200}
-                            />
+                          <div
+                            className="flexRow"
+                            style={{ justifyContent: "space-between" }}
+                          >
+                            <div style={{ maxWidth: 200 }}>
+                              <img
+                                src={
+                                  feature.properties.photos.length
+                                    ? feature.properties.photos[0].prefix +
+                                      "original" +
+                                      feature.properties.photos[0].suffix
+                                    : "https://www.freeiconspng.com/thumbs/ghost-icon/ghost-icon-14.png"
+                                }
+                                height={132}
+                                width={200}
+                              />
+                              <b>
+                                <i>
+                                  {
+                                    feature.properties.location
+                                      .formatted_address
+                                  }
+                                </i>
+                              </b>
+                            </div>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "flex-end",
+                                flexDirection: "column",
+                                width: "100%",
+                                height: "100%",
+                                gap: 12
+                              }}
+                            >
+                              {feature.properties.description &&
+                              feature.properties.description !== "NA" ? (
+                                <>{feature.properties.description}</>
+                              ) : null}
+                              <div
+                                className="flexRow"
+                                style={{
+                                  justifyContent: "flex-start",
+                                  maxWidth: 250,
+                                  overflowX: "scroll",
+                                  gap: 4
+                                }}
+                              >
+                                {feature.properties.categories.length ? (
+                                  <Tag
+                                    key={`${featureIndex}-tag-${feature.properties.categories[0].name}`}
+                                    color="blue"
+                                    style={{ margin: 0 }}
+                                  >
+                                    {feature.properties.categories[0].name}
+                                  </Tag>
+                                ) : null}
+                              </div>
+                            </div>
+
+                            <div className="flexColumn">
+                              {feature.properties.website &&
+                              feature.properties.website !== "NA" ? (
+                                <a href={feature.properties.website}>
+                                  <QRCode
+                                    errorLevel="H"
+                                    value={feature.properties.website}
+                                    icon="TrotterLogo.png"
+                                    size={100}
+                                    iconSize={20}
+                                  />
+                                </a>
+                              ) : null}
+                              <Alert
+                                message={
+                                  <div
+                                    className="flexRow"
+                                    style={{ gap: 2, padding: 0 }}
+                                  >
+                                    <Grade />
+                                    <b>
+                                      {feature.properties.rating.toFixed(1)}
+                                    </b>
+                                  </div>
+                                }
+                                type={
+                                  feature.properties.rating > 8
+                                    ? "success"
+                                    : "warning"
+                                }
+                              />
+                            </div>
                           </div>
                         </Card>
                       </>
@@ -353,6 +440,11 @@ const BaseMap: FC = () => {
   useEffect(() => {
     setMarkers([]);
     dropoffs[itineraryDay]?.features?.forEach((element, i: number) => {
+      const pic = element?.properties?.photos?.length
+        ? element?.properties?.photos[0].prefix +
+          "original" +
+          element?.properties?.photos[0].suffix
+        : null;
       setMarkers((old) => [
         ...old,
         <Marker
@@ -371,16 +463,14 @@ const BaseMap: FC = () => {
             anchor: "bottom",
             closeOnMove: true,
             closeOnClick: true
-          })
-            // .setText(element?.properties?.name)
-            .setHTML(
-              `<h3>${
-                element?.properties?.name
-              }</h3><img width="200" height="100" src="${`${
-                (element as any).images[0] ||
-                "https://www.freeiconspng.com/thumbs/ghost-icon/ghost-icon-14.png"
-              }`}" />`
-            )}
+          }).setHTML(
+            `<h3>${
+              element?.properties?.name
+            }</h3><img width="200" height="100" src="${`${
+              pic ||
+              "https://www.freeiconspng.com/thumbs/ghost-icon/ghost-icon-14.png"
+            }`}" />`
+          )}
         >
           {/* <CustomMarker element={element as Feature} /> */}
           <StepMarker dayIndex={itineraryDay} featureIndex={i} />

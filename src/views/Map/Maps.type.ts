@@ -24,8 +24,20 @@ export type GeoJsonRes = {
       };
       properties: {
         name: string;
+        photos: {
+          prefix: string;
+          suffix: string;
+        }[];
+        description: string;
+        website: string;
+        rating: number;
+        location: {
+          formatted_address: string;
+        };
+        categories: {
+          name: string;
+        }[];
       };
-      images: string[];
     }[];
   }[];
   routes: {
