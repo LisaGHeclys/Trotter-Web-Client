@@ -110,7 +110,7 @@ const LogoLink = styled(Link)`
   font-family: ${FONT};
 
   &:hover {
-    color: ${COLORS.links};
+    color: ${COLORS.blue};
   }
   @media (max-width: 1024px) {
     font-size: 22px;
@@ -127,7 +127,7 @@ const LoginLink = styled(Link)`
 
   &:hover {
     scale: 1.04;
-    color: ${COLORS.links};
+    color: ${COLORS.blue};
   }
   @media (max-width: 1024px) {
     font-size: 16px;
@@ -136,7 +136,7 @@ const LoginLink = styled(Link)`
 
 const RegisterLink = styled(Link)`
   display: flex;
-  background-color: ${COLORS.grey};
+  background-color: ${COLORS.blue};
   color: ${COLORS.white};
   font-weight: 700;
   font-size: 20px;
