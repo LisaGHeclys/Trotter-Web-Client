@@ -7,7 +7,7 @@ import { AccountCircle } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 type WithHeaderProps = {
-  children: JSX.Element;
+  children?: JSX.Element;
 };
 
 type NavButtons = {
