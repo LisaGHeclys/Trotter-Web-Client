@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { clarity } from "clarity-js";
@@ -14,6 +14,7 @@ import "./i18n/config";
 import "./App.css";
 import Onboarding from "./views/Onboarding/Onboarding";
 import SuggestPage from "./views/Suggest/Suggest";
+import Cookies from "./components/Cookies/Cookies";
 
 const InitClarity = () => {
   clarity.consent();
@@ -27,6 +28,12 @@ const InitClarity = () => {
 
 const App = () => {
   const dispatch = useDispatch();
+  const run = localStorage.getItem("COOKIES_OVER") !== "true";
+  const [cookiesOpen, setCookiesOpen] = useState(true);
+  const handleCookiesClose = () => {
+    setCookiesOpen(false);
+    localStorage.setItem("COOKIES_OVER", "true");
+  };
 
   useEffect(() => {
     dispatch({ type: "LOGIN", payload: localStorage.getItem("jwt") });
@@ -35,6 +42,9 @@ const App = () => {
 
   return (
     <AppWrapper>
+      {run && cookiesOpen ? (
+        <Cookies open={cookiesOpen} onClose={handleCookiesClose} />
+      ) : null}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<TravelPage />} />
