@@ -3,6 +3,7 @@ import React from "react";
 import "./Map.scss";
 import {
   AddHome,
+  CloudUpload,
   DirectionsBike,
   DirectionsCar,
   DirectionsWalk,
@@ -19,6 +20,7 @@ type MapSidebarProps = {
   transportMode: TransportType;
   setTransportMode: React.Dispatch<React.SetStateAction<TransportType>>;
   toggleIsTripSaveModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleIsTripLoadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const MapSidebar: FC<MapSidebarProps> = ({
@@ -26,7 +28,8 @@ const MapSidebar: FC<MapSidebarProps> = ({
   toggleHotelMode,
   transportMode,
   setTransportMode,
-  toggleIsTripSaveModalOpen
+  toggleIsTripSaveModalOpen,
+  toggleIsTripLoadModalOpen
 }) => {
   const [isTransportModeSelectionOpen, toggleIsTransportModeSelectionOpen] =
     React.useState<boolean>(false);
@@ -87,6 +90,17 @@ const MapSidebar: FC<MapSidebarProps> = ({
         type="button"
       >
         <Share />
+      </IconButton>
+      <IconButton
+        sx={{
+          borderRadius: 0,
+          borderBottom: "1px solid lightgray",
+          transition: "color 1s ease 0s"
+        }}
+        type="button"
+        onClick={() => toggleIsTripLoadModalOpen((prev) => !prev)}
+      >
+        <CloudUpload />
       </IconButton>
 
       <div

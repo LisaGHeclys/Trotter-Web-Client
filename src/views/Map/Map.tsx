@@ -29,12 +29,21 @@ import {
 import { format, addDays } from "date-fns";
 import { getSearchInput } from "../../reducers/search.reducers";
 import { BaseMapPropsDefault, weekColors } from "./Maps.utils";
-import { TransportType, UnderLineProps } from "./Maps.type";
+import { GeoJsonRes, TransportType, UnderLineProps } from "./Maps.type";
 import styled from "styled-components";
 import { Geometry } from "@turf/helpers";
 import WithHeader from "../../Layout/WithHeader";
 import MapSidebar from "./MapSidebar";
-import { StepProps, Steps, DatePicker, QRCode, Alert, Tag } from "antd";
+import {
+  StepProps,
+  Steps,
+  DatePicker,
+  QRCode,
+  Alert,
+  Tag,
+  Table,
+  Button
+} from "antd";
 import StepMarker from "./StepMarker";
 import { useGenerateItinerary } from "../../hooks/useGenerateItinerary";
 import dayjs from "dayjs";
@@ -48,6 +57,8 @@ import {
 import BudgetComponent from "./Budget";
 import { useFetchCityInfo } from "../../hooks/useFetchCityInfo";
 import { useSaveTrip } from "../../hooks/useSaveTrip";
+import { useGetTrips } from "../../hooks/useGetTrips";
+import { Trip, getSavedTrips } from "../../reducers/trips.reducers";
 
 enum TAB {
   ITINERARY,
@@ -64,6 +75,56 @@ const BaseMap: FC = () => {
     [id: string]: FeatureCollection;
   }>({});
   const searchState = useSelector(getSearchInput);
+  const trips = useSelector(getSavedTrips);
+
+  const tripsColumns = [
+    {
+      title: "City",
+      dataIndex: "cityName",
+      key: "cityName"
+    },
+    {
+      title: "Start date",
+      dataIndex: "startDate",
+      key: "startDate"
+    },
+    {
+      title: "End date",
+      dataIndex: "endDate",
+      key: "endDate"
+    },
+    {
+      title: "Action",
+      dataIndex: "",
+      key: "x",
+      // eslint-disable-next-line
+      render: (record: Trip) => (
+        <Button
+          onClick={() => {
+            setIsComputing(true);
+            setTripData({
+              bbox: null,
+              cityName: record.cityName,
+              lat: null,
+              lon: null
+            });
+            setRange([
+              {
+                endDate: new Date(record.endDate),
+                startDate: new Date(record.startDate),
+                key: "selection"
+              }
+            ]);
+            computeMapData(record.tripData, false);
+            toggleIsTripLoadModalOpen(false);
+          }}
+        >
+          Load
+        </Button>
+      )
+    }
+  ];
+
   const [length, setLength] = useState<number>(BaseMapPropsDefault.length);
   const [itineraryDay, setItineraryDay] = useState<number>(0);
   const [tripData, setTripData] = useState<{
@@ -100,6 +161,9 @@ const BaseMap: FC = () => {
     useState<boolean>(false);
   const [isTripSaveModalOpen, toggleIsTripSaveModalOpen] =
     useState<boolean>(false);
+  const [isTripLoadModalOpen, toggleIsTripLoadModalOpen] =
+    useState<boolean>(false);
+  const [isComputing, setIsComputing] = useState<boolean>(false);
 
   const [tab, setTab] = useState<TAB>(TAB.ITINERARY);
   const [cityInfo, setCityInfo] = useState<any[] | null>(null);
@@ -109,7 +173,9 @@ const BaseMap: FC = () => {
   const [generateItineraryStatus, generateItinerary] = useGenerateItinerary();
   const [fetchCityInfoStatus, fetchCityInfo] = useFetchCityInfo();
   const [saveTripStatus, saveTrip] = useSaveTrip();
+  const [getTripsStatus, getTrips] = useGetTrips();
   const [steps, setSteps] = useState<StepProps[][]>([]);
+  const [currentTrip, setCurrentTrip] = useState<object | null>(null);
   const [jsonData, setJsonData] = useState<{
     features: {
       geometry: {
@@ -128,8 +194,6 @@ const BaseMap: FC = () => {
       // Fetch the JSON file using the relative path
       const response = await fetch("/data.geojson");
       const data = await response.json();
-
-      console.log(data);
 
       setJsonData(data);
     };
@@ -160,6 +224,10 @@ const BaseMap: FC = () => {
       );
     }
   };
+
+  useEffect(() => {
+    if (isTripLoadModalOpen) getTrips();
+  }, [isTripLoadModalOpen]);
 
   const handleMapDblClick = async (e: MapLayerMouseEvent) => {
     if (isHotelSelectionActivated) {
@@ -204,6 +272,205 @@ const BaseMap: FC = () => {
     setLength(diffDays);
   }, [range]);
 
+  const computeMapData = (resJson: GeoJsonRes, status: boolean) => {
+    setMarkers([]);
+    setDropoffs({});
+    setRoutes({});
+    setCityInfo(null);
+    setTab(TAB.ITINERARY);
+    if (status === false) {
+      mapRef.current?.flyTo({
+        center: [
+          resJson.features[0].features[0].geometry
+            .coordinates[0] as unknown as number,
+          resJson.features[0].features[0].geometry
+            .coordinates[1] as unknown as number
+        ],
+        zoom: 12
+      });
+    }
+    setSteps([]);
+
+    if (resJson.features) {
+      for (const features of resJson.features) {
+        const i = resJson.features.indexOf(features);
+        if (!features) continue;
+        setDropoffs((old) => ({
+          ...old,
+          [i]: features as unknown as FeatureCollection
+        }));
+        const tripLegData = resJson.routes[i].tripLegData;
+        setSteps((old) => {
+          old.push(
+            features.features.map((feature, featureIndex) => {
+              return {
+                title: <b>{feature.properties.name}</b>,
+                description: (
+                  <>
+                    <Card
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        maxWidth: 600,
+                        padding: "12px",
+                        alignItems: "end",
+                        justifyContent: "center",
+                        backgroundColor: "gr",
+                        boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 14px 0px",
+                        margin: "12px 12px 12px 24px",
+                        width: "100%"
+                      }}
+                    >
+                      {featureIndex !== 0 || hotel.length > 0 ? (
+                        <div className="transportInfo">
+                          {transportMode === TransportType.DRIVING ? (
+                            <DirectionsCar sx={{ height: 16, width: 16 }} />
+                          ) : null}
+                          {transportMode === TransportType.CYCLING ? (
+                            <DirectionsBike sx={{ height: 16, width: 16 }} />
+                          ) : null}
+                          {transportMode === TransportType.WALKING ? (
+                            <DirectionsWalk sx={{ height: 16, width: 16 }} />
+                          ) : null}
+                          <b>
+                            {tripLegData[featureIndex].distances}m |{" "}
+                            {tripLegData[featureIndex].durations} min
+                          </b>
+                        </div>
+                      ) : null}
+                      <div
+                        className="flexRow"
+                        style={{ justifyContent: "space-between" }}
+                      >
+                        <div style={{ maxWidth: 200 }}>
+                          <img
+                            src={
+                              feature.properties.photos.length
+                                ? feature.properties.photos[0].prefix +
+                                  "original" +
+                                  feature.properties.photos[0].suffix
+                                : "https://www.freeiconspng.com/thumbs/ghost-icon/ghost-icon-14.png"
+                            }
+                            height={132}
+                            width={200}
+                          />
+                          <b>
+                            <i>
+                              {feature.properties.location.formatted_address}
+                            </i>
+                          </b>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "flex-end",
+                            flexDirection: "column",
+                            width: "100%",
+                            height: "100%",
+                            gap: 12
+                          }}
+                        >
+                          {feature.properties.description &&
+                          feature.properties.description !== "NA" ? (
+                            <>{feature.properties.description}</>
+                          ) : null}
+                          <div
+                            className="flexRow"
+                            style={{
+                              justifyContent: "flex-start",
+                              maxWidth: 250,
+                              overflowX: "scroll",
+                              gap: 4
+                            }}
+                          >
+                            {feature.properties.categories.length ? (
+                              <Tag
+                                key={`${featureIndex}-tag-${feature.properties.categories[0].name}`}
+                                color="blue"
+                                style={{ margin: 0 }}
+                              >
+                                {feature.properties.categories[0].name}
+                              </Tag>
+                            ) : null}
+                          </div>
+                        </div>
+
+                        <div className="flexColumn">
+                          {feature.properties.website &&
+                          feature.properties.website !== "NA" ? (
+                            <a href={feature.properties.website}>
+                              <QRCode
+                                errorLevel="H"
+                                value={feature.properties.website}
+                                icon="TrotterLogo.png"
+                                size={100}
+                                iconSize={20}
+                              />
+                            </a>
+                          ) : null}
+                          <Alert
+                            message={
+                              <div
+                                className="flexRow"
+                                style={{ gap: 2, padding: 0 }}
+                              >
+                                <Grade />
+                                <b>{feature.properties.rating.toFixed(1)}</b>
+                              </div>
+                            }
+                            type={
+                              feature.properties.rating > 8
+                                ? "success"
+                                : "warning"
+                            }
+                          />
+                        </div>
+                      </div>
+                    </Card>
+                  </>
+                ),
+                status: "finish",
+                icon: (
+                  <StepMarker
+                    dayIndex={i}
+                    featureIndex={featureIndex}
+                    onClick={() => {
+                      mapRef.current?.flyTo({
+                        center: [
+                          feature.geometry.coordinates[0] as unknown as number,
+                          feature.geometry.coordinates[1] as unknown as number
+                        ],
+                        zoom: 16,
+                        duration: 1000
+                      });
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      setItineraryDay(i);
+                    }}
+                  />
+                )
+              };
+            })
+          );
+          return old;
+        });
+      }
+    }
+
+    if (resJson.routes) {
+      for (const routes1 of resJson.routes) {
+        const i = resJson.routes.indexOf(routes1);
+        if (!routes1) continue;
+        setRoutes((old) => ({
+          ...old,
+          [i]: routes1.route
+        }));
+      }
+    }
+
+    setIsComputing(false);
+  };
+
   const fetchCoordinates =
     /* useCallback( */
     async (
@@ -223,213 +490,9 @@ const BaseMap: FC = () => {
           bbox: [lng - 0.12, lat - 0.12, lng + 0.12, lat + 0.12]
         });
 
-        setMarkers([]);
-        setDropoffs({});
-        setRoutes({});
-        setCityInfo(null);
-        setTab(TAB.ITINERARY);
-        if (resJsonWithStatus[0] === false) {
-          mapRef.current?.flyTo({
-            center: [
-              resJsonWithStatus[1].features[0].features[0].geometry
-                .coordinates[0] as unknown as number,
-              resJsonWithStatus[1].features[0].features[0].geometry
-                .coordinates[1] as unknown as number
-            ],
-            zoom: 12
-          });
-        }
-        setSteps([]);
-        const resJson = resJsonWithStatus[1];
-
-        if (resJson.features) {
-          for (const features of resJson.features) {
-            const i = resJson.features.indexOf(features);
-            if (!features) continue;
-            setDropoffs((old) => ({
-              ...old,
-              [i]: features as unknown as FeatureCollection
-            }));
-            const tripLegData = resJson.routes[i].tripLegData;
-            setSteps((old) => {
-              old.push(
-                features.features.map((feature, featureIndex) => {
-                  return {
-                    title: <b>{feature.properties.name}</b>,
-                    description: (
-                      <>
-                        <Card
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            maxWidth: 600,
-                            padding: "12px",
-                            alignItems: "end",
-                            justifyContent: "center",
-                            backgroundColor: "gr",
-                            boxShadow:
-                              "rgba(100, 100, 111, 0.2) 0px 7px 14px 0px",
-                            margin: "12px 12px 12px 24px",
-                            width: "100%"
-                          }}
-                        >
-                          {featureIndex !== 0 || hotel.length > 0 ? (
-                            <div className="transportInfo">
-                              {transportMode === TransportType.DRIVING ? (
-                                <DirectionsCar sx={{ height: 16, width: 16 }} />
-                              ) : null}
-                              {transportMode === TransportType.CYCLING ? (
-                                <DirectionsBike
-                                  sx={{ height: 16, width: 16 }}
-                                />
-                              ) : null}
-                              {transportMode === TransportType.WALKING ? (
-                                <DirectionsWalk
-                                  sx={{ height: 16, width: 16 }}
-                                />
-                              ) : null}
-                              <b>
-                                {tripLegData[featureIndex].distances}m |{" "}
-                                {tripLegData[featureIndex].durations} min
-                              </b>
-                            </div>
-                          ) : null}
-                          <div
-                            className="flexRow"
-                            style={{ justifyContent: "space-between" }}
-                          >
-                            <div style={{ maxWidth: 200 }}>
-                              <img
-                                src={
-                                  feature.properties.photos.length
-                                    ? feature.properties.photos[0].prefix +
-                                      "original" +
-                                      feature.properties.photos[0].suffix
-                                    : "https://www.freeiconspng.com/thumbs/ghost-icon/ghost-icon-14.png"
-                                }
-                                height={132}
-                                width={200}
-                              />
-                              <b>
-                                <i>
-                                  {
-                                    feature.properties.location
-                                      .formatted_address
-                                  }
-                                </i>
-                              </b>
-                            </div>
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "flex-end",
-                                flexDirection: "column",
-                                width: "100%",
-                                height: "100%",
-                                gap: 12
-                              }}
-                            >
-                              {feature.properties.description &&
-                              feature.properties.description !== "NA" ? (
-                                <>{feature.properties.description}</>
-                              ) : null}
-                              <div
-                                className="flexRow"
-                                style={{
-                                  justifyContent: "flex-start",
-                                  maxWidth: 250,
-                                  overflowX: "scroll",
-                                  gap: 4
-                                }}
-                              >
-                                {feature.properties.categories.length ? (
-                                  <Tag
-                                    key={`${featureIndex}-tag-${feature.properties.categories[0].name}`}
-                                    color="blue"
-                                    style={{ margin: 0 }}
-                                  >
-                                    {feature.properties.categories[0].name}
-                                  </Tag>
-                                ) : null}
-                              </div>
-                            </div>
-
-                            <div className="flexColumn">
-                              {feature.properties.website &&
-                              feature.properties.website !== "NA" ? (
-                                <a href={feature.properties.website}>
-                                  <QRCode
-                                    errorLevel="H"
-                                    value={feature.properties.website}
-                                    icon="TrotterLogo.png"
-                                    size={100}
-                                    iconSize={20}
-                                  />
-                                </a>
-                              ) : null}
-                              <Alert
-                                message={
-                                  <div
-                                    className="flexRow"
-                                    style={{ gap: 2, padding: 0 }}
-                                  >
-                                    <Grade />
-                                    <b>
-                                      {feature.properties.rating.toFixed(1)}
-                                    </b>
-                                  </div>
-                                }
-                                type={
-                                  feature.properties.rating > 8
-                                    ? "success"
-                                    : "warning"
-                                }
-                              />
-                            </div>
-                          </div>
-                        </Card>
-                      </>
-                    ),
-                    status: "finish",
-                    icon: (
-                      <StepMarker
-                        dayIndex={i}
-                        featureIndex={featureIndex}
-                        onClick={() => {
-                          mapRef.current?.flyTo({
-                            center: [
-                              feature.geometry
-                                .coordinates[0] as unknown as number,
-                              feature.geometry
-                                .coordinates[1] as unknown as number
-                            ],
-                            zoom: 16,
-                            duration: 1000
-                          });
-                          window.scrollTo({ top: 0, behavior: "smooth" });
-                          setItineraryDay(i);
-                        }}
-                      />
-                    )
-                  };
-                })
-              );
-              return old;
-            });
-          }
-        }
-
-        if (resJson.routes) {
-          for (const routes1 of resJson.routes) {
-            const i = resJson.routes.indexOf(routes1);
-            if (!routes1) continue;
-            setRoutes((old) => ({
-              ...old,
-              [i]: routes1.route
-            }));
-          }
-        }
+        setIsComputing(true);
+        setCurrentTrip(resJsonWithStatus[1]);
+        computeMapData(resJsonWithStatus[1], resJsonWithStatus[0]);
       } catch (e) {
         console.log(e);
       }
@@ -480,7 +543,11 @@ const BaseMap: FC = () => {
   }, [dropoffs, itineraryDay]);
 
   useEffect(() => {
-    if (!generateItineraryStatus.loading && !!tripData.cityName) {
+    if (
+      !generateItineraryStatus.loading &&
+      !!tripData.cityName &&
+      !isComputing
+    ) {
       fetchCoordinates(
         tripData.lon as number,
         tripData.lat as number,
@@ -504,6 +571,7 @@ const BaseMap: FC = () => {
           setTransportMode={setTransportMode}
           transportMode={transportMode}
           toggleIsTripSaveModalOpen={toggleIsTripSaveModalOpen}
+          toggleIsTripLoadModalOpen={toggleIsTripLoadModalOpen}
         />
         <div className="searchBar">
           <Autocomplete
@@ -796,15 +864,52 @@ const BaseMap: FC = () => {
                         hotel[0]?.props.latitude || 0
                       ],
                       cityName: tripData.cityName || "",
-                      tripData: {
-                        dropoffs,
-                        routes
-                      }
+                      tripData: currentTrip as GeoJsonRes
                     });
                     toggleIsTripSaveModalOpen(false);
                   }}
                 >
                   Save
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        {isTripLoadModalOpen ? (
+          <div className="tripSaveModal">
+            <div className="tripSaveModalContent">
+              <h2>Load up a saved trip</h2>
+              {getTripsStatus.loading ? (
+                <CircularProgress />
+              ) : (
+                <div>
+                  <Table
+                    size="small"
+                    dataSource={trips.map((trip) => {
+                      const endDate = new Date(0);
+                      const startDate = new Date(0);
+                      endDate.setUTCSeconds(trip.endDate / 1000);
+                      startDate.setUTCSeconds(trip.startDate / 1000);
+                      return {
+                        ...trip,
+                        endDate: format(endDate, "dd MMM yyyy"),
+                        startDate: format(startDate, "dd MMM yyyy")
+                      };
+                    })}
+                    columns={tripsColumns}
+                    bordered
+                  />
+                </div>
+              )}
+              <div className="tripSaveModalButtons">
+                <button
+                  type="button"
+                  className="tripSaveModalButton"
+                  onClick={() => toggleIsTripLoadModalOpen(false)}
+                  disabled={saveTripStatus.loading}
+                >
+                  Cancel
                 </button>
               </div>
             </div>
