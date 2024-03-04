@@ -25,13 +25,16 @@ import {
 } from "../Authentification.style";
 
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import toast from "react-hot-toast";
+import { CircularProgress } from "@mui/material";
 
 const Login: FC = () => {
-  const [, /* loading */ setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -78,19 +81,31 @@ const Login: FC = () => {
               />
             </WrapperInput>
             <WrapperInput>
-              <IconInput>
-                <VisibilityOffIcon sx={{ color: "#BBBBBB" }} />
-              </IconInput>
               <AuthentificationInput
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder={t("general.password") as string}
                 onChange={(e) => setPassword(e.target.value)}
                 data-testid="passwordInput"
               />
+              <IconInput>
+                <TogglePasswordButton
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <VisibilityOffIcon style={{ color: "#BBBBBB" }} />
+                  ) : (
+                    <VisibilityIcon style={{ color: "#BBBBBB" }} />
+                  )}
+                </TogglePasswordButton>
+              </IconInput>
             </WrapperInput>
             <ForgotPasswordText>{t("login.forgotPassword")}</ForgotPasswordText>
-            <AuthentificationButton onClick={login} data-testid="submitLogin">
-              {t("general.logIn")}
+            <AuthentificationButton
+              onClick={login}
+              data-testid="submitLogin"
+              disabled={loading}
+            >
+              {loading ? <CircularProgress /> : t("general.logIn")}
             </AuthentificationButton>
           </Column>
           <DividerText data-content={t("description.separator")} />
@@ -208,6 +223,14 @@ const ForgotPasswordText = styled.p`
     color: ${COLORS.grey};
     transition-duration: 0.3s;
   }
+`;
+
+const TogglePasswordButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  position: absolute;
 `;
 
 export default Login;

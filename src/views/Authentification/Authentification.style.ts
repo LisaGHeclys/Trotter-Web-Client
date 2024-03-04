@@ -100,7 +100,7 @@ export const AuthentificationButton = styled.button`
   height: 48px;
   border: none;
   border-radius: 10px;
-  background-color: ${COLORS.grey};
+  background-color: ${COLORS.blue};
   color: ${COLORS.white};
   cursor: pointer;
   font-weight: bold;
@@ -108,7 +108,7 @@ export const AuthentificationButton = styled.button`
   transition: all ease-in-out 0.2s;
 
   &:hover {
-    background-color: ${COLORS.grey};
+    background-color: ${COLORS.blue};
     scale: 1.06;
   }
   @media (max-width: 1024px) {
@@ -121,7 +121,7 @@ export const LinkToOtherAuthButton = styled.button`
   width: 180px;
   height: 48px;
   z-index: 1;
-  background-color: ${COLORS.grey};
+  background-color: ${COLORS.blue};
   border: none;
   border-radius: 10px;
   color: ${COLORS.bg};

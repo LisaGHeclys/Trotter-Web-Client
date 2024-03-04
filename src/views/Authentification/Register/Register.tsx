@@ -24,18 +24,25 @@ import {
 import Navbar from "../../../components/Navbar/Navbar";
 
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import LockIcon from "@mui/icons-material/Lock";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import toast from "react-hot-toast";
+import { CircularProgress } from "@mui/material";
 
 const Register: FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   async function register() {
+    setLoading(true);
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -70,6 +77,7 @@ const Register: FC = () => {
     } catch (e) {
       toast.error("An error occured, please try again later");
     }
+    setLoading(false);
   }
 
   return (
@@ -102,32 +110,49 @@ const Register: FC = () => {
               />
             </WrapperInput>
             <WrapperInput>
-              <IconInput>
-                <LockIcon sx={{ color: "#BBBBBB" }} />
-              </IconInput>
               <AuthentificationInput
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder={t("general.password") as string}
                 onChange={(e) => setPassword(e.target.value)}
                 data-testid="passwordInput"
               />
+              <IconInput>
+                <TogglePasswordButton
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <VisibilityOffIcon style={{ color: "#BBBBBB" }} />
+                  ) : (
+                    <VisibilityIcon style={{ color: "#BBBBBB" }} />
+                  )}
+                </TogglePasswordButton>
+              </IconInput>
             </WrapperInput>
             <WrapperInput>
-              <IconInput>
-                <LockIcon sx={{ color: "#BBBBBB" }} />
-              </IconInput>
               <AuthentificationInput
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 placeholder="Confirm Password"
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 data-testid="passwordConfirmInput"
               />
+              <IconInput>
+                <TogglePasswordButton
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? (
+                    <VisibilityOffIcon style={{ color: "#BBBBBB" }} />
+                  ) : (
+                    <VisibilityIcon style={{ color: "#BBBBBB" }} />
+                  )}
+                </TogglePasswordButton>
+              </IconInput>
             </WrapperInput>
             <AuthentificationButton
               onClick={register}
               data-testid="submitRegister"
+              disabled={loading}
             >
-              {t("general.register")}
+              {loading ? <CircularProgress /> : t("general.register")}
             </AuthentificationButton>
           </Column>
           <DividerText data-content={t("description.separator")} />
@@ -220,6 +245,14 @@ const FormWrapper = styled.div`
     height: 100%;
     padding: 0;
   }
+`;
+
+const TogglePasswordButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  position: absolute;
 `;
 
 export default Register;

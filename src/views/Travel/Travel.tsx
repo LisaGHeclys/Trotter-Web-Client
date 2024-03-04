@@ -7,6 +7,7 @@ import { AnyAction, Dispatch } from "redux";
 import { useTranslation } from "react-i18next";
 import { COLORS, FONT } from "../../UI/Colors";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
@@ -14,8 +15,12 @@ import { Range } from "react-date-range";
 import { BaseMapPropsDefault } from "../Map/Maps.utils";
 import Joyride, { CallBackProps, Step } from "react-joyride";
 
+import WithHeader from "../../Layout/WithHeader";
+import { getUserToken } from "../../reducers/auth.reducers";
+
 // This part will be removed when the component will be connected to the backend server.
 import { Card, CardContent, CardMedia, CardActionArea } from "@mui/material";
+
 const cardData = [
   {
     id: 1,
@@ -23,7 +28,9 @@ const cardData = [
     content:
       "South Korea's capital, seamlessly blends ancient charm with modern vibrancy, offering a dynamic cityscape where tradition meets innovation.",
     imageUrl: "/seoul.jpg",
-    city: "Seoul"
+    city: "Seoul",
+    lat: 37.566,
+    lon: 126.9784
   },
   {
     id: 2,
@@ -31,23 +38,29 @@ const cardData = [
     content:
       "Spain's vibrant city, harmonizes history with modernity, creating a dynamic blend of iconic architecture and contemporary energy.",
     imageUrl: "/Barcelone.jpg",
-    city: "Barcelona"
+    city: "Barcelona",
+    lat: 41.38879,
+    lon: 2.15899
   },
   {
     id: 3,
-    title: "Gyeongju, South Korea",
+    title: "Lyon, France",
     content:
-      "South Korea's historic gem, echoes the past with ancient temples and palaces, embodying the legacy of the Silla Dynasty.",
-    imageUrl: "/gyeongju.jpg",
-    city: "Gyeongju"
+      "Lyon, the gastronomic capital, blends history and flavor along the Rhône and Saône rivers. With Renaissance charm, UNESCO-listed Old Town, and renowned bouchons, it's a culinary and cultural delight.",
+    imageUrl: "/Lyon.png",
+    city: "Lyon",
+    lat: 45.76342,
+    lon: 4.834277
   },
   {
     id: 4,
-    title: "Aix-en-Provence, France",
+    title: "Paris, France",
     content:
-      "In the heart of Provence, France, exudes charm with its elegant streets and artistic flair, blending a relaxed Mediterranean vibe with old-world sophistication.",
-    imageUrl: "/aix.jpg",
-    city: "aix-en-provence"
+      "Paris, the City of Lights, is a global symbol of romance and culture. With its iconic landmarks, charming streets, and culinary delights, it captivates visitors with its timeless allure.",
+    imageUrl: "/paris.jpg",
+    city: "Paris",
+    lat: 48.864716,
+    lon: 2.349014
   }
 ];
 
@@ -134,6 +147,8 @@ const TravelPage: FC = () => {
     setLength(diffDays);
   }, [range]);
 
+  const isLoggedIn = useSelector(getUserToken);
+
   return (
     <div>
       <TravelWrapper container p={0} m={0} rowGap={10}>
@@ -144,10 +159,10 @@ const TravelPage: FC = () => {
           steps={steps}
           styles={{
             options: {
-              arrowColor: COLORS.grey,
+              arrowColor: COLORS.blue,
               backgroundColor: COLORS.bg,
               textColor: COLORS.text,
-              primaryColor: COLORS.grey
+              primaryColor: COLORS.blue
             },
             buttonClose: {
               display: "none"
@@ -161,7 +176,7 @@ const TravelPage: FC = () => {
           run={run}
         />
         <Grid item p={0} m={0} xs={12}>
-          <Navbar />
+          {isLoggedIn ? <WithHeader /> : <Navbar />}
         </Grid>
       </TravelWrapper>
       <DestinationComponentWrapper>
@@ -238,7 +253,16 @@ const TravelPage: FC = () => {
                   image={card.imageUrl}
                   alt={`${card.title} Image`}
                   onClick={() => {
-                    dispatch({ type: "SEARCH", payload: { place: card.city } });
+                    dispatch({
+                      type: "SEARCH",
+                      payload: {
+                        place: {
+                          cityName: card.city,
+                          lat: card.lat,
+                          lon: card.lon
+                        }
+                      }
+                    });
                     navigate("/map");
                   }}
                 />
