@@ -27,8 +27,10 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import toast from "react-hot-toast";
+import { CircularProgress } from "@mui/material";
 
 const Register: FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -40,6 +42,7 @@ const Register: FC = () => {
   const { t } = useTranslation();
 
   async function register() {
+    setLoading(true);
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -74,6 +77,7 @@ const Register: FC = () => {
     } catch (e) {
       toast.error("An error occured, please try again later");
     }
+    setLoading(false);
   }
 
   return (
@@ -146,8 +150,9 @@ const Register: FC = () => {
             <AuthentificationButton
               onClick={register}
               data-testid="submitRegister"
+              disabled={loading}
             >
-              {t("general.register")}
+              {loading ? <CircularProgress /> : t("general.register")}
             </AuthentificationButton>
           </Column>
           <DividerText data-content={t("description.separator")} />
