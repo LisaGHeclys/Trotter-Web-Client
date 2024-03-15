@@ -95,7 +95,6 @@ const LogoWrapper = styled.div`
 
 const PictureWrapper = styled.img`
   height: 55px;
-  width: fit-content;
 
   &:hover {
     color: ${COLORS.links};
