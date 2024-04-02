@@ -293,7 +293,7 @@ const DestinationComponentWrapper = styled.div`
   align-items: center;
   align-content: center;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 75px;
 
   @media (max-width: 768px) {
     display: flex;
