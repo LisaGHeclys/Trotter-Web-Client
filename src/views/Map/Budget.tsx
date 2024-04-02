@@ -100,16 +100,36 @@ const BudgetComponent: FC = () => {
     <>
       <Card
         style={{
+          marginTop: "20px",
           marginBottom: "16px",
-          maxWidth: 350,
+          marginLeft: "20px",
+          width: "fit-content",
           borderRadius: "5px",
-          backgroundColor: "lightgray"
+          backgroundColor: "#DDDDDD",
+          padding: "8px 16px"
         }}
       >
-        <CardContent>
-          <Typography variant="h5">
-            Total Budget: {totalBudget.toFixed(2)}€
+        <CardContent
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "14px"
+          }}
+        >
+          <Typography variant="h5" style={{}}>
+            {totalBudget.toFixed(2)}€
           </Typography>
+          <div
+            style={{
+              width: "1px",
+              height: "52px",
+              marginLeft: "16px",
+              marginRight: "16px",
+              backgroundColor: "#BBBBBB"
+            }}
+          />
           <AddExpenselButton onClick={handleAddExpense}>
             Add Expense
           </AddExpenselButton>
@@ -193,7 +213,8 @@ const BudgetComponent: FC = () => {
           border: "none",
           boxShadow: "none",
           width: "50%",
-          margin: "0"
+          margin: "0",
+          marginLeft: "20px !important"
         }}
         square={true}
         defaultExpanded={true}
@@ -283,7 +304,7 @@ const AddExpenselButton = styled.button`
   background-color: ${COLORS.blue};
   color: ${COLORS.bg};
 
-  padding: 15px 22px;
+  padding: 12px 20px;
   border-radius: 5px;
   font-family: ${FONT};
   font-size: 18px;
