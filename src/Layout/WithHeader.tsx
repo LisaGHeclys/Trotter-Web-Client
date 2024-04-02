@@ -4,7 +4,7 @@ import trotterLogo from "../assets/Trotter_logo.png";
 import { useTranslation } from "react-i18next";
 import { IconButton, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type WithHeaderProps = {
   children?: JSX.Element;
@@ -18,15 +18,15 @@ type NavButtons = {
 const navButtons: NavButtons = [
   {
     key: "home",
-    redirect: ""
+    redirect: "/"
   },
   {
     key: "discover",
-    redirect: ""
+    redirect: "/map"
   },
   {
-    key: "destinations",
-    redirect: ""
+    key: "trending",
+    redirect: "/trending"
   }
 ];
 
@@ -61,9 +61,11 @@ const WithHeader: React.FC<WithHeaderProps> = ({ children }) => {
           ))}
         </div>
         <div className="profileButtonContainer">
-          <IconButton sx={{ padding: 0, height: 36, width: 36 }}>
-            <AccountCircle sx={{ height: "100%", width: "100%" }} />
-          </IconButton>
+          <Link to="/profile">
+            <IconButton sx={{ padding: 0, height: 36, width: 36 }}>
+              <AccountCircle sx={{ height: "100%", width: "100%" }} />
+            </IconButton>
+          </Link>
         </div>
       </head>
       <div className="pageLayout">{children}</div>
