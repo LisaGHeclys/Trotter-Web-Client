@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { COLORS, FONT } from "../../UI/Colors";
 import styled from "styled-components";
 import { Input, Button } from "../../components/LibUI";
-import toast, { Toaster } from "react-hot-toast";
+import { toast } from "sonner";
 
 const SuggestPage: FC = () => {
   const [name, setName] = useState<string>("");
@@ -49,32 +49,30 @@ const SuggestPage: FC = () => {
   };
 
   const createSuggestion = async () => {
-    try {
-      const response = await axios({
-        method: "post",
-        url: `${process.env.REACT_APP_SERVER_URI}/suggest`,
-        headers: {
-          Accept: "*/*",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*"
-        },
-        data: {
-          name: name,
-          description: description,
-          place: coords
-        }
-      });
-      if (response.status === 200) {
-        toast.success(t("suggest.success") || "");
+    const promise = axios({
+      method: "post",
+      url: `${process.env.REACT_APP_SERVER_URI}/suggest`,
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: {
+        name: name,
+        description: description,
+        place: coords
       }
-    } catch (e) {
-      toast.error(t("suggest.error") || "");
-    }
+    });
+    toast.promise(promise, {
+      success: t("suggest.success"),
+      error: t("suggest.error"),
+      loading: t("suggest.loading")
+    });
+    await promise;
   };
 
   return (
     <div>
-      <Toaster />
       <SuggestWrapper container p={0} m={0} rowGap={10}>
         <Grid item p={0} m={0} xs={12}>
           <Navbar />

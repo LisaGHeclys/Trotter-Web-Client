@@ -15,6 +15,7 @@ import "./App.css";
 import Onboarding from "./views/Onboarding/Onboarding";
 import SuggestPage from "./views/Suggest/Suggest";
 import Cookies from "./components/Cookies/Cookies";
+import { Toaster } from "sonner";
 
 const InitClarity = () => {
   clarity.consent();
@@ -45,6 +46,7 @@ const App = () => {
       {run && cookiesOpen ? (
         <Cookies open={cookiesOpen} onClose={handleCookiesClose} />
       ) : null}
+      <Toaster />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<TravelPage />} />

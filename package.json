@@ -36,7 +36,6 @@
     "react-alice-carousel": "^2.7.0",
     "react-date-range": "^1.4.0",
     "react-dom": "^18.2.0",
-    "react-hot-toast": "^2.4.1",
     "react-i18next": "^12.2.2",
     "react-joyride": "^2.5.5",
     "react-map-gl": "^7.0.20",
@@ -46,6 +45,7 @@
     "react-use": "^17.4.0",
     "redux": "^4.2.0",
     "sass": "^1.56.1",
+    "sonner": "^1.4.41",
     "styled-components": "^5.3.6",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"

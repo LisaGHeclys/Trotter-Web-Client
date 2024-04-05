@@ -1,9 +1,11 @@
 import { useWebClient } from "./useWebClient";
 import { useTypedAsyncFn } from "./useTypedAsyncFn";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export const useSaveTrip = () => {
   const webClient = useWebClient();
+  const { t } = useTranslation();
 
   return useTypedAsyncFn<{
     startDate: number;
@@ -12,11 +14,12 @@ export const useSaveTrip = () => {
     cityName: string;
     tripData: object;
   }>(async (payload) => {
-    try {
-      await webClient.post(`/trips`, payload);
-      toast.success("Your trip has successfully been saved!");
-    } catch (error) {
-      toast.error("Couldn't save your trip. Try again later.");
-    }
+    const promise = webClient.post(`/trips`, payload);
+    toast.promise(promise, {
+      success: t("trips.saveSuccess"),
+      error: t("trips.saveError"),
+      loading: t("trips.saveLoading")
+    });
+    await promise;
   }, []);
 };

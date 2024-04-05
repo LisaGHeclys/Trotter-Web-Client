@@ -26,7 +26,7 @@ import Navbar from "../../../components/Navbar/Navbar";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { CircularProgress } from "@mui/material";
 
 const Register: FC = () => {
@@ -44,7 +44,7 @@ const Register: FC = () => {
   async function register() {
     setLoading(true);
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error(t("register.passwordMismatch"));
       return;
     }
     try {
@@ -63,7 +63,7 @@ const Register: FC = () => {
         }
       });
       if (!response.data.accessToken) {
-        toast.error("An error occured, please try again later");
+        toast.error(t("unexpectedError"));
       } else {
         localStorage.setItem("jwt", response.data.accessToken);
         dispatch({ type: "LOGIN", payload: response.data.accessToken });
@@ -75,7 +75,7 @@ const Register: FC = () => {
         }
       }
     } catch (e) {
-      toast.error("An error occured, please try again later");
+      toast.error(t("unexpectedError"));
     }
     setLoading(false);
   }

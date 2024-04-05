@@ -27,7 +27,7 @@ import {
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { CircularProgress } from "@mui/material";
 
 const Login: FC = () => {
@@ -56,8 +56,7 @@ const Login: FC = () => {
       }
     } catch (e) {
       console.error("An error occured while loging the user");
-      toast.error("An error occured while loging the user");
-      //to put a toaster
+      toast.error(t("login.error"));
     }
     setLoading(false);
   };
