@@ -2,9 +2,9 @@ import React from "react";
 import "./WithHeaders.scss";
 import trotterLogo from "../assets/Trotter_logo.png";
 import { useTranslation } from "react-i18next";
-import { IconButton, Typography } from "@mui/material";
-import { AccountCircle } from "@mui/icons-material";
+import { Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import { Avatar } from "antd";
 
 type WithHeaderProps = {
   children?: JSX.Element;
@@ -62,9 +62,11 @@ const WithHeader: React.FC<WithHeaderProps> = ({ children }) => {
         </div>
         <div className="profileButtonContainer">
           <Link to="/profile">
-            <IconButton sx={{ padding: 0, height: 36, width: 36 }}>
-              <AccountCircle sx={{ height: "100%", width: "100%" }} />
-            </IconButton>
+            <Avatar
+              src={`https://api.dicebear.com/8.x/notionists-neutral/svg?seed=${localStorage.getItem(
+                "jwt"
+              )}`}
+            />
           </Link>
         </div>
       </head>

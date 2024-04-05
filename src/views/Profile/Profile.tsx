@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -14,87 +14,74 @@ import filterIcon from "../../assets/profile/Filter.svg";
 import groupImage from "../../assets/profile/group.svg";
 import savedIcon from "../../assets/profile/saved.svg";
 import settingIcon from "../../assets/profile/setting.svg";
+import WithHeader from "../../Layout/WithHeader";
+import { Avatar } from "antd";
+import ModificableInput from "../../components/ModificableInput";
 
 const Profile = () => {
   const [showDelete, setShowDelete] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("roger");
+  const [email, setEmail] = useState<string>("roger.salengro@gmail.com");
+  const [birthDate, setBirthDate] = useState<string>("10/02/1970");
+  const [phoneNumber, setPhoneNumber] = useState<string>("+33641893207");
 
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const ProfileData = [
-    {
-      id: 1,
-      name: t("description.profilePart4"),
-      image: destinationIcon
-    },
-    {
-      id: 2,
-      name: t("description.profilePart5"),
-      image: savedIcon
-    },
-    {
-      id: 3,
-      name: t("description.profilePart5"),
-      image: calendarIcon
-    }
-  ];
+
+  const handleChange =
+    (setState: React.Dispatch<SetStateAction<string>>) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setState(event.target.value);
+    };
 
   return (
-    <div>
-      <Navbar></Navbar>
-      <div className="ProfileSection">
-        <button onClick={() => navigate("/")}>
-          <img src={backArrowIcon} alt="" />
-        </button>
-        <div className="ProfileContent">
-          <Grid className="GridProfileHeader" container rowGap={10}>
-            <Grid className="ProfileImageOutLet" item xs={12} md={4}>
-              <div className="ProfileImage">
-                <img src={groupImage} alt="" />
+    <WithHeader>
+      <>
+        <div className="profileLayout">
+          <div className="userSettings profileCard">
+            <div className="userInfos">
+              <div className="avatarContainer">
+                <Avatar
+                  size={{ xl: 100 }}
+                  src={`https://api.dicebear.com/8.x/notionists-neutral/svg?seed=${localStorage.getItem(
+                    "jwt"
+                  )}`}
+                />
               </div>
-            </Grid>
-            <Grid item xs={12} md={8}>
-              <div className="ActionButton">
-                <button>
-                  <img src={settingIcon} alt="" />
-                </button>
-                <button onClick={() => setShowDelete(true)}>
-                  <img src={deleteIcon} alt="" />
-                </button>
-              </div>
-              <div className="UserInfo">
-                <h3>{t("general.email")}</h3>
-                <h3>{t("general.password")}</h3>
-              </div>
-            </Grid>
-          </Grid>
-          <div className="Filter" onClick={() => console.log("setting")}>
-            <button>
-              <img src={filterIcon} alt="" />
-            </button>
-            <h3>{t("description.profilePart3")}</h3>
+              <ModificableInput
+                value={username}
+                onChange={handleChange(setUsername)}
+                label="Username"
+              />
+              <ModificableInput
+                value={email}
+                onChange={handleChange(setEmail)}
+                label="EMail"
+              />
+              <ModificableInput
+                value={birthDate}
+                onChange={handleChange(setBirthDate)}
+                label="Birthdate"
+              />
+              <ModificableInput
+                value={phoneNumber}
+                onChange={handleChange(setPhoneNumber)}
+                label="Phone number"
+              />
+            </div>
+            <hr />
+            <div className="interestsSettings"></div>
+            <hr />
+            <div className="actionButtons"></div>
           </div>
-          <Grid container spacing={4}>
-            {ProfileData.map((data) => (
-              <Grid item xs={12} md={4} key={data.id}>
-                <div className="ProfileItem">
-                  <img src={data.image} alt="" />
-                  <h3>{data.name}</h3>
-                </div>
-              </Grid>
-            ))}
-          </Grid>
-          <div className="Logout">
-            <button>
-              <strong className="text">LOG OUT</strong>
-            </button>
-          </div>
+          <div className="savedTripsList profileCard"></div>
         </div>
-      </div>
-      <DeleteAccountModal
-        showDelete={showDelete}
-        setShowDelete={setShowDelete}
-      />
-    </div>
+        <DeleteAccountModal
+          showDelete={showDelete}
+          setShowDelete={setShowDelete}
+        />
+      </>
+    </WithHeader>
   );
 };
 
