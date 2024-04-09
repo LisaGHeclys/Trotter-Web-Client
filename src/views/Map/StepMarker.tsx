@@ -1,7 +1,7 @@
 import { FC } from "react";
 import React from "react";
 import "./Map.scss";
-import { weekColors } from "./Maps.utils";
+import { weekColors } from "./Maps.helpers";
 
 type StepMarkerProps = {
   dayIndex: number;

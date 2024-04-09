@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
 import { Range } from "react-date-range";
-import { BaseMapPropsDefault } from "../Map/Maps.utils";
+import { BaseMapPropsDefault } from "../Map/Maps.helpers";
 import Joyride, { CallBackProps, Step } from "react-joyride";
 
 import WithHeader from "../../Layout/WithHeader";
