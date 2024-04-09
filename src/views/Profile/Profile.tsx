@@ -1,5 +1,5 @@
-import React, { SetStateAction, useState } from "react";
-import { Grid } from "@mui/material";
+import React, { SetStateAction, useEffect, useState } from "react";
+import { CircularProgress, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DeleteAccountModal from "./DeleteAccountModal/DeleteAccountModal";
@@ -15,24 +15,58 @@ import groupImage from "../../assets/profile/group.svg";
 import savedIcon from "../../assets/profile/saved.svg";
 import settingIcon from "../../assets/profile/setting.svg";
 import WithHeader from "../../Layout/WithHeader";
-import { Avatar } from "antd";
+import { Avatar, Button } from "antd";
 import ModificableInput from "../../components/ModificableInput";
+import { useSelector } from "react-redux";
+import { getSavedTrips } from "../../reducers/trips.reducers";
+import { useGetTrips } from "../../hooks/useGetTrips";
+import { SaveAltRounded } from "@mui/icons-material";
+
+type UserSettings = {
+  username: string;
+  email: string;
+  birthDate: string;
+  phoneNumber: string;
+};
 
 const Profile = () => {
+  const trips = useSelector(getSavedTrips);
+  const [getTripsStatus, getTrips] = useGetTrips();
+
   const [showDelete, setShowDelete] = useState<boolean>(false);
-  const [username, setUsername] = useState<string>("roger");
-  const [email, setEmail] = useState<string>("roger.salengro@gmail.com");
-  const [birthDate, setBirthDate] = useState<string>("10/02/1970");
-  const [phoneNumber, setPhoneNumber] = useState<string>("+33641893207");
+  const [userSettings, setUserSettings] = useState<UserSettings>({
+    username: "roger",
+    email: "roger.salengro@gmail.com",
+    birthDate: "10/02/1970",
+    phoneNumber: "+33641823207"
+  });
+  const originalUserSettings: UserSettings = {
+    username: "roger",
+    email: "roger.salengro@gmail.com",
+    birthDate: "10/02/1970",
+    phoneNumber: "+33641823207"
+  };
 
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const hasSettingsChanged = () =>
+    userSettings.birthDate !== originalUserSettings.birthDate ||
+    userSettings.email !== originalUserSettings.email ||
+    userSettings.username !== originalUserSettings.username ||
+    userSettings.phoneNumber !== originalUserSettings.phoneNumber;
+
   const handleChange =
-    (setState: React.Dispatch<SetStateAction<string>>) =>
+    (key: keyof UserSettings) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setState(event.target.value);
+      setUserSettings((prev) => ({ ...prev, [key]: event.target.value }));
     };
+
+  useEffect(() => {
+    if (!trips.length) {
+      getTrips();
+    }
+  }, []);
 
   return (
     <WithHeader>
@@ -42,39 +76,77 @@ const Profile = () => {
             <div className="userInfos">
               <div className="avatarContainer">
                 <Avatar
-                  size={{ xl: 100 }}
+                  className="avatar"
                   src={`https://api.dicebear.com/8.x/notionists-neutral/svg?seed=${localStorage.getItem(
                     "jwt"
                   )}`}
                 />
               </div>
               <ModificableInput
-                value={username}
-                onChange={handleChange(setUsername)}
+                value={userSettings.username}
+                onChange={handleChange("username")}
                 label="Username"
               />
               <ModificableInput
-                value={email}
-                onChange={handleChange(setEmail)}
+                value={userSettings.email}
+                onChange={handleChange("email")}
                 label="EMail"
               />
               <ModificableInput
-                value={birthDate}
-                onChange={handleChange(setBirthDate)}
+                value={userSettings.birthDate}
+                onChange={handleChange("birthDate")}
                 label="Birthdate"
               />
               <ModificableInput
-                value={phoneNumber}
-                onChange={handleChange(setPhoneNumber)}
+                value={userSettings.phoneNumber}
+                onChange={handleChange("phoneNumber")}
                 label="Phone number"
               />
             </div>
             <hr />
             <div className="interestsSettings"></div>
             <hr />
-            <div className="actionButtons"></div>
+            <div className="actionButtons">
+              <Button type="primary" disabled={!hasSettingsChanged()}>
+                {t("profile.saveChanges")}
+              </Button>
+              <Button danger>{t("profile.changePassword")}</Button>
+              <Button
+                type="primary"
+                danger
+                onClick={() => {
+                  setShowDelete(true);
+                }}
+              >
+                {t("profile.deleteAccount")}
+              </Button>
+            </div>
           </div>
-          <div className="savedTripsList profileCard"></div>
+          <div className="savedTripsList profileCard">
+            <h3>{t("profile.savedTrips")}</h3>
+            {getTripsStatus.loading ? (
+              <>
+                <CircularProgress />
+              </>
+            ) : (
+              <>
+                {trips.length ? (
+                  <div>
+                    {trips.map((trip, i) => (
+                      <div key={i}>{trip.cityName}</div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="emptyTripList">
+                    <SaveAltRounded
+                      sx={{ height: 100, width: 100, color: "lightgray" }}
+                    />
+                    <p>{t("profile.findYourSavedTripsHere")}</p>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
         <DeleteAccountModal
           showDelete={showDelete}

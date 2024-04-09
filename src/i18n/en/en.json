@@ -111,5 +111,12 @@
     "saveError": "Your trip could not be saved. Try again later.",
     "saveSuccess": "Your trip has been saved.",
     "saveLoading": "Your trip is being saved..."
+  },
+  "profile": {
+    "saveChanges": "Save",
+    "changePassword": "Change password",
+    "deleteAccount": "Delete account",
+    "findYourSavedTripsHere": "Save trips and find them here",
+    "savedTrips": "Saved trips"
   }
 }

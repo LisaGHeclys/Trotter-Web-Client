@@ -1,3 +1,33 @@
+// Tablets and small desktops
+$screen-lg-min: 992px;
+
+// Large tablets and desktops
+$screen-xl-min: 1200px;
+
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+// Large devices
+@mixin lg {
+  @media (min-width: #{$screen-lg-min}) {
+    @content;
+  }
+}
+
+// Extra large devices
+@mixin xl {
+  @media (min-width: #{$screen-xl-min}) {
+    @content;
+  }
+}
+
+// Small devices
+@mixin sm {
+  @media (min-width: #{$screen-sm-min}) {
+    @content;
+  }
+}
+
 .ProfileSection {
   padding: 200px;
 }
@@ -94,12 +124,18 @@ button {
 
 .profileLayout {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 200px;
+  padding: 50px;
   gap: 12px;
+
+  @include xl {
+    flex-direction: row;
+    padding: 100px;
+    align-items: stretch;
+  }
 }
 
 .profileCard {
@@ -111,13 +147,12 @@ button {
   border: 1px solid #95b0b4;
   padding: 20px;
   width: 300px;
-  height: 100%;
   background-color: rgb(248, 249, 253);
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 }
 
 .userSettings {
-  flex: 1;
+  flex: 2;
 }
 
 .userInfos {
@@ -135,4 +170,33 @@ button {
   width: 100px;
   height: 100px;
   margin-bottom: 20px;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 75%;
+  margin: 20px 12px 0px 12px;
+  gap: 6px;
+}
+
+.emptyTripList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background-color: rgb(248, 249, 253);
+
+  @include xl {
+    padding-top: 100px;
+  }
 }

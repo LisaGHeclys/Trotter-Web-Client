@@ -38,12 +38,12 @@ const ModificableInput = ({
           value={value}
           className={!isEditing ? "unmodifiedInput" : undefined}
         />
-        <span className={isEditing ? "editIcon" : undefined}>
+        <span className={isEditing ? "isEditing" : undefined}>
           <Edit
             onClick={() => {
               setIsEditing(true);
             }}
-            sx={{ width: 16, cursor: "pointer" }}
+            sx={{ width: 16, cursor: isEditing ? "default" : "pointer" }}
           />
         </span>
       </div>{" "}

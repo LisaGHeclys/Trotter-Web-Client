@@ -116,5 +116,12 @@
     "saveError": "Votre voyage n'a pas pu être sauvegardé, veuillez réessayer plus tard.",
     "saveSuccess": "Votre voyage a bien été sauvegardé.",
     "saveLoading": "Votre voyage est en cours de sauvegarde..."
+  },
+  "profile": {
+    "saveChanges": "Sauvegarder",
+    "changePassword": "Modifier mon MDP",
+    "deleteAccount": "Supprimer mon compte",
+    "findYourSavedTripsHere": "Sauvegardez des voyages pour les retrouver ici",
+    "savedTrips": "Voyages sauvegardés"
   }
 }

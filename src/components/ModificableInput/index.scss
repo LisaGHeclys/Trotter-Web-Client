@@ -1,6 +1,6 @@
 .modificableInputContainer {
   padding: 0px 12px;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
 .modificableInput {
@@ -21,7 +21,7 @@
 }
 
 .isEditing {
-  opacity: 1;
+  opacity: 0 !important;
 }
 
 .unmodifiedInput {
