@@ -18,53 +18,28 @@ import {
 import { FeatureCollection } from "geojson";
 import { Popup, MapLayerMouseEvent } from "mapbox-gl";
 import Routes from "./Routes";
-import {
-  Autocomplete,
-  Card,
-  CircularProgress,
-  Divider,
-  TextField,
-  Typography
-} from "@mui/material";
-import { format, addDays } from "date-fns";
+import { Autocomplete, CircularProgress, TextField } from "@mui/material";
+import { format } from "date-fns";
 import { getSearchInput } from "../../reducers/search.reducers";
-import { BaseMapPropsDefault, weekColors } from "./Maps.utils";
-import { GeoJsonRes, TransportType, UnderLineProps } from "./Maps.type";
+import {
+  BaseMapPropsDefault,
+  mapGjsonToSteps,
+  weekColors
+} from "./Maps.helpers";
+import { GeoJsonRes, TransportType } from "./Maps.type";
 import styled from "styled-components";
 import { Geometry } from "@turf/helpers";
 import WithHeader from "../../Layout/WithHeader";
 import MapSidebar from "./MapSidebar";
-import {
-  StepProps,
-  Steps,
-  DatePicker,
-  QRCode,
-  Alert,
-  Tag,
-  Table,
-  Button
-} from "antd";
+import { DatePicker, Table, Button } from "antd";
 import StepMarker from "./StepMarker";
 import { useGenerateItinerary } from "../../hooks/useGenerateItinerary";
 import dayjs from "dayjs";
 import { Toaster } from "react-hot-toast";
-import {
-  DirectionsBike,
-  DirectionsCar,
-  DirectionsWalk,
-  Grade
-} from "@mui/icons-material";
-import BudgetComponent from "./Budget";
-import { useFetchCityInfo } from "../../hooks/useFetchCityInfo";
 import { useSaveTrip } from "../../hooks/useSaveTrip";
 import { useGetTrips } from "../../hooks/useGetTrips";
 import { Trip, getSavedTrips } from "../../reducers/trips.reducers";
-
-enum TAB {
-  ITINERARY,
-  INFO,
-  BUDGET
-}
+import TripSection from "./TripSection";
 
 const BaseMap: FC = () => {
   const mapRef = React.useRef<MapRef>(null);
@@ -165,17 +140,13 @@ const BaseMap: FC = () => {
     useState<boolean>(false);
   const [isComputing, setIsComputing] = useState<boolean>(false);
 
-  const [tab, setTab] = useState<TAB>(TAB.ITINERARY);
-  const [cityInfo, setCityInfo] = useState<any[] | null>(null);
   const [transportMode, setTransportMode] = useState<TransportType>(
     TransportType.WALKING
   );
   const [generateItineraryStatus, generateItinerary] = useGenerateItinerary();
-  const [fetchCityInfoStatus, fetchCityInfo] = useFetchCityInfo();
   const [saveTripStatus, saveTrip] = useSaveTrip();
   const [getTripsStatus, getTrips] = useGetTrips();
-  const [steps, setSteps] = useState<StepProps[][]>([]);
-  const [currentTrip, setCurrentTrip] = useState<object | null>(null);
+  const [currentTrip, setCurrentTrip] = useState<GeoJsonRes | null>(null);
   const [jsonData, setJsonData] = useState<{
     features: {
       geometry: {
@@ -276,8 +247,6 @@ const BaseMap: FC = () => {
     setMarkers([]);
     setDropoffs({});
     setRoutes({});
-    setCityInfo(null);
-    setTab(TAB.ITINERARY);
     if (status === false) {
       mapRef.current?.flyTo({
         center: [
@@ -289,7 +258,6 @@ const BaseMap: FC = () => {
         zoom: 12
       });
     }
-    setSteps([]);
 
     if (resJson.features) {
       for (const features of resJson.features) {
@@ -299,161 +267,6 @@ const BaseMap: FC = () => {
           ...old,
           [i]: features as unknown as FeatureCollection
         }));
-        const tripLegData = resJson.routes[i].tripLegData;
-        setSteps((old) => {
-          old.push(
-            features.features.map((feature, featureIndex) => {
-              return {
-                title: <b>{feature.properties.name}</b>,
-                description: (
-                  <>
-                    <Card
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        maxWidth: 600,
-                        padding: "12px",
-                        alignItems: "end",
-                        justifyContent: "center",
-                        backgroundColor: "gr",
-                        boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 14px 0px",
-                        margin: "12px 12px 12px 24px",
-                        width: "100%"
-                      }}
-                    >
-                      {featureIndex !== 0 || hotel.length > 0 ? (
-                        <div className="transportInfo">
-                          {transportMode === TransportType.DRIVING ? (
-                            <DirectionsCar sx={{ height: 16, width: 16 }} />
-                          ) : null}
-                          {transportMode === TransportType.CYCLING ? (
-                            <DirectionsBike sx={{ height: 16, width: 16 }} />
-                          ) : null}
-                          {transportMode === TransportType.WALKING ? (
-                            <DirectionsWalk sx={{ height: 16, width: 16 }} />
-                          ) : null}
-                          <b>
-                            {tripLegData[featureIndex].distances}m |{" "}
-                            {tripLegData[featureIndex].durations} min
-                          </b>
-                        </div>
-                      ) : null}
-                      <div
-                        className="flexRow"
-                        style={{ justifyContent: "space-between" }}
-                      >
-                        <div style={{ maxWidth: 200 }}>
-                          <img
-                            src={
-                              feature.properties.photos.length
-                                ? feature.properties.photos[0].prefix +
-                                  "original" +
-                                  feature.properties.photos[0].suffix
-                                : "https://www.freeiconspng.com/thumbs/ghost-icon/ghost-icon-14.png"
-                            }
-                            height={132}
-                            width={200}
-                          />
-                          <b>
-                            <i>
-                              {feature.properties.location.formatted_address}
-                            </i>
-                          </b>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "flex-end",
-                            flexDirection: "column",
-                            width: "100%",
-                            height: "100%",
-                            gap: 12
-                          }}
-                        >
-                          {feature.properties.description &&
-                          feature.properties.description !== "NA" ? (
-                            <>{feature.properties.description}</>
-                          ) : null}
-                          <div
-                            className="flexRow"
-                            style={{
-                              justifyContent: "flex-start",
-                              maxWidth: 250,
-                              overflowX: "scroll",
-                              gap: 4
-                            }}
-                          >
-                            {feature.properties.categories.length ? (
-                              <Tag
-                                key={`${featureIndex}-tag-${feature.properties.categories[0].name}`}
-                                color="blue"
-                                style={{ margin: 0 }}
-                              >
-                                {feature.properties.categories[0].name}
-                              </Tag>
-                            ) : null}
-                          </div>
-                        </div>
-
-                        <div className="flexColumn">
-                          {feature.properties.website &&
-                          feature.properties.website !== "NA" ? (
-                            <a href={feature.properties.website}>
-                              <QRCode
-                                errorLevel="H"
-                                value={feature.properties.website}
-                                icon="TrotterLogo.png"
-                                size={100}
-                                iconSize={20}
-                              />
-                            </a>
-                          ) : null}
-                          <Alert
-                            message={
-                              <div
-                                className="flexRow"
-                                style={{ gap: 2, padding: 0 }}
-                              >
-                                <Grade />
-                                <b>{feature.properties.rating.toFixed(1)}</b>
-                              </div>
-                            }
-                            type={
-                              feature.properties.rating > 8
-                                ? "success"
-                                : "warning"
-                            }
-                          />
-                        </div>
-                      </div>
-                    </Card>
-                  </>
-                ),
-                status: "finish",
-                icon: (
-                  <StepMarker
-                    dayIndex={i}
-                    featureIndex={featureIndex}
-                    onClick={() => {
-                      mapRef.current?.flyTo({
-                        center: [
-                          feature.geometry.coordinates[0] as unknown as number,
-                          feature.geometry.coordinates[1] as unknown as number
-                        ],
-                        zoom: 16,
-                        duration: 1000
-                      });
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                      setItineraryDay(i);
-                    }}
-                  />
-                )
-              };
-            })
-          );
-          return old;
-        });
       }
     }
 
@@ -471,34 +284,30 @@ const BaseMap: FC = () => {
     setIsComputing(false);
   };
 
-  const fetchCoordinates =
-    /* useCallback( */
-    async (
-      lng: number,
-      lat: number,
-      transportMode: TransportType,
-      //eslint-disable-next-line
-      bbox: number[]
-    ) => {
-      if (!lng && !lat) return;
-      try {
-        const resJsonWithStatus = await generateItinerary({
-          lon: lng ?? 0,
-          lat: lat ?? 0,
-          days: length,
-          transportMean: transportMode,
-          bbox: [lng - 0.12, lat - 0.12, lng + 0.12, lat + 0.12]
-        });
+  const fetchCoordinates = async (
+    lng: number,
+    lat: number,
+    transportMode: TransportType,
+    //eslint-disable-next-line
+    bbox: number[]
+  ) => {
+    if (!lng && !lat) return;
+    try {
+      const resJsonWithStatus = await generateItinerary({
+        lon: lng ?? 0,
+        lat: lat ?? 0,
+        days: length,
+        transportMean: transportMode,
+        bbox: [lng - 0.12, lat - 0.12, lng + 0.12, lat + 0.12]
+      });
 
-        setIsComputing(true);
-        setCurrentTrip(resJsonWithStatus[1]);
-        computeMapData(resJsonWithStatus[1], resJsonWithStatus[0]);
-      } catch (e) {
-        console.log(e);
-      }
-    }; /* ,
-    [length, token, hotel]
-  ); */
+      setIsComputing(true);
+      setCurrentTrip(resJsonWithStatus[1]);
+      computeMapData(resJsonWithStatus[1], resJsonWithStatus[0]);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     setMarkers([]);
@@ -699,137 +508,20 @@ const BaseMap: FC = () => {
               />
             </Map>
           </div>
-          <div className="mapSideMenu">
-            <div className="tabsContainer">
-              <div onClick={() => setTab(TAB.ITINERARY)}>
-                <Typography
-                  variant="h5"
-                  fontWeight={"bolder"}
-                  color={tab === TAB.ITINERARY ? "black" : "darkgray"}
-                >
-                  ITINERARY
-                </Typography>
-              </div>
-              <div
-                onClick={async () => {
-                  setTab(TAB.INFO);
-                  const citySlug = jsonData?.features.find(
-                    (feature) => feature.properties.name === tripData.cityName
-                  )?.properties.href;
-                  if (!cityInfo && citySlug)
-                    setCityInfo(await fetchCityInfo({ slug: citySlug }));
-                }}
-              >
-                <Typography
-                  variant="h5"
-                  fontWeight={"bolder"}
-                  color={tab === TAB.INFO ? "black" : "darkgray"}
-                >
-                  INFO
-                </Typography>
-              </div>
-              <div onClick={() => setTab(TAB.BUDGET)}>
-                <Typography
-                  variant="h5"
-                  fontWeight={"bolder"}
-                  color={tab === TAB.BUDGET ? "black" : "darkgray"}
-                >
-                  BUDGET
-                </Typography>
-              </div>
-            </div>
-            {tab === TAB.ITINERARY
-              ? generateItineraryStatus.loading
-                ? null
-                : Array.from(Array(length).keys()).map((day) => (
-                    <>
-                      <UnderLine itineraryDay={day}>
-                        {format(
-                          addDays(range[0]?.startDate || new Date(), day),
-                          "EEEE, do MMMM"
-                        )}{" "}
-                      </UnderLine>
-                      <Steps
-                        items={steps.length ? steps[day] : []}
-                        direction="vertical"
-                        current={10000}
-                      />
-                      <Divider />
-                    </>
-                  ))
-              : null}
-
-            {tab === TAB.INFO ? (
-              <div className="infoContainer">
-                {fetchCityInfoStatus.loading ? (
-                  <CircularProgress />
-                ) : cityInfo ? (
-                  <>
-                    <h3>City Size</h3>
-                    <p>
-                      <b>Population size:</b>{" "}
-                      {cityInfo[1].data[0].float_value.toFixed(1)}M
-                    </p>
-                    <p>
-                      <b>Spoken languages:</b>{" "}
-                      {cityInfo[11].data[2].string_value}
-                    </p>
-                    <p>
-                      <b>Currency used:</b> {cityInfo[5].data[0].string_value}
-                    </p>
-                    <p>
-                      <b>Median age:</b> {cityInfo[9].data[2].float_value} years
-                    </p>
-                    <h3>Climate</h3>
-                    <p>
-                      <b>Average day length:</b>{" "}
-                      {cityInfo[2].data[0].float_value.toFixed(1)} hours
-                    </p>
-                    <p>
-                      <b> Average day Temperature:</b>{" "}
-                      {cityInfo[2].data[3].string_value}°C -{" "}
-                      {cityInfo[2].data[2].string_value}°C
-                    </p>
-                    <p>
-                      <b> Average number of rainy days per year:</b>{" "}
-                      {cityInfo[2].data[1].float_value.toFixed(0)}
-                    </p>
-                    <p>
-                      <b>Weather type:</b> {cityInfo[2].data[5].string_value}
-                    </p>
-                    <h3>Cost of living</h3>
-                    <h5>in $</h5>
-                    <p>
-                      <b>Cost of a meal at a restaurant:</b>{" "}
-                      {cityInfo[3].data[8].currency_dollar_value.toFixed(2)}
-                    </p>
-                    <p>
-                      <b>Cost of a cappucino:</b>{" "}
-                      {cityInfo[3].data[3].currency_dollar_value.toFixed(2)}
-                    </p>
-                    <p>
-                      <b>Cost of a movie ticket:</b>{" "}
-                      {cityInfo[3].data[4].currency_dollar_value.toFixed(2)}
-                    </p>
-                    <p>
-                      <b>Cost of a beer:</b>{" "}
-                      {cityInfo[3].data[6].currency_dollar_value.toFixed(2)}
-                    </p>
-                    <p>
-                      <b>Cost of a fresh bread:</b>{" "}
-                      {cityInfo[3].data[2].currency_dollar_value.toFixed(2)}
-                    </p>
-                    <p>
-                      <b>Cost of a kilogram of apples:</b>{" "}
-                      {cityInfo[3].data[1].currency_dollar_value.toFixed(2)}
-                    </p>
-                  </>
-                ) : null}
-              </div>
-            ) : null}
-
-            {tab === TAB.BUDGET ? <BudgetComponent /> : null}
-          </div>
+          {tripData && range[0].startDate && (
+            <TripSection
+              loading={generateItineraryStatus.loading}
+              tripData={tripData}
+              startDate={range[0].startDate}
+              steps={mapGjsonToSteps(
+                currentTrip,
+                !!hotel.length,
+                transportMode,
+                mapRef,
+                setItineraryDay
+              )}
+            />
+          )}
         </div>
         <Toaster />
 
@@ -923,24 +615,6 @@ const BaseMap: FC = () => {
 const HotelMarker = styled.img`
   z-index: 999;
   position: relative;
-`;
-
-const UnderLine = styled.h3<UnderLineProps>`
-  background-repeat: no-repeat;
-  background-size: 100% 0.4em;
-  background-position: 15% 88%;
-  transition: background-size 0.25s ease-in;
-  backgroundimage: linear-gradient(
-    120deg,
-    ${(props) => weekColors[props.itineraryDay].primary} 0%,
-    ${(props) => weekColors[props.itineraryDay].secondary} 30%,
-    ${(props) => weekColors[props.itineraryDay].secondary} 70%,
-    ${(props) => weekColors[props.itineraryDay].primary} 100%
-  );
-
-  &:hover {
-    background-size: 100% 88%;
-  }
 `;
 
 export default BaseMap;
