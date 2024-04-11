@@ -4,9 +4,7 @@ import axios, {
   AxiosResponse,
   HeadersDefaults
 } from "axios";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getUserToken } from "../reducers/auth.reducers";
 import { PATHS } from "../reducers/routes";
 
 const API_BASE_URL = process.env.REACT_APP_SERVER_URI;
@@ -44,7 +42,8 @@ export const useWebClient = (): AxiosInstance => {
   const instance = CustomAxiosInstance.getInstance();
   const navigate = useNavigate();
 
-  const token = useSelector(getUserToken);
+  const token = localStorage.getItem("jwt") || undefined;
+
   if (token) {
     instance.defaults.headers = {
       Authorization: `Bearer ${token}`

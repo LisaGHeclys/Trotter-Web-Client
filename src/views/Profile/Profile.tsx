@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { getSavedTrips } from "../../reducers/trips.reducers";
 import { useGetTrips } from "../../hooks/useGetTrips";
 import { SaveAltRounded } from "@mui/icons-material";
+import MapPreview from "./MapPreview";
 
 type UserSettings = {
   username: string;
@@ -34,12 +35,17 @@ const Profile = () => {
   const [getTripsStatus, getTrips] = useGetTrips();
 
   const [showDelete, setShowDelete] = useState<boolean>(false);
+  const [timeouts, setTimeouts] = useState<{ [id: string]: NodeJS.Timeout }>(
+    {}
+  );
+  const [previewedMap, setPreviewedMap] = useState<number>();
   const [userSettings, setUserSettings] = useState<UserSettings>({
     username: "roger",
     email: "roger.salengro@gmail.com",
     birthDate: "10/02/1970",
     phoneNumber: "+33641823207"
   });
+
   const originalUserSettings: UserSettings = {
     username: "roger",
     email: "roger.salengro@gmail.com",
@@ -131,9 +137,25 @@ const Profile = () => {
             ) : (
               <>
                 {trips.length ? (
-                  <div>
+                  <div className="tripsGrid">
                     {trips.map((trip, i) => (
-                      <div key={i}>{trip.cityName}</div>
+                      <div
+                        className="previewContainer"
+                        key={i}
+                        onMouseLeave={() => {
+                          clearTimeout(timeouts[i]);
+                          setPreviewedMap(undefined);
+                        }}
+                        onMouseEnter={() => {
+                          const to = setTimeout(() => {
+                            setPreviewedMap(i);
+                          }, 5000);
+                          setTimeouts((prev) => ({ ...prev, [i]: to }));
+                        }}
+                      >
+                        <div className="tripInfo">{trip.cityName}</div>
+                        {true && <MapPreview />}
+                      </div>
                     ))}
                   </div>
                 ) : (
