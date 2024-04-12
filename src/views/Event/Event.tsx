@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 import { COLORS, FONT } from "../../UI/Colors";
 import styled from "styled-components";
 import { Input, Button } from "../../components/LibUI";
-import toast, { Toaster } from "react-hot-toast";
+import { toast } from "sonner";
 
 const EventPage: FC = () => {
   const regexExp = /^((-?|\+?)?\d+(\.\d+)?),\s*((-?|\+?)?\d+(\.\d+)?)$/gi;
@@ -119,39 +119,37 @@ const EventPage: FC = () => {
   };
 
   const createEvent = async () => {
-    try {
-      const response = await axios({
-        method: "post",
-        url: `${process.env.REACT_APP_SERVER_URI}/event`,
-        headers: {
-          Accept: "*/*",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${localStorage.getItem("jwt")}`
-        },
-        data: {
-          name: name,
-          description: description,
-          place: coords,
-          maxParticipants: maxParticipants,
-          tags: tags.split(","),
-          openingDate: openingDate,
-          closingDate: closingDate,
-          startDate: startDate,
-          endDate: endDate
-        }
-      });
-      if (response.status === 200) {
-        toast.success(t("event.success") || "");
+    const promise = axios({
+      method: "post",
+      url: `${process.env.REACT_APP_SERVER_URI}/event`,
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`
+      },
+      data: {
+        name: name,
+        description: description,
+        place: coords,
+        maxParticipants: maxParticipants,
+        tags: tags.split(","),
+        openingDate: openingDate,
+        closingDate: closingDate,
+        startDate: startDate,
+        endDate: endDate
       }
-    } catch (e) {
-      toast.error(t("event.error") || "");
-    }
+    });
+    toast.promise(promise, {
+      success: t("event.success"),
+      error: t("event.error"),
+      loading: t("event.loading")
+    });
+    await promise;
   };
 
   return (
     <div>
-      <Toaster />
       <EventWrapper container p={0} m={0} rowGap={10}>
         <Grid item p={0} m={0} xs={12}>
           <Navbar />

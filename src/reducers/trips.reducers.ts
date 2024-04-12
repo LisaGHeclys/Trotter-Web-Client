@@ -8,6 +8,7 @@ export type Trip = {
   endDate: number;
   housingCoordinates: number[] | null;
   tripData: GeoJsonRes;
+  id: string;
 };
 
 export interface TripsState {

@@ -27,8 +27,9 @@ import {
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { CircularProgress } from "@mui/material";
+import { useFetchUser } from "../../../hooks/useFetchUser";
 
 const Login: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -38,6 +39,7 @@ const Login: FC = () => {
   const dispatch = useDispatch<Dispatch<AnyAction>>();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [, fetchUser] = useFetchUser();
 
   const login = async () => {
     setLoading(true);
@@ -48,6 +50,7 @@ const Login: FC = () => {
       if (!result?.ok) throw new Error(resToJSON?.Message);
       localStorage.setItem("jwt", resToJSON.accessToken);
       dispatch({ type: "LOGIN", payload: resToJSON.accessToken });
+      fetchUser();
       const preferences = localStorage.getItem("preferences");
       if (preferences) {
         navigate("/");
@@ -56,8 +59,7 @@ const Login: FC = () => {
       }
     } catch (e) {
       console.error("An error occured while loging the user");
-      toast.error("An error occured while loging the user");
-      //to put a toaster
+      toast.error(t("login.error"));
     }
     setLoading(false);
   };

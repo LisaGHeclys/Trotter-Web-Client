@@ -1,3 +1,33 @@
+// Tablets and small desktops
+$screen-lg-min: 992px;
+
+// Large tablets and desktops
+$screen-xl-min: 1200px;
+
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+// Large devices
+@mixin lg {
+  @media (min-width: #{$screen-lg-min}) {
+    @content;
+  }
+}
+
+// Extra large devices
+@mixin xl {
+  @media (min-width: #{$screen-xl-min}) {
+    @content;
+  }
+}
+
+// Small devices
+@mixin sm {
+  @media (min-width: #{$screen-sm-min}) {
+    @content;
+  }
+}
+
 .ProfileSection {
   padding: 200px;
 }
@@ -90,4 +120,114 @@ button {
       color: #000000;
     }
   }
+}
+
+.profileLayout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 50px;
+  gap: 12px;
+
+  @include xl {
+    flex-direction: row;
+    padding: 100px;
+    align-items: stretch;
+  }
+}
+
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #95b0b4;
+  padding: 20px;
+  width: 300px;
+  background-color: rgb(248, 249, 253);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.userSettings {
+  flex: 2;
+}
+
+.userInfos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.savedTripsList {
+  flex: 3;
+}
+
+.avatarContainer {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 75%;
+  margin: 20px 12px 0px 12px;
+  gap: 6px;
+}
+
+.emptyTripList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background-color: rgb(248, 249, 253);
+
+  @include xl {
+    padding-top: 100px;
+  }
+}
+
+.previewContainer {
+  width: 300px;
+  height: 250px;
+  border: 1px solid #95b0b4;
+  position: relative;
+}
+
+.tripInfo {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: calc(100% - 48px);
+  height: calc(100% - 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: rgba(0, 0, 0, 0.75) 150px 0px 100px 00px inset;
+  z-index: 10;
+  cursor: pointer;
+  padding: 24px;
+}
+
+.tripsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  width: 100%;
+  gap: 12px;
+  margin: 24px;
+  color: white;
 }

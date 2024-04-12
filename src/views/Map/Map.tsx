@@ -35,7 +35,6 @@ import { DatePicker, Table, Button } from "antd";
 import StepMarker from "./StepMarker";
 import { useGenerateItinerary } from "../../hooks/useGenerateItinerary";
 import dayjs from "dayjs";
-import { Toaster } from "react-hot-toast";
 import { useSaveTrip } from "../../hooks/useSaveTrip";
 import { useGetTrips } from "../../hooks/useGetTrips";
 import { Trip, getSavedTrips } from "../../reducers/trips.reducers";
@@ -523,7 +522,6 @@ const BaseMap: FC = () => {
             />
           )}
         </div>
-        <Toaster />
 
         {isTripSaveModalOpen ? (
           <div className="tripSaveModal">

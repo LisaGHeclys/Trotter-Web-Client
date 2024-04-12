@@ -2,9 +2,10 @@ import { useWebClient } from "./useWebClient";
 import { useTypedAsyncFn } from "./useTypedAsyncFn";
 import { AxiosResponse } from "axios";
 import { GeoJsonRes } from "../views/Map/Maps.type";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { AsyncFnReturn } from "react-use/lib/useAsyncFn";
 import downApi from "../views/Map/downApi.json";
+import { useTranslation } from "react-i18next";
 
 type useGenerateItineraryType = () => AsyncFnReturn<
   (
@@ -20,6 +21,7 @@ type useGenerateItineraryType = () => AsyncFnReturn<
 
 export const useGenerateItinerary: useGenerateItineraryType = () => {
   const webClient = useWebClient();
+  const { t } = useTranslation();
 
   return useTypedAsyncFn<{
     lat: number;
@@ -40,9 +42,7 @@ export const useGenerateItinerary: useGenerateItineraryType = () => {
       if ((error as any).response?.status === 401) {
         return [false, downApi];
       }
-      toast.error(
-        "Something wrong happened, here is a default itinerary in Berlin"
-      );
+      toast.error(t("map.generateError"));
       return [false, downApi];
     }
   }, []);

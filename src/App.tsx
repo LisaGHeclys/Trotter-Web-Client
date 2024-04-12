@@ -15,6 +15,8 @@ import "./App.css";
 import Onboarding from "./views/Onboarding/Onboarding";
 import SuggestPage from "./views/Suggest/Suggest";
 import Cookies from "./components/Cookies/Cookies";
+import { Toaster } from "sonner";
+import { useFetchUser } from "./hooks/useFetchUser";
 
 const InitClarity = () => {
   clarity.consent();
@@ -35,8 +37,11 @@ const App = () => {
     localStorage.setItem("COOKIES_OVER", "true");
   };
 
+  const [, fetchUser] = useFetchUser(true);
+
   useEffect(() => {
     dispatch({ type: "LOGIN", payload: localStorage.getItem("jwt") });
+    fetchUser();
     InitClarity();
   }, []);
 
@@ -45,11 +50,12 @@ const App = () => {
       {run && cookiesOpen ? (
         <Cookies open={cookiesOpen} onClose={handleCookiesClose} />
       ) : null}
+      <Toaster />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<TravelPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/" element={<TravelPage />} />
           <Route path="/oauth/callback" element={<OauthCallback />} />
           <Route path="/map" element={<BaseMap />} />
           <Route path="/profile" element={<Profile />} />
