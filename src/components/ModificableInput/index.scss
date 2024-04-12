@@ -1,0 +1,35 @@
+.modificableInputContainer {
+  padding: 0px 12px;
+  margin-bottom: 6px;
+}
+
+.modificableInput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.modificableInput:hover > span {
+  opacity: 1;
+}
+
+.modificableInput > span {
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.isEditing {
+  opacity: 0 !important;
+}
+
+.unmodifiedInput {
+  cursor: default;
+}
+
+.modificableInputLabel {
+  font-weight: bolder;
+  font-size: 12px;
+  margin-left: 2px;
+}

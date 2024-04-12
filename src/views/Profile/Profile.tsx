@@ -1,100 +1,174 @@
-import React, { useState } from "react";
-import { Grid } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DeleteAccountModal from "./DeleteAccountModal/DeleteAccountModal";
-import Navbar from "../../components/Navbar/ProfileNavbar/ProfileNavbar";
 import "./Profile.scss";
 
-import backArrowIcon from "../../assets/profile/backArrow.svg";
-import calendarIcon from "../../assets/profile/calendar.svg";
-import deleteIcon from "../../assets/profile/delete.svg";
-import destinationIcon from "../../assets/profile/destination.svg";
-import filterIcon from "../../assets/profile/Filter.svg";
-import groupImage from "../../assets/profile/group.svg";
-import savedIcon from "../../assets/profile/saved.svg";
-import settingIcon from "../../assets/profile/setting.svg";
+import WithHeader from "../../Layout/WithHeader";
+import { Avatar, Button } from "antd";
+import ModificableInput from "../../components/ModificableInput";
+import { useSelector } from "react-redux";
+import { getSavedTrips } from "../../reducers/trips.reducers";
+import { useGetTrips } from "../../hooks/useGetTrips";
+import { SaveAltRounded } from "@mui/icons-material";
+import MapPreview from "./MapPreview";
+import { format } from "date-fns";
+import { User, getUser } from "../../reducers/auth.reducers";
+import { useEditUser } from "../../hooks/useEditUser";
 
 const Profile = () => {
-  const [showDelete, setShowDelete] = useState<boolean>(false);
+  const trips = useSelector(getSavedTrips);
+  const originalUser = useSelector(getUser);
+  const [getTripsStatus, getTrips] = useGetTrips();
 
+  const [editUserStatus, editUser] = useEditUser();
+
+  const [showDelete, setShowDelete] = useState<boolean>(false);
+  const [user, setUser] = useState(originalUser);
   const navigate = useNavigate();
+
   const { t } = useTranslation();
-  const ProfileData = [
-    {
-      id: 1,
-      name: t("description.profilePart4"),
-      image: destinationIcon
-    },
-    {
-      id: 2,
-      name: t("description.profilePart5"),
-      image: savedIcon
-    },
-    {
-      id: 3,
-      name: t("description.profilePart5"),
-      image: calendarIcon
+
+  const handleChange =
+    (key: keyof User) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setUser((prev) => ({ ...prev, [key]: event.target.value }));
+    };
+
+  useEffect(() => {
+    if (!trips.length) {
+      getTrips();
     }
-  ];
+  }, []);
+
+  useEffect(() => {
+    setUser(originalUser);
+  }, [originalUser]);
 
   return (
-    <div>
-      <Navbar></Navbar>
-      <div className="ProfileSection">
-        <button onClick={() => navigate("/")}>
-          <img src={backArrowIcon} alt="" />
-        </button>
-        <div className="ProfileContent">
-          <Grid className="GridProfileHeader" container rowGap={10}>
-            <Grid className="ProfileImageOutLet" item xs={12} md={4}>
-              <div className="ProfileImage">
-                <img src={groupImage} alt="" />
-              </div>
-            </Grid>
-            <Grid item xs={12} md={8}>
-              <div className="ActionButton">
-                <button>
-                  <img src={settingIcon} alt="" />
-                </button>
-                <button onClick={() => setShowDelete(true)}>
-                  <img src={deleteIcon} alt="" />
-                </button>
-              </div>
-              <div className="UserInfo">
-                <h3>{t("general.email")}</h3>
-                <h3>{t("general.password")}</h3>
-              </div>
-            </Grid>
-          </Grid>
-          <div className="Filter" onClick={() => console.log("setting")}>
-            <button>
-              <img src={filterIcon} alt="" />
-            </button>
-            <h3>{t("description.profilePart3")}</h3>
-          </div>
-          <Grid container spacing={4}>
-            {ProfileData.map((data) => (
-              <Grid item xs={12} md={4} key={data.id}>
-                <div className="ProfileItem">
-                  <img src={data.image} alt="" />
-                  <h3>{data.name}</h3>
+    <WithHeader>
+      <>
+        <div className="profileLayout">
+          {user && (
+            <div className="user profileCard">
+              <div className="userInfos">
+                <div className="avatarContainer">
+                  <Avatar
+                    className="avatar"
+                    src={`https://api.dicebear.com/8.x/notionists-neutral/svg?seed=${localStorage.getItem(
+                      "jwt"
+                    )}`}
+                  />
                 </div>
-              </Grid>
-            ))}
-          </Grid>
-          <div className="Logout">
-            <button>
-              <strong className="text">LOG OUT</strong>
-            </button>
+                <ModificableInput
+                  value={user.username}
+                  onChange={handleChange("username")}
+                  label="Username"
+                />
+                <ModificableInput
+                  value={user.email}
+                  onChange={handleChange("email")}
+                  label="EMail"
+                />
+                <ModificableInput
+                  value={user.birthDate}
+                  onChange={handleChange("birthDate")}
+                  label="Birthdate"
+                />
+                <ModificableInput
+                  value={user.phoneNumber}
+                  onChange={handleChange("phoneNumber")}
+                  label="Phone number"
+                />
+              </div>
+              <hr />
+              <div className="interestsSettings"></div>
+              <hr />
+              <div className="actionButtons">
+                <Button
+                  type="primary"
+                  disabled={
+                    !(
+                      user.birthDate !== originalUser.birthDate ||
+                      user.email !== originalUser.email ||
+                      user.username !== originalUser.username ||
+                      user.phoneNumber !== originalUser.phoneNumber
+                    )
+                  }
+                  loading={editUserStatus.loading}
+                  onClick={() => editUser(user)}
+                >
+                  {t("profile.saveChanges")}
+                </Button>
+                <Button danger>{t("profile.changePassword")}</Button>
+                <Button
+                  type="primary"
+                  danger
+                  onClick={() => {
+                    setShowDelete(true);
+                  }}
+                >
+                  {t("profile.deleteAccount")}
+                </Button>
+              </div>
+            </div>
+          )}
+          <div className="savedTripsList profileCard">
+            <h3>{t("profile.savedTrips")}</h3>
+            {getTripsStatus.loading ? (
+              <>
+                <CircularProgress />
+              </>
+            ) : (
+              <>
+                {trips.length ? (
+                  <div className="tripsGrid">
+                    {trips.map((trip, i) => {
+                      const startDate = new Date(0).setUTCSeconds(
+                        trip.startDate / 1000
+                      );
+                      const endDate = new Date(0).setUTCSeconds(
+                        trip.endDate / 1000
+                      );
+                      return (
+                        <div className="previewContainer" key={i}>
+                          <div
+                            className="tripInfo"
+                            onClick={() => {
+                              navigate(`/map?id=${trip.id}`);
+                            }}
+                          >
+                            <span>{trip.cityName}</span>
+                            <span>
+                              {format(startDate, "dd MMM") +
+                                " ➤ " +
+                                format(endDate, "dd MMM")}
+                            </span>
+                            <span>{}</span>
+                          </div>
+                          <MapPreview trip={trip} />
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="emptyTripList">
+                    <SaveAltRounded
+                      sx={{ height: 100, width: 100, color: "lightgray" }}
+                    />
+                    <p>{t("profile.findYourSavedTripsHere")}</p>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
-      </div>
-      <DeleteAccountModal
-        showDelete={showDelete}
-        setShowDelete={setShowDelete}
-      />
-    </div>
+        <DeleteAccountModal
+          showDelete={showDelete}
+          setShowDelete={setShowDelete}
+        />
+      </>
+    </WithHeader>
   );
 };
 

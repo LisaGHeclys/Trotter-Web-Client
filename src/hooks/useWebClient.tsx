@@ -4,9 +4,7 @@ import axios, {
   AxiosResponse,
   HeadersDefaults
 } from "axios";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { getUserToken } from "../reducers/auth.reducers";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { PATHS } from "../reducers/routes";
 
 const API_BASE_URL = process.env.REACT_APP_SERVER_URI;
@@ -40,11 +38,16 @@ export class CustomAxiosInstance {
   };
 }
 
-export const useWebClient = (): AxiosInstance => {
+export const useWebClient = (preventNavigate = false): AxiosInstance => {
   const instance = CustomAxiosInstance.getInstance();
-  const navigate = useNavigate();
+  let navigate: NavigateFunction;
 
-  const token = useSelector(getUserToken);
+  if (!preventNavigate) {
+    navigate = useNavigate();
+  }
+
+  const token = localStorage.getItem("jwt") || undefined;
+
   if (token) {
     instance.defaults.headers = {
       Authorization: `Bearer ${token}`
@@ -59,7 +62,7 @@ export const useWebClient = (): AxiosInstance => {
     },
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (error: any) => {
-      if (401 === error.response?.status) {
+      if (401 === error.response?.status && !preventNavigate) {
         console.log("Unauthorized, redirected to login page");
 
         navigate(PATHS.LOGIN);

@@ -1,4 +1,5 @@
 {
+  "unexpectedError": "An unexpected error occured. Please try again later.",
   "description": {
     "separator": "or sign with",
     "travelPart2": "Location",
@@ -35,16 +36,16 @@
   "register": {
     "createAccount": "Create a new account",
     "welcome": "Welcome !",
-    "member": "Already a member ?"
+    "member": "Already a member ?",
+    "passwordMismatch": "Passwords do not match"
   },
-
   "login": {
     "logInAccount": "Login to your account",
     "welcome": "Welcome !",
     "noAccount": "Do not have an account ?",
-    "forgotPassword": "Forgot your password ?"
+    "forgotPassword": "Forgot your password ?",
+    "error": "Your entered email or password is incorrect."
   },
-
   "general": {
     "logIn": "Log in",
     "register": "Sign up",
@@ -77,7 +78,8 @@
     "fieldsError": "All fields are required",
     "coordinatesError": "Coordinates must be in the format : latitude, longitude (ex: 45.767624, 4.834840)",
     "success": "Your suggestion has been submitted !",
-    "error": "An error occured, please try again later"
+    "error": "An error occured, please try again later",
+    "loading": "Your suggestion is being processed"
   },
   "event": {
     "title": "Create your own event",
@@ -96,7 +98,31 @@
     "maxParticipantsError": "Maximum number of participants must be a number greater than 0",
     "dateError": "Dates must be in the format : YYYY-MM-DD (ex: 2020-12-31)",
     "dateLogicError": "The start date must be before the end date and the registration closing date",
-    "success": "Your suggestion has been submitted !",
-    "error": "An error occured, please try again later"
+    "success": "Your event has successfully been created !",
+    "error": "An error occured, please try again later",
+    "loading": "Your event is being created"
+  },
+  "map": {
+    "generateError": "Your itinerary could not be generated. Try again later.",
+    "cityDetailsError": "City details could not be loaded. Try again later."
+  },
+  "trips": {
+    "getAllError": "Your trips could not be loaded. Try again later.",
+    "saveError": "Your trip could not be saved. Try again later.",
+    "saveSuccess": "Your trip has been saved.",
+    "saveLoading": "Your trip is being saved..."
+  },
+  "profile": {
+    "saveChanges": "Save",
+    "changePassword": "Change password",
+    "deleteAccount": "Delete account",
+    "findYourSavedTripsHere": "Save trips and find them here",
+    "savedTrips": "Saved trips"
+  },
+  "user": {
+    "fetchError": "User data could not be loaded. Try again later.",
+    "editError": "User data could not be edited. Try again later.",
+    "editLoading": "Your data is being edited...",
+    "modified": "Your data has been modified."
   }
 }

@@ -1,9 +1,18 @@
 import { AnyAction } from "redux";
 import { RootState } from "../store";
 
+export type User = {
+  username: string;
+  email: string;
+  birthDate: string;
+  phoneNumber: string;
+  id: string;
+};
+
 export interface AuthState {
   isLoggedIn: boolean;
   token?: string;
+  user?: User;
 }
 
 const initialState: AuthState = {
@@ -28,6 +37,11 @@ export default function authReducers(
         ...state,
         isLoggedIn: false
       };
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.payload
+      };
     default:
       return state;
   }
@@ -35,3 +49,4 @@ export default function authReducers(
 }
 
 export const getUserToken = (store: RootState) => store.auth.token;
+export const getUser = (store: RootState): User => store.auth.user;

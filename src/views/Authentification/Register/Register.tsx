@@ -26,8 +26,9 @@ import Navbar from "../../../components/Navbar/Navbar";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { CircularProgress } from "@mui/material";
+import { useFetchUser } from "../../../hooks/useFetchUser";
 
 const Register: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -40,11 +41,12 @@ const Register: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [, fetchUser] = useFetchUser();
 
   async function register() {
     setLoading(true);
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error(t("register.passwordMismatch"));
       return;
     }
     try {
@@ -63,10 +65,11 @@ const Register: FC = () => {
         }
       });
       if (!response.data.accessToken) {
-        toast.error("An error occured, please try again later");
+        toast.error(t("unexpectedError"));
       } else {
         localStorage.setItem("jwt", response.data.accessToken);
         dispatch({ type: "LOGIN", payload: response.data.accessToken });
+        fetchUser();
         const preferences = localStorage.getItem("preferences");
         if (preferences) {
           navigate("/");
@@ -75,7 +78,7 @@ const Register: FC = () => {
         }
       }
     } catch (e) {
-      toast.error("An error occured, please try again later");
+      toast.error(t("unexpectedError"));
     }
     setLoading(false);
   }
