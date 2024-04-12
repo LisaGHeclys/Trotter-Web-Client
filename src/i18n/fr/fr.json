@@ -123,5 +123,11 @@
     "deleteAccount": "Supprimer mon compte",
     "findYourSavedTripsHere": "Sauvegardez des voyages pour les retrouver ici",
     "savedTrips": "Voyages sauvegardés"
+  },
+  "user": {
+    "fetchError": "Vos informations n'ont pas pu être récupérées, veuillez réessayer plus tard.",
+    "editError": "Vos informations n'ont pas pu être modifiées, veuillez réessayer plus tard.",
+    "modified": "Vos informations ont bien été modifiées.",
+    "editLoading": "Vos informations sont en cours de modification..."
   }
 }

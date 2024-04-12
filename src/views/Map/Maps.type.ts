@@ -20,7 +20,7 @@ export type GeoJsonRes = {
   features: {
     features: {
       geometry: {
-        coordinates: Position[];
+        coordinates: Position;
       };
       properties: {
         name: string;

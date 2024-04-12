@@ -28,6 +28,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { toast } from "sonner";
 import { CircularProgress } from "@mui/material";
+import { useFetchUser } from "../../../hooks/useFetchUser";
 
 const Register: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -40,6 +41,7 @@ const Register: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [, fetchUser] = useFetchUser();
 
   async function register() {
     setLoading(true);
@@ -67,6 +69,7 @@ const Register: FC = () => {
       } else {
         localStorage.setItem("jwt", response.data.accessToken);
         dispatch({ type: "LOGIN", payload: response.data.accessToken });
+        fetchUser();
         const preferences = localStorage.getItem("preferences");
         if (preferences) {
           navigate("/");

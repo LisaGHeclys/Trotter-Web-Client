@@ -118,5 +118,11 @@
     "deleteAccount": "Delete account",
     "findYourSavedTripsHere": "Save trips and find them here",
     "savedTrips": "Saved trips"
+  },
+  "user": {
+    "fetchError": "User data could not be loaded. Try again later.",
+    "editError": "User data could not be edited. Try again later.",
+    "editLoading": "Your data is being edited...",
+    "modified": "Your data has been modified."
   }
 }
