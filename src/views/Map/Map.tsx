@@ -39,6 +39,7 @@ import { useSaveTrip } from "../../hooks/useSaveTrip";
 import { useGetTrips } from "../../hooks/useGetTrips";
 import { Trip, getSavedTrips } from "../../reducers/trips.reducers";
 import TripSection from "./TripSection";
+import { useSearchParams } from "react-router-dom";
 
 const BaseMap: FC = () => {
   const mapRef = React.useRef<MapRef>(null);
@@ -50,6 +51,8 @@ const BaseMap: FC = () => {
   }>({});
   const searchState = useSelector(getSearchInput);
   const trips = useSelector(getSavedTrips);
+  const [searchParams] = useSearchParams();
+  const tripId = searchParams.get("id");
 
   const tripsColumns = [
     {
@@ -169,6 +172,9 @@ const BaseMap: FC = () => {
     };
 
     fetchData();
+    if (tripId) {
+      loadTripFromId(tripId);
+    }
   }, []);
 
   const handleMapClick = async (e: MapLayerMouseEvent) => {
@@ -230,6 +236,49 @@ const BaseMap: FC = () => {
         ]
       }));
       setIsHotelSelectionActivated(false);
+    }
+  };
+
+  const loadTripFromId = async (id: string) => {
+    let localTrips = trips;
+    if (!localTrips.length) {
+      localTrips = await getTrips();
+    }
+    const trip = localTrips.find((x) => x.id === id);
+    if (!trip) {
+      return;
+    } else {
+      const endDate = new Date(0);
+      const startDate = new Date(0);
+      endDate.setUTCSeconds(trip.endDate / 1000);
+      startDate.setUTCSeconds(trip.startDate / 1000);
+      setIsComputing(true);
+      setTripData({
+        bbox: null,
+        cityName: trip.cityName,
+        lat: null,
+        lon: null
+      });
+      setRange([
+        {
+          endDate: new Date(endDate),
+          startDate: new Date(startDate),
+          key: "selection"
+        }
+      ]);
+      computeMapData(trip.tripData, false);
+      setCurrentTrip(trip.tripData);
+      setTimeout(() => {
+        mapRef.current?.flyTo({
+          center: [
+            trip.tripData.features[0].features[0].geometry
+              .coordinates[0] as unknown as number,
+            trip.tripData.features[0].features[0].geometry
+              .coordinates[1] as unknown as number
+          ],
+          zoom: 12
+        });
+      }, 500);
     }
   };
 
@@ -365,10 +414,6 @@ const BaseMap: FC = () => {
     }
     setItineraryDay(0);
   }, [tripData, transportMode]);
-
-  useEffect(() => {
-    console.log(generateItineraryStatus.error);
-  }, [generateItineraryStatus]);
 
   return (
     <WithHeader>

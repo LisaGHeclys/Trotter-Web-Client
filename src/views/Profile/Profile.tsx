@@ -36,9 +36,8 @@ const Profile = () => {
     };
 
   useEffect(() => {
-    if (!trips.length) {
-      getTrips();
-    }
+    // get trips anyway, loss is not that big
+    getTrips();
   }, []);
 
   useEffect(() => {
@@ -64,13 +63,14 @@ const Profile = () => {
                   value={user.username}
                   onChange={handleChange("username")}
                   label="Username"
+                  editable
                 />
                 <ModificableInput
                   value={user.email}
                   onChange={handleChange("email")}
                   label="EMail"
                 />
-                <ModificableInput
+                {/* <ModificableInput
                   value={user.birthDate}
                   onChange={handleChange("birthDate")}
                   label="Birthdate"
@@ -79,7 +79,7 @@ const Profile = () => {
                   value={user.phoneNumber}
                   onChange={handleChange("phoneNumber")}
                   label="Phone number"
-                />
+                /> */}
               </div>
               <hr />
               <div className="interestsSettings"></div>

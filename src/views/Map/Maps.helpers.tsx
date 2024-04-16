@@ -176,7 +176,9 @@ export const mapGjsonToSteps = (
                 zoom: 16,
                 duration: 1000
               });
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              document
+                .getElementsByTagName("body")[0]
+                .scrollTo({ top: 0, behavior: "smooth" });
               setItineraryDay(index);
             }}
           />

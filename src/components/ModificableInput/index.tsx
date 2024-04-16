@@ -8,12 +8,14 @@ type ModificableInputProps = {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   value: string | number;
   label: string;
+  editable?: boolean;
 };
 
 const ModificableInput = ({
   onChange,
   value,
-  label
+  label,
+  editable = false
 }: ModificableInputProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -22,7 +24,7 @@ const ModificableInput = ({
   };
 
   const handleClick = () => {
-    if (!isEditing) {
+    if (!isEditing && editable) {
       setIsEditing(true);
     }
   };
@@ -38,14 +40,16 @@ const ModificableInput = ({
           value={value}
           className={!isEditing ? "unmodifiedInput" : undefined}
         />
-        <span className={isEditing ? "isEditing" : undefined}>
-          <Edit
-            onClick={() => {
-              setIsEditing(true);
-            }}
-            sx={{ width: 16, cursor: isEditing ? "default" : "pointer" }}
-          />
-        </span>
+        {editable && (
+          <span className={"editIcon " + (isEditing ? "isEditing" : "")}>
+            <Edit
+              onClick={() => {
+                setIsEditing(true);
+              }}
+              sx={{ width: 16, cursor: isEditing ? "default" : "pointer" }}
+            />
+          </span>
+        )}
       </div>{" "}
     </div>
   );

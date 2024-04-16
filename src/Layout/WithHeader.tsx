@@ -70,7 +70,9 @@ const WithHeader: React.FC<WithHeaderProps> = ({ children }) => {
           </Link>
         </div>
       </head>
-      <div className="pageLayout">{children}</div>
+      <div className="pageLayout" id="pageLayout">
+        {children}
+      </div>
     </>
   );
 };

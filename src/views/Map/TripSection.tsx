@@ -27,14 +27,10 @@ const TripSection = ({ loading, startDate, steps }: TripSectionProps) => {
   const [tab, setTab] = useState<TAB>(TAB.ITINERARY);
   //eslint-disable-next-line
   const [cityInfo, setCityInfo] = useState<any[] | null>(null);
-  console.log(
-    steps,
-    Array.from({ length: steps.length }, (v, i) => i)
-  );
 
   //   const [fetchCityInfoStatus, fetchCityInfo] = useFetchCityInfo();
   return (
-    <div className="mapSideMenu">
+    <div className="mapSideMenu" id="mapSideMenu">
       <div className="tabsContainer">
         <div onClick={() => setTab(TAB.ITINERARY)}>
           <Typography
