@@ -1,4 +1,7 @@
 {
+  "home": "Home",
+  "discover": "Discover",
+  "trending": "Trending",
   "unexpectedError": "An unexpected error occured. Please try again later.",
   "description": {
     "separator": "or sign with",

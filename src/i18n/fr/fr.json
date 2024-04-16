@@ -1,4 +1,7 @@
 {
+  "home": "Accueil",
+  "discover": "Découvrir",
+  "trending": "Tendance",
   "unexpectedError": "Une erreur inattendue s'est produite, veuillez réessayer plus tard.",
   "description": {
     "travelPart2": "Localisation",
