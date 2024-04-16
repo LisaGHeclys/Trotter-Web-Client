@@ -16,7 +16,7 @@ import Onboarding from "./views/Onboarding/Onboarding";
 import SuggestPage from "./views/Suggest/Suggest";
 import Cookies from "./components/Cookies/Cookies";
 import { Toaster } from "sonner";
-import { useFetchUser } from "./hooks/useFetchUser";
+import WithUser from "./Layout/WithUser";
 
 const InitClarity = () => {
   clarity.consent();
@@ -37,11 +37,8 @@ const App = () => {
     localStorage.setItem("COOKIES_OVER", "true");
   };
 
-  const [, fetchUser] = useFetchUser(true);
-
   useEffect(() => {
     dispatch({ type: "LOGIN", payload: localStorage.getItem("jwt") });
-    fetchUser();
     InitClarity();
   }, []);
 
@@ -52,17 +49,19 @@ const App = () => {
       ) : null}
       <Toaster />
       <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/" element={<TravelPage />} />
-          <Route path="/oauth/callback" element={<OauthCallback />} />
-          <Route path="/map" element={<BaseMap />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/welcome" element={<Onboarding />} />
-          <Route path="/suggest" element={<SuggestPage />} />
-          <Route path="/event" element={<Event />} />
-        </Routes>
+        <WithUser>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/" element={<TravelPage />} />
+            <Route path="/oauth/callback" element={<OauthCallback />} />
+            <Route path="/map" element={<BaseMap />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/welcome" element={<Onboarding />} />
+            <Route path="/suggest" element={<SuggestPage />} />
+            <Route path="/event" element={<Event />} />
+          </Routes>
+        </WithUser>
       </BrowserRouter>
     </AppWrapper>
   );

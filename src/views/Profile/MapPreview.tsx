@@ -99,7 +99,6 @@ const MapPreview = ({ trip }: MapPreviewProps) => {
   };
 
   useEffect(() => {
-    console.log("hey");
     if (!hasComputed) {
       computeMapData(trip.tripData);
     }
