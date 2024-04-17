@@ -72,8 +72,8 @@ export const mapGjsonToSteps = (
                     <DirectionsWalk sx={{ height: 16, width: 16 }} />
                   ) : null}
                   <b>
-                    {tripLegData[subIndex].distances}m |{" "}
-                    {tripLegData[subIndex].durations} min
+                    {metersToFormattedKm(tripLegData[subIndex].distances)} |{" "}
+                    {minutesToFormattedHours(tripLegData[subIndex].durations)}
                   </b>
                 </div>
               ) : null}
@@ -187,4 +187,16 @@ export const mapGjsonToSteps = (
     });
   });
   return steps;
+};
+
+export const metersToFormattedKm = (meters: number): string => {
+  if (meters < 1000) return `${meters}m`;
+  return `${(meters / 1000).toFixed(1)}km`;
+};
+
+export const minutesToFormattedHours = (minutes: number): string => {
+  if (minutes < 60) return `${minutes}min`;
+  return `${Math.floor(minutes / 60)}h${
+    minutes % 60 < 10 ? `0${minutes % 60}` : minutes % 60
+  }min`;
 };
