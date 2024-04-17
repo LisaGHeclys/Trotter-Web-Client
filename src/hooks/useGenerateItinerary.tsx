@@ -35,7 +35,6 @@ export const useGenerateItinerary: useGenerateItineraryType = () => {
         "/IA",
         payload
       );
-      console.log(rep.data);
       return [true, rep.data];
     } catch (error) {
       // eslint-disable-next-line

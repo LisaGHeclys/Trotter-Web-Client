@@ -19,7 +19,6 @@ export default function searchReducers(
 ): SearchState {
   switch (action.type) {
     case "SEARCH":
-      console.log(action.payload.place);
       if (
         typeof action.payload.place === "object" &&
         action.payload.place !== null

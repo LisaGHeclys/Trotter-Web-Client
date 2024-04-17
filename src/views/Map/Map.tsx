@@ -40,6 +40,7 @@ import { useGetTrips } from "../../hooks/useGetTrips";
 import { Trip, getSavedTrips } from "../../reducers/trips.reducers";
 import TripSection from "./TripSection";
 import { useSearchParams } from "react-router-dom";
+import { useShareTrip } from "../../hooks/useShareTrip";
 
 const BaseMap: FC = () => {
   const mapRef = React.useRef<MapRef>(null);
@@ -69,6 +70,23 @@ const BaseMap: FC = () => {
       title: "End date",
       dataIndex: "endDate",
       key: "endDate"
+    },
+    {
+      title: "Shared",
+      dataIndex: "",
+      key: "share",
+      render: (record: Trip) => (
+        <Button
+          onClick={() => {
+            shareTrip(record.id);
+          }}
+          loading={shareTripStatus.loading}
+          disabled={shareTripStatus.loading}
+        >
+          {" "}
+          Share{" "}
+        </Button>
+      )
     },
     {
       title: "Action",
@@ -148,6 +166,7 @@ const BaseMap: FC = () => {
   const [generateItineraryStatus, generateItinerary] = useGenerateItinerary();
   const [saveTripStatus, saveTrip] = useSaveTrip();
   const [getTripsStatus, getTrips] = useGetTrips();
+  const [shareTripStatus, shareTrip] = useShareTrip();
   const [currentTrip, setCurrentTrip] = useState<GeoJsonRes | null>(null);
   const [jsonData, setJsonData] = useState<{
     features: {

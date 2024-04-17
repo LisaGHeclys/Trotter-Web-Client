@@ -15,6 +15,7 @@ type TripSectionProps = {
   loading: boolean;
   startDate: Date;
   steps: StepProps[][];
+  isShared?: boolean;
 };
 
 enum TAB {
@@ -23,14 +24,22 @@ enum TAB {
   BUDGET
 }
 
-const TripSection = ({ loading, startDate, steps }: TripSectionProps) => {
+const TripSection = ({
+  loading,
+  startDate,
+  steps,
+  isShared = false
+}: TripSectionProps) => {
   const [tab, setTab] = useState<TAB>(TAB.ITINERARY);
   //eslint-disable-next-line
   const [cityInfo, setCityInfo] = useState<any[] | null>(null);
 
   //   const [fetchCityInfoStatus, fetchCityInfo] = useFetchCityInfo();
   return (
-    <div className="mapSideMenu" id="mapSideMenu">
+    <div
+      className={"mapSideMenu" + (isShared ? "Shared" : "")}
+      id="mapSideMenu"
+    >
       <div className="tabsContainer">
         <div onClick={() => setTab(TAB.ITINERARY)}>
           <Typography

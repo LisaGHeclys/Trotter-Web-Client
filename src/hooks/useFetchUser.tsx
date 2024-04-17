@@ -21,7 +21,8 @@ export const useFetchUser = (noNavigate = false) => {
     } catch (error) {
       if (
         location.pathname !== PATHS.LOGIN &&
-        location.pathname !== PATHS.REGISTER
+        location.pathname !== PATHS.REGISTER &&
+        location.pathname.startsWith("/share/")
       ) {
         toast.dismiss();
         toast.error(t("user.fetchError"));

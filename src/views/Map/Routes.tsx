@@ -22,10 +22,11 @@ const Routes: FC<RoutesProps> = ({ routes, colors, itineraryDay }) => {
               paint={{
                 "line-color": colors[key].primary,
                 "line-width":
-                  itineraryDay === key
+                  itineraryDay === key || itineraryDay === -1
                     ? ["interpolate", ["linear"], ["zoom"], 12, 3, 22, 12]
                     : ["interpolate", ["linear"], ["zoom"], 4, 1, 6, 4],
-                "line-opacity": itineraryDay === key ? 1 : 0.3,
+                "line-opacity":
+                  itineraryDay === key || itineraryDay === -1 ? 1 : 0.3,
                 "line-width-transition": {
                   delay: 0,
                   duration: 300
@@ -68,7 +69,8 @@ const Routes: FC<RoutesProps> = ({ routes, colors, itineraryDay }) => {
                 "text-color": colors[key].secondary,
                 "text-halo-color": "hsl(55, 11%, 96%)",
                 "text-halo-width": 3,
-                "text-opacity": itineraryDay === key ? 1 : 0
+                "text-opacity":
+                  itineraryDay === key || itineraryDay === -1 ? 1 : 0
               }}
               waterway-label
             />
