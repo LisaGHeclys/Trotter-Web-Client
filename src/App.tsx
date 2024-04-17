@@ -17,6 +17,7 @@ import SuggestPage from "./views/Suggest/Suggest";
 import Cookies from "./components/Cookies/Cookies";
 import { Toaster } from "sonner";
 import WithUser from "./Layout/WithUser";
+import SharedTripPage from "./views/SharedTrip";
 
 const InitClarity = () => {
   clarity.consent();
@@ -60,6 +61,7 @@ const App = () => {
             <Route path="/welcome" element={<Onboarding />} />
             <Route path="/suggest" element={<SuggestPage />} />
             <Route path="/event" element={<Event />} />
+            <Route path="/share/:tripId" element={<SharedTripPage />} />
           </Routes>
         </WithUser>
       </BrowserRouter>

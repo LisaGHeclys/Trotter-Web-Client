@@ -132,5 +132,11 @@
     "editError": "Vos informations n'ont pas pu être modifiées, veuillez réessayer plus tard.",
     "modified": "Vos informations ont bien été modifiées.",
     "editLoading": "Vos informations sont en cours de modification..."
+  },
+  "share": {
+    "error": "Ce voyage n'a pas pu être récupéré, peut-être n'est-il pas partagé publiquement ou le lien est incorrect.",
+    "success": "Votre voyage a bien été partagé. Le lien a été copié dans votre presse-papiers.",
+    "sharingError": "Votre voyage n'a pas pu être partagé, veuillez réessayer plus tard.",
+    "loading": "Votre voyage est en cours de partage..."
   }
 }

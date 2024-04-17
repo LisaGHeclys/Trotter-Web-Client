@@ -127,5 +127,11 @@
     "editError": "User data could not be edited. Try again later.",
     "editLoading": "Your data is being edited...",
     "modified": "Your data has been modified."
+  },
+  "share": {
+    "error": "This trip could not be loaded. Perhaps it has not been shared or it is the wrong link.",
+    "success": "Your trip has been shared ! The link was copied to your clipboard.",
+    "sharingError": "Your trip could not be shared. Try again later.",
+    "loading": "Your trip is being shared..."
   }
 }

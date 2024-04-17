@@ -9,6 +9,7 @@ export type Trip = {
   housingCoordinates: number[] | null;
   tripData: GeoJsonRes;
   id: string;
+  isShared: boolean;
 };
 
 export interface TripsState {

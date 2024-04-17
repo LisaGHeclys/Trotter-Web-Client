@@ -44,7 +44,6 @@ const Login: FC = () => {
   const login = async () => {
     setLoading(true);
     try {
-      console.log(email, password);
       const result = await loginUser(email, password);
       const resToJSON = await result.json();
       if (!result?.ok) throw new Error(resToJSON?.Message);
