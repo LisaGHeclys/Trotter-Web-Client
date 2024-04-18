@@ -181,7 +181,7 @@
 
 .transportSelection {
   position: absolute;
-  top: 82px;
+  top: 124px;
   left: 49px;
   display: flex;
   flex-direction: row;
@@ -196,6 +196,27 @@
 .transportSelectionOpened {
   width: fit-content;
   animation: width 1s ease 1s;
+}
+
+.interestsSelection {
+  position: absolute;
+  top: 82px;
+  left: 49px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f3f4f8;
+  width: 0px;
+  z-index: 10000;
+  overflow: hidden;
+  height: fit-content;
+}
+
+.interestsSelectionOpened {
+  width: fit-content;
+  animation: width 1s ease 1s;
+  border: 1px solid lightgray;
+  align-items: center;
+  justify-content: center;
 }
 
 .transportInfo {
